@@ -1,120 +1,139 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import SignatureDresses from "./SignatureDresses";
-import BrandStory from "./BrandStory";
-import Collections from "./Collections";
-import BridalProcess from "./BridalProcess";
-import EditorialGallery from "./EditorialGallery";
-import ConsultationCTA from "./ConsultationCTA";
-import Footer from "./Footer";
+import { useEffect, useState } from "react";
 
-export default function Home() {
+export default function AamiraEntry() {
   const [loaded, setLoaded] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
-  const heroRef = useRef<HTMLDivElement>(null);
+  const [bridalHover, setBridalHover] = useState(false);
+  const [basicHover, setBasicHover] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoaded(true), 100);
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const t = setTimeout(() => setLoaded(true), 80);
+    return () => clearTimeout(t);
   }, []);
 
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,100;0,300;0,400;1,100;1,300;1,400&family=Jost:wght@200;300;400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,100;0,300;0,400;0,500;1,100;1,300;1,400&family=Jost:wght@200;300;400&display=swap');
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-          --ivory: #F0EBE1;
-          --silk-white: #F7F4EF;
-          --noir: #1C1A18;
-          --dust: #9E9488;
-          --blush: #D9C4B5;
-          --gold: #B8963E;
-          --warm-fog: #C8BFB4;
+          --ivory:     #F0EBE1;
+          --noir:      #1A1612;
+          --noir2:     #211D19;
+          --dust:      #9E9488;
+          --blush:     #D9C4B5;
+          --gold:      #B8963E;
+          --champagne: #D4B483;
+          --fog:       #C8BFB4;
+          --card-border: rgba(184,150,62,0.45);
         }
 
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-        }
+        html, body { height: 100%; }
 
-        html {
-          scroll-behavior: smooth;
-        }
-
-        body {
+        .ae-root {
+          min-height: 100vh;
           background: var(--noir);
-          color: var(--ivory);
+          display: flex;
+          flex-direction: column;
           font-family: 'Jost', sans-serif;
-          overflow-x: hidden;
-        }
-
-        .font-cormorant {
-          font-family: 'Cormorant Garamond', serif;
-        }
-
-        /* Grain overlay */
-        .grain::after {
-          content: '';
-          position: fixed;
-          inset: -200%;
-          width: 400%;
-          height: 400%;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-          opacity: 0.03;
-          pointer-events: none;
-          z-index: 100;
-          animation: grain 8s steps(10) infinite;
-        }
-
-        @keyframes grain {
-          0%, 100% { transform: translate(0, 0); }
-          10% { transform: translate(-2%, -3%); }
-          20% { transform: translate(3%, 2%); }
-          30% { transform: translate(-1%, 4%); }
-          40% { transform: translate(4%, -1%); }
-          50% { transform: translate(-3%, 3%); }
-          60% { transform: translate(2%, -4%); }
-          70% { transform: translate(-4%, 1%); }
-          80% { transform: translate(1%, -2%); }
-          90% { transform: translate(-2%, 4%); }
-        }
-
-        /* Fade-in animations */
-        .fade-in {
-          opacity: 0;
-          transform: translateY(16px);
-          transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-                      transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .fade-in.visible {
-          opacity: 1;
-          transform: translateY(0);
-        }
-
-        .delay-200 { transition-delay: 0.2s; }
-        .delay-400 { transition-delay: 0.4s; }
-        .delay-600 { transition-delay: 0.6s; }
-        .delay-800 { transition-delay: 0.8s; }
-        .delay-1000 { transition-delay: 1s; }
-
-        /* Nav link hover */
-        .nav-link {
           position: relative;
-          letter-spacing: 0.12em;
-          transition: color 0.4s ease;
+          overflow: hidden;
         }
 
-        .nav-link::after {
+        /* ── Ambient background image ── */
+        .ae-bg {
+          position: fixed;
+          inset: 0;
+          z-index: 0;
+          background-image: url('https://plus.unsplash.com/premium_photo-1670430623154-24626c42fb33?q=80&w=1974&auto=format&fit=crop');
+          background-size: cover;
+          background-position: center;
+          filter: brightness(0.22) saturate(0.42) contrast(1.06);
+          pointer-events: none;
+        }
+        /* extra left-side veil drape feel + bottom pool of darkness */
+        .ae-bg::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background:
+            linear-gradient(
+              105deg,
+              rgba(14,10,7,0.70) 0%,
+              transparent 42%,
+              rgba(14,10,7,0.32) 100%
+            ),
+            radial-gradient(
+              ellipse 80% 60% at 50% 108%,
+              rgba(8,5,3,0.72) 0%,
+              transparent 70%
+            );
+        }
+
+        /* ── Grain ── */
+        .ae-grain {
+          position: fixed;
+          inset: 0;
+          z-index: 1;
+          pointer-events: none;
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+          opacity: 0.042;
+        }
+
+        /* ── Radial vignette — pools darkness toward edges ── */
+        .ae-vignette {
+          position: fixed;
+          inset: 0;
+          z-index: 2;
+          pointer-events: none;
+          background: radial-gradient(
+            ellipse 90% 85% at 50% 50%,
+            transparent 40%,
+            rgba(8,5,3,0.55) 100%
+          );
+        }
+
+        /* ── Fade-in ── */
+        .ae-fade {
+          opacity: 0;
+          transform: translateY(8px);
+          transition: opacity 1.9s cubic-bezier(0.25, 0.1, 0.1, 1),
+                      transform 2.2s cubic-bezier(0.22, 0.8, 0.32, 1);
+        }
+        .ae-fade.on { opacity: 1; transform: none; }
+        .ae-d0 { transition-delay: 0.10s; }
+        .ae-d1 { transition-delay: 0.40s; }
+        .ae-d2 { transition-delay: 0.72s; }
+        .ae-d3 { transition-delay: 1.00s; }
+        .ae-d4 { transition-delay: 1.28s; }
+        .ae-d5 { transition-delay: 1.58s; }
+
+        /* ── Nav ── */
+        .ae-nav {
+          position: relative;
+          z-index: 10;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          padding: 28px 44px;
+        }
+        .ae-nav-link {
+          font-family: 'Jost', sans-serif;
+          font-size: 8.5px;
+          font-weight: 300;
+          letter-spacing: 0.32em;
+          text-transform: uppercase;
+          color: rgba(240,235,225,0.5);
+          text-decoration: none;
+          transition: color 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+          position: relative;
+          -webkit-font-smoothing: antialiased;
+          padding-right: 0.32em;
+        }
+        .ae-nav-link::after {
           content: '';
           position: absolute;
           bottom: -2px;
@@ -122,411 +141,515 @@ export default function Home() {
           width: 0;
           height: 1px;
           background: var(--gold);
-          transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: width 1.1s cubic-bezier(0.76, 0, 0.24, 1);
         }
+        .ae-nav-link:hover { color: var(--ivory); }
+        .ae-nav-link:hover::after { width: 100%; }
 
-        .nav-link:hover {
-          color: var(--ivory);
-        }
-
-        .nav-link:hover::after {
-          width: 100%;
-        }
-
-        /* CTA text link */
-        .cta-link {
+        /* ── Main layout ── */
+        .ae-main {
           position: relative;
-          display: inline-flex;
+          z-index: 10;
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 0 40px 0;
+          gap: 0;
+        }
+
+        /* ── Logotype block ── */
+        .ae-logo-block {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-bottom: 20px;
+        }
+
+        .ae-logotype {
+          font-family: 'Cormorant Garamond', serif;
+          font-weight: 300;
+          font-size: clamp(38px, 5.8vw, 68px);
+          color: var(--ivory);
+          letter-spacing: 0.55em;
+          text-transform: uppercase;
+          line-height: 1;
+          padding-right: 0.55em; /* compensate tracking on last char */
+          font-feature-settings: 'kern' 1, 'liga' 1;
+          -webkit-font-smoothing: antialiased;
+          text-shadow:
+            0 0 80px rgba(212,180,131,0.10),
+            0 1px 2px rgba(8,5,3,0.55);
+        }
+
+        .ae-logo-ornament {
+          display: flex;
           align-items: center;
           gap: 12px;
-          transition: gap 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+          margin-top: 14px;
         }
-
-        .cta-link::before {
-          content: '';
-          display: inline-block;
-          width: 32px;
+        .ae-orn-line {
+          width: 64px;
           height: 1px;
-          background: var(--gold);
-          transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+          background: linear-gradient(to right, transparent, rgba(184,150,62,0.65));
+        }
+        .ae-orn-line.rev {
+          background: linear-gradient(to left, transparent, rgba(184,150,62,0.65));
         }
 
-        .cta-link:hover {
-          gap: 20px;
+        /* ── Eyebrow ── */
+        .ae-eyebrow {
+          font-family: 'Jost', sans-serif;
+          font-size: 8.5px;
+          font-weight: 300;
+          letter-spacing: 0.46em;
+          text-transform: uppercase;
+          color: var(--dust);
+          margin-bottom: 48px;
+          padding-right: 0.46em;
+          line-height: 1;
+          -webkit-font-smoothing: antialiased;
         }
 
-        .cta-link:hover::before {
-          width: 48px;
+        /* ── Card row ── */
+        .ae-cards {
+          display: flex;
+          align-items: center;
+          gap: 0;
+          width: 100%;
+          max-width: 740px;
         }
 
-        /* Scroll indicator */
-        .scroll-line {
-          animation: scrollPulse 2.4s ease-in-out infinite;
+        /* ── OR divider ── */
+        .ae-or {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 10px;
+          flex-shrink: 0;
+          width: 80px;
+        }
+        .ae-or-line {
+          width: 1px;
+          height: 28px;
+          background: linear-gradient(to bottom, transparent, rgba(184,150,62,0.4));
+        }
+        .ae-or-line.bot {
+          background: linear-gradient(to top, transparent, rgba(184,150,62,0.4));
+        }
+        .ae-or-label {
+          font-family: 'Jost', sans-serif;
+          font-size: 7.5px;
+          font-weight: 300;
+          letter-spacing: 0.36em;
+          text-transform: uppercase;
+          color: var(--dust);
+          padding-right: 0.36em;
+          opacity: 0.7;
+          -webkit-font-smoothing: antialiased;
         }
 
-        @keyframes scrollPulse {
-          0%, 100% { opacity: 0.3; transform: scaleY(1); }
-          50% { opacity: 0.8; transform: scaleY(1.3); }
+        /* ── Card ── */
+        .ae-card {
+          flex: 1;
+          position: relative;
+          overflow: hidden;
+          border: 1px solid rgba(184,150,62,0.32);
+          cursor: pointer;
+          aspect-ratio: 0.72 / 1;
+          max-height: 400px;
+          min-height: 280px;
+          text-decoration: none;
+          display: block;
+          /* Depth: outer ambient shadow + tight inner light suggestion */
+          box-shadow:
+            0 12px 64px rgba(6,4,2,0.85),
+            0 3px 16px  rgba(6,4,2,0.60),
+            0 1px 4px   rgba(6,4,2,0.45),
+            inset 0 1px 0 rgba(212,180,131,0.14),
+            inset 0 -1px 0 rgba(6,4,2,0.70),
+            inset 1px 0 0 rgba(212,180,131,0.04),
+            inset -1px 0 0 rgba(212,180,131,0.04);
+          /* Card enters slowly, exits even more slowly — luxury never rushes away */
+          transition:
+            border-color   1.4s cubic-bezier(0.4, 0, 0.2, 1),
+            box-shadow     1.6s cubic-bezier(0.4, 0, 0.2, 1),
+            transform      1.8s cubic-bezier(0.22, 0.8, 0.32, 1);
+        }
+        .ae-card:hover {
+          border-color: rgba(184,150,62,0.70);
+          transform: translateY(-3px);
+          box-shadow:
+            0 28px 88px rgba(6,4,2,0.90),
+            0 10px 32px rgba(6,4,2,0.65),
+            0 3px 10px  rgba(6,4,2,0.50),
+            inset 0 1px 0 rgba(212,180,131,0.24),
+            inset 0 -1px 0 rgba(6,4,2,0.75),
+            inset 1px 0 0 rgba(212,180,131,0.07),
+            inset -1px 0 0 rgba(212,180,131,0.07);
         }
 
-        /* Horizontal rule shimmer */
-        .shimmer-line {
+        /* Card inner image */
+        .ae-card-img {
+          position: absolute;
+          inset: -6%;
+          background-size: cover;
+          background-position: center top;
+          filter: brightness(0.55) contrast(1.08) saturate(0.65) sepia(0.12);
+          transition:
+            transform 2.8s cubic-bezier(0.22, 0.8, 0.32, 1),
+            filter    2.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .ae-card:hover .ae-card-img {
+          transform: scale(1.04);
+          filter: brightness(0.44) contrast(1.12) saturate(0.58) sepia(0.16);
+        }
+
+        /* Card gradient — five-stop cinematic depth */
+        .ae-card-grad {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          transition: opacity 2.0s cubic-bezier(0.4, 0, 0.2, 1);
+          /* Primary depth gradient */
           background: linear-gradient(
-            90deg,
-            transparent 0%,
-            var(--blush) 40%,
-            var(--gold) 50%,
-            var(--blush) 60%,
-            transparent 100%
+            to bottom,
+            rgba(14,10,7,0.22)  0%,
+            rgba(14,10,7,0.04) 22%,
+            rgba(14,10,7,0.0)  42%,
+            rgba(14,10,7,0.48) 72%,
+            rgba(8,5,3,0.84)  100%
           );
-          background-size: 200% 100%;
-          animation: shimmer 4s ease-in-out infinite;
+        }
+        /* Subtle gold ambient — top edge only, simulates reflected light */
+        .ae-card-grad::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            to bottom,
+            rgba(184,150,62,0.07) 0%,
+            transparent 28%
+          );
+          opacity: 0;
+          transition: opacity 2.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Inner shadow — bottom and sides, frames the image */
+        .ae-card-grad::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          box-shadow:
+            inset 0 0 50px rgba(6,4,2,0.50),
+            inset 0 -20px 40px rgba(6,4,2,0.25);
+          transition: box-shadow 2.0s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .ae-card:hover .ae-card-grad {
+          background: linear-gradient(
+            to bottom,
+            rgba(14,10,7,0.32)  0%,
+            rgba(14,10,7,0.06) 22%,
+            rgba(14,10,7,0.0)  40%,
+            rgba(14,10,7,0.60) 70%,
+            rgba(8,5,3,0.92)  100%
+          );
+        }
+        .ae-card:hover .ae-card-grad::before { opacity: 1; }
+        .ae-card:hover .ae-card-grad::after {
+          box-shadow:
+            inset 0 0 72px rgba(6,4,2,0.68),
+            inset 0 -24px 52px rgba(6,4,2,0.35);
         }
 
-        @keyframes shimmer {
-          0% { background-position: 200% center; }
-          100% { background-position: -200% center; }
+        /* Card content */
+        .ae-card-body {
+          position: absolute;
+          inset: 0;
+          z-index: 2;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: flex-end;
+          padding: 0 20px 28px;
+          text-align: center;
         }
 
-        /* Mobile menu */
-        @media (max-width: 768px) {
-          .nav-links { display: none; }
-          .mobile-menu-icon { display: flex; }
+        .ae-card-super {
+          font-family: 'Cormorant Garamond', serif;
+          font-style: italic;
+          font-size: clamp(10px, 1vw, 12px);
+          font-weight: 300;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          color: rgba(212,180,131,0.72);
+          margin-bottom: 4px;
+          padding-right: 0.22em;
+          line-height: 1;
+          -webkit-font-smoothing: antialiased;
         }
 
-        @media (min-width: 769px) {
-          .mobile-menu-icon { display: none; }
+        .ae-card-title {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: clamp(38px, 5.2vw, 62px);
+          font-weight: 300;
+          letter-spacing: 0.06em;
+          color: var(--ivory);
+          line-height: 0.9;
+          margin-bottom: 10px;
+          padding-right: 0.06em;
+          font-feature-settings: 'kern' 1;
+          -webkit-font-smoothing: antialiased;
+          text-shadow:
+            0 2px 24px rgba(8,5,3,0.80),
+            0 1px 4px  rgba(8,5,3,0.60);
+        }
+
+        .ae-card-sub {
+          font-family: 'Jost', sans-serif;
+          font-size: 7.5px;
+          font-weight: 300;
+          letter-spacing: 0.38em;
+          text-transform: uppercase;
+          color: rgba(240,235,225,0.45);
+          margin-bottom: 20px;
+          padding-right: 0.38em;
+          -webkit-font-smoothing: antialiased;
+        }
+
+        /* Card CTA — underline style */
+        .ae-card-cta {
+          font-family: 'Jost', sans-serif;
+          font-size: 7.5px;
+          font-weight: 300;
+          letter-spacing: 0.32em;
+          text-transform: uppercase;
+          color: rgba(240,235,225,0.6);
+          padding-right: 0.32em;
+          position: relative;
+          transition: color 1.1s cubic-bezier(0.4, 0, 0.2, 1);
+          -webkit-font-smoothing: antialiased;
+        }
+        .ae-card-cta::after {
+          content: '';
+          position: absolute;
+          bottom: -3px;
+          left: 0;
+          right: 0;
+          height: 1px;
+          background: rgba(240,235,225,0.35);
+          transition: background 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .ae-card:hover .ae-card-cta { color: var(--ivory); }
+        .ae-card:hover .ae-card-cta::after { background: var(--gold); }
+
+        /* Corner brackets — restrained reveal, no growth flash */
+        .ae-corner {
+          position: absolute;
+          width: 16px;
+          height: 16px;
+          z-index: 3;
+          opacity: 0;
+          transition:
+            opacity  1.6s cubic-bezier(0.4, 0, 0.2, 1),
+            width    1.8s cubic-bezier(0.22, 0.8, 0.32, 1),
+            height   1.8s cubic-bezier(0.22, 0.8, 0.32, 1);
+        }
+        .ae-card:hover .ae-corner { opacity: 1; width: 22px; height: 22px; }
+        .ae-corner-tl { top: 10px;    left: 10px;  border-top: 1px solid rgba(184,150,62,0.80); border-left:  1px solid rgba(184,150,62,0.80); }
+        .ae-corner-tr { top: 10px;    right: 10px; border-top: 1px solid rgba(184,150,62,0.80); border-right: 1px solid rgba(184,150,62,0.80); }
+        .ae-corner-bl { bottom: 10px; left: 10px;  border-bottom: 1px solid rgba(184,150,62,0.80); border-left:  1px solid rgba(184,150,62,0.80); }
+        .ae-corner-br { bottom: 10px; right: 10px; border-bottom: 1px solid rgba(184,150,62,0.80); border-right: 1px solid rgba(184,150,62,0.80); }
+
+        /* ── Footer monogram + tagline ── */
+        .ae-footer {
+          position: relative;
+          z-index: 10;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 28px 40px 32px;
+          gap: 14px;
+        }
+
+        /* Monogram SVG mark */
+        .ae-monogram {
+          opacity: 0.62;
+          transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1),
+                      filter  1.4s cubic-bezier(0.4, 0, 0.2, 1);
+          filter: drop-shadow(0 0 8px rgba(184,150,62,0.0));
+        }
+        .ae-monogram:hover {
+          opacity: 0.90;
+          filter: drop-shadow(0 0 10px rgba(184,150,62,0.22));
+        }
+
+        .ae-tagline {
+          font-family: 'Jost', sans-serif;
+          font-size: 7.5px;
+          font-weight: 300;
+          letter-spacing: 0.44em;
+          text-transform: uppercase;
+          color: rgba(158,148,136,0.55);
+          padding-right: 0.44em;
+          line-height: 1;
+          -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 680px) {
+          .ae-cards {
+            flex-direction: column;
+            gap: 16px;
+            max-width: 340px;
+          }
+          .ae-or { flex-direction: row; width: auto; gap: 12px; }
+          .ae-or-line { width: 28px; height: 1px; background: linear-gradient(to right, transparent, rgba(184,150,62,0.4)) !important; }
+          .ae-or-line.bot { background: linear-gradient(to left, transparent, rgba(184,150,62,0.4)) !important; }
+          .ae-card { aspect-ratio: 1.4 / 1; max-height: 220px; }
+          .ae-nav { padding: 20px 24px; }
+          .ae-main { padding: 0 20px; }
+          .ae-footer { padding: 20px 20px 28px; }
+          .ae-logotype { letter-spacing: 0.36em; font-size: clamp(28px, 8vw, 48px); padding-right: 0.36em; }
         }
       `}</style>
 
-      {/* Grain overlay */}
-      <div className="grain fixed inset-0 pointer-events-none z-50" />
+      {/* Ambient bg */}
+      <div className="ae-bg" />
+      {/* Film grain */}
+      <div className="ae-grain" />
+      {/* Radial vignette */}
+      <div className="ae-vignette" />
 
-      {/* ─── HERO SECTION ─── */}
-      <section
-        ref={heroRef}
-        className="relative w-full h-screen min-h-[100dvh] overflow-hidden"
-        style={{ background: "var(--noir)" }}
-      >
-        {/* Background image with parallax */}
-        <div
-          className="absolute inset-0 w-full h-full"
-          style={{
-            transform: `translateY(${scrollY * 0.25}px)`,
-            willChange: "transform",
-          }}
-        >
-          {/* Placeholder image — replace src with actual editorial photography */}
-          <div
-            className="absolute inset-0 w-full h-full"
-            style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1608245536505-9bab008d00d3?q=80&w=1974&auto=format&fit=crop')`,
-              backgroundSize: "cover",
-              backgroundPosition: "center 20%",
-              filter: "grayscale(20%) brightness(0.62)",
-            }}
-          />
-        </div>
+      <div className="ae-root">
 
-        {/* Dark gradient — bottom fade */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `linear-gradient(
-              to bottom,
-              rgba(28,26,24,0.18) 0%,
-              rgba(28,26,24,0.0) 30%,
-              rgba(28,26,24,0.0) 55%,
-              rgba(28,26,24,0.72) 100%
-            )`,
-          }}
-        />
-
-        {/* Left-side vertical gradient for text protection */}
-        <div
-          className="absolute inset-0 hidden md:block"
-          style={{
-            background: `linear-gradient(
-              to right,
-              rgba(28,26,24,0.10) 0%,
-              transparent 50%
-            )`,
-          }}
-        />
-
-        {/* ─── NAVIGATION ─── */}
-        <nav
-          className={`absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-8 md:px-16 py-8 fade-in ${loaded ? "visible" : ""}`}
-        >
-          {/* Left nav links */}
-          <div className="nav-links flex items-center gap-10">
-            {["Collections", "Atelier"].map((item) => (
-              <a
-                key={item}
-                href="#"
-                className="nav-link font-cormorant text-xs"
-                style={{
-                  color: "var(--warm-fog)",
-                  fontWeight: 300,
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                  fontSize: "11px",
-                }}
-              >
-                {item}
-              </a>
-            ))}
-          </div>
-
-          {/* Center logotype */}
-          <div className="absolute left-1/2 -translate-x-1/2 top-6">
-            <span
-              className="font-cormorant tracking-widest"
-              style={{
-                fontSize: "clamp(15px, 1.8vw, 22px)",
-                fontWeight: 100,
-                color: "var(--ivory)",
-                letterSpacing: "0.28em",
-                textTransform: "uppercase",
-              }}
-            >
-              Aamira
-            </span>
-            <div
-              className="shimmer-line mt-1.5"
-              style={{ height: "0.5px", width: "100%" }}
-            />
-            <span
-              className="block text-center"
-              style={{
-                fontSize: "7px",
-                fontFamily: "'Jost', sans-serif",
-                fontWeight: 300,
-                color: "var(--dust)",
-                letterSpacing: "0.32em",
-                textTransform: "uppercase",
-                marginTop: "4px",
-              }}
-            >
-              Bridal
-            </span>
-          </div>
-
-          {/* Right nav links */}
-          <div className="nav-links flex items-center gap-10">
-            {["Stories", "Book Appointment"].map((item) => (
-              <a
-                key={item}
-                href="#"
-                className="nav-link font-cormorant"
-                style={{
-                  color: "var(--warm-fog)",
-                  fontWeight: 300,
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                  fontSize: "11px",
-                }}
-              >
-                {item}
-              </a>
-            ))}
-
-            {/* Brand switcher — Aamira Basic */}
-            <a
-              href="/basic"
-              className="nav-link"
-              style={{
-                fontFamily: "'Jost', sans-serif",
-                fontSize: "10px",
-                fontWeight: 300,
-                letterSpacing: "0.22em",
-                textTransform: "uppercase",
-                color: "var(--dust)",
-                borderLeft: "1px solid rgba(158,148,136,0.3)",
-                paddingLeft: "24px",
-                marginLeft: "4px",
-              }}
-            >
-              Aamira Basic
-            </a>
-          </div>
-
-          {/* Mobile hamburger */}
-          <button
-            className="mobile-menu-icon flex-col gap-1.5 cursor-pointer"
-            aria-label="Menu"
-          >
-            <span className="block w-6 h-px" style={{ background: "var(--ivory)" }} />
-            <span className="block w-4 h-px" style={{ background: "var(--ivory)" }} />
-          </button>
+        {/* ── NAV ── */}
+        <nav className={`ae-nav ae-fade ae-d0 ${loaded ? "on" : ""}`}>
+          <a href="#" className="ae-nav-link">About Aamira</a>
         </nav>
 
-        {/* ─── HERO CONTENT ─── */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center z-10 px-6 text-center">
+        {/* ── MAIN ── */}
+        <main className="ae-main">
 
-          {/* Ghost display text — large background type */}
-          <span
-            className={`font-cormorant absolute select-none pointer-events-none fade-in delay-200 ${loaded ? "visible" : ""}`}
-            style={{
-              fontSize: "clamp(80px, 18vw, 260px)",
-              fontWeight: 100,
-              color: "transparent",
-              WebkitTextStroke: "0.5px rgba(240,235,225,0.07)",
-              letterSpacing: "-0.03em",
-              lineHeight: 0.9,
-              userSelect: "none",
-              top: "50%",
-              transform: "translateY(-50%)",
-              whiteSpace: "nowrap",
-            }}
-          >
-            Aamira
-          </span>
-
-          {/* Eyebrow */}
-          <p
-            className={`fade-in delay-400 ${loaded ? "visible" : ""}`}
-            style={{
-              fontFamily: "'Jost', sans-serif",
-              fontSize: "10px",
-              fontWeight: 300,
-              letterSpacing: "0.32em",
-              textTransform: "uppercase",
-              color: "var(--blush)",
-              marginBottom: "28px",
-            }}
-          >
-            Bridal Couture
-          </p>
-
-          {/* Main headline */}
-          <h1
-            className={`font-cormorant fade-in delay-600 ${loaded ? "visible" : ""}`}
-            style={{
-              fontSize: "clamp(42px, 7.5vw, 96px)",
-              fontWeight: 100,
-              lineHeight: 1.05,
-              letterSpacing: "-0.02em",
-              color: "var(--ivory)",
-              maxWidth: "820px",
-            }}
-          >
-            Where devotion
-            <br />
-            <em style={{ fontStyle: "italic", fontWeight: 100 }}>becomes</em> design.
-          </h1>
-
-          {/* Divider */}
-          <div
-            className={`fade-in delay-800 ${loaded ? "visible" : ""}`}
-            style={{
-              width: "1px",
-              height: "40px",
-              background: `linear-gradient(to bottom, var(--gold), transparent)`,
-              margin: "32px auto",
-              opacity: 0.7,
-            }}
-          />
-
-          {/* Tagline */}
-          <p
-            className={`font-cormorant fade-in delay-800 ${loaded ? "visible" : ""}`}
-            style={{
-              fontSize: "clamp(15px, 1.6vw, 19px)",
-              fontWeight: 300,
-              fontStyle: "italic",
-              color: "var(--warm-fog)",
-              letterSpacing: "0.02em",
-              lineHeight: 1.7,
-              maxWidth: "480px",
-            }}
-          >
-            Each gown a beginning. Each stitch, a promise held in silk.
-          </p>
-
-          {/* CTA */}
-          <a
-            href="#collection"
-            className={`cta-link fade-in delay-1000 ${loaded ? "visible" : ""}`}
-            style={{
-              marginTop: "48px",
-              fontFamily: "'Jost', sans-serif",
-              fontSize: "11px",
-              fontWeight: 300,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: "var(--ivory)",
-              textDecoration: "none",
-            }}
-          >
-            Explore the Collection
-          </a>
-        </div>
-
-        {/* ─── BOTTOM STRIP ─── */}
-        <div
-          className={`absolute bottom-0 left-0 right-0 z-10 flex items-end justify-between px-8 md:px-16 pb-8 fade-in delay-1000 ${loaded ? "visible" : ""}`}
-        >
-          {/* Location */}
-          <p
-            style={{
-              fontFamily: "'Jost', sans-serif",
-              fontSize: "10px",
-              fontWeight: 300,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: "var(--dust)",
-            }}
-          >
-            Australia · Sydney · Indonesiawwww
-          </p>
-
-          {/* Scroll indicator */}
-          <div className="flex flex-col items-center gap-2">
-            <span
-              style={{
-                fontFamily: "'Jost', sans-serif",
-                fontSize: "9px",
-                fontWeight: 300,
-                letterSpacing: "0.22em",
-                textTransform: "uppercase",
-                color: "var(--dust)",
-              }}
-            >
-              Scroll
-            </span>
-            <div
-              className="scroll-line"
-              style={{
-                width: "1px",
-                height: "36px",
-                background: `linear-gradient(to bottom, var(--dust), transparent)`,
-              }}
-            />
+          {/* Logotype */}
+          <div className={`ae-logo-block ae-fade ae-d1 ${loaded ? "on" : ""}`}>
+            <span className="ae-logotype">Aamira</span>
+            <div className="ae-logo-ornament">
+              <div className="ae-orn-line" />
+              {/* Diamond dot */}
+              <svg width="6" height="6" viewBox="0 0 6 6" fill="none">
+                <rect x="0" y="3" width="4.24" height="4.24" transform="rotate(-45 0 3)" fill="#B8963E" opacity="0.7" />
+              </svg>
+              <div className="ae-orn-line rev" />
+            </div>
           </div>
 
-          {/* Collection label */}
-          <p
-            style={{
-              fontFamily: "'Jost', sans-serif",
-              fontSize: "10px",
-              fontWeight: 300,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: "var(--dust)",
-            }}
-          >
-            SS · 2026
+          {/* Eyebrow */}
+          <p className={`ae-eyebrow ae-fade ae-d2 ${loaded ? "on" : ""}`}>
+            Choose Your Experience
           </p>
-        </div>
-      </section>
-      <SignatureDresses />
-      <BrandStory />
-      <Collections />
-      <BridalProcess />
-      <EditorialGallery />
-      <ConsultationCTA />
-      <Footer />
+
+          {/* Cards */}
+          <div className={`ae-cards ae-fade ae-d3 ${loaded ? "on" : ""}`}>
+
+            {/* ── BRIDAL CARD ── */}
+            <a
+              href="/bridal"
+              className="ae-card"
+              onMouseEnter={() => setBridalHover(true)}
+              onMouseLeave={() => setBridalHover(false)}
+              aria-label="Enter Aamira Bridal"
+            >
+              <div
+                className="ae-card-img"
+                style={{
+                  backgroundImage: `url('https://images.unsplash.com/photo-1492175742197-ed20dc5a6bed?q=80&w=987&auto=format&fit=crop')`,
+                  backgroundPosition: "center 10%",
+                }}
+              />
+              <div className="ae-card-grad" />
+
+              {/* Corner brackets */}
+              <div className="ae-corner ae-corner-tl" />
+              <div className="ae-corner ae-corner-tr" />
+              <div className="ae-corner ae-corner-bl" />
+              <div className="ae-corner ae-corner-br" />
+
+              <div className="ae-card-body">
+                <span className="ae-card-super">Aamira</span>
+                <h2 className="ae-card-title">Bridal</h2>
+                <p className="ae-card-sub">Luxury Couture</p>
+                <span className="ae-card-cta">Enter Bridal</span>
+              </div>
+            </a>
+
+            {/* ── OR DIVIDER ── */}
+            <div className={`ae-or ae-fade ae-d3 ${loaded ? "on" : ""}`}>
+              <div className="ae-or-line" />
+              <span className="ae-or-label">Or</span>
+              <div className="ae-or-line bot" />
+            </div>
+
+            {/* ── BASIC CARD ── */}
+            <a
+              href="/basic"
+              className="ae-card"
+              onMouseEnter={() => setBasicHover(true)}
+              onMouseLeave={() => setBasicHover(false)}
+              aria-label="Enter Aamira Basic"
+            >
+              <div
+                className="ae-card-img"
+                style={{
+                  backgroundImage: `url('https://plus.unsplash.com/premium_photo-1679064458881-76904cf6d1aa?q=80&w=987&auto=format&fit=crop')`,
+                  backgroundPosition: "center 15%",
+                  filter: "brightness(0.58) contrast(1.04) saturate(0.6) sepia(0.08)",
+                }}
+              />
+              <div className="ae-card-grad" />
+
+              {/* Corner brackets */}
+              <div className="ae-corner ae-corner-tl" />
+              <div className="ae-corner ae-corner-tr" />
+              <div className="ae-corner ae-corner-bl" />
+              <div className="ae-corner ae-corner-br" />
+
+              <div className="ae-card-body">
+                <span className="ae-card-super">Aamira</span>
+                <h2 className="ae-card-title">Basic</h2>
+                <p className="ae-card-sub">Ready-to-Wear</p>
+                <span className="ae-card-cta">Enter Basic</span>
+              </div>
+            </a>
+
+          </div>
+        </main>
+
+        {/* ── FOOTER ── */}
+        <footer className={`ae-footer ae-fade ae-d5 ${loaded ? "on" : ""}`}>
+          {/* Monogram mark — stylised AAMIRA letterform */}
+          <svg
+            className="ae-monogram"
+            width="36"
+            height="36"
+            viewBox="0 0 36 36"
+            fill="none"
+            aria-hidden="true"
+          >
+            {/* Left A stroke */}
+            <path d="M4 30 L13 8 L18 20" stroke="#D4B483" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+            {/* Right M stroke */}
+            <path d="M18 20 L18 8 L26 20 L32 8" stroke="#D4B483" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+            {/* Crossbar on A */}
+            <path d="M8.5 22 L15.5 22" stroke="#D4B483" strokeWidth="0.7" strokeLinecap="round" />
+            {/* Diamond top ornament */}
+            <rect x="16.5" y="3.5" width="3" height="3" transform="rotate(45 18 5)" fill="#B8963E" opacity="0.7" />
+          </svg>
+
+          <p className="ae-tagline">Timeless Elegance. Made for You.</p>
+        </footer>
+
+      </div>
     </>
   );
 }
