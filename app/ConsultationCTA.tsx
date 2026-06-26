@@ -542,7 +542,7 @@ export default function ConsultationCTA() {
 
             {/* Pills */}
             <div className={`ct-pills ct-reveal ct-d5 ${inView ? "on" : ""}`}>
-              {["90 Min Session", "Complimentary", "Private Atelier", "Jakarta · KL · Dubai"].map((pill, i) => (
+              {["90 Min Session", "Complimentary", "Private Atelier", "Australia · Sydney · Indonesia"].map((pill, i) => (
                 <div key={i} className="ct-pill">
                   <span className="ct-pill-dot" />
                   <span className="ct-j" style={{ fontSize: "9px", fontWeight: 300, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--noir)", opacity: 0.75 }}>
@@ -615,7 +615,7 @@ export default function ConsultationCTA() {
             { label: "Response time", value: "Within 24 hours", note: "Mon – Sat" },
             { label: "Session length", value: "90 minutes", note: "Private atelier" },
             { label: "Investment", value: "Complimentary", note: "No obligation" },
-            { label: "Locations", value: "3 ateliers", note: "Jakarta · KL · Dubai" },
+            { label: "Locations", value: "3 ateliers", note: "Australia · Sydney · Indonesia" },
           ].map((cell, i) => (
             <div key={i} className="ct-info-cell">
               <span className="ct-j" style={{ fontSize: "9px", fontWeight: 300, letterSpacing: "0.24em", textTransform: "uppercase", color: "var(--dust)" }}>

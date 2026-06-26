@@ -13,7 +13,7 @@ const collections = [
       "For the woman who enters a room and changes its atmosphere. Structured silk, cathedral trains, and hand-placed beadwork that takes four hundred hours to complete.",
     details: ["Silk Charmeuse", "Hand Beading", "Cathedral Train", "Made to Measure"],
     image:
-      "https://images.unsplash.com/photo-1723832347953-83c28e2d4dd2?q=80&w=1600&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1723832347953-83c28e2d4dd2?q=80&w=1587&auto=format&fit=crop",
     imageAlt: "Wedding gown editorial",
     accent: "#B8963E",
     tag: "Signature",
@@ -28,7 +28,7 @@ const collections = [
       "Lighter. More intimate. Gowns built for the moment before — when anticipation is its own kind of beauty. Fluid silhouettes in blush-toned organza and Chantilly lace.",
     details: ["Chantilly Lace", "Organza", "Fluid Silhouette", "Limited Pieces"],
     image:
-      "https://images.unsplash.com/photo-1482482097755-0b595893ba63?q=80&w=1600&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1482482097755-0b595893ba63?q=80&w=1587&auto=format&fit=crop",
     imageAlt: "Engagement gown editorial",
     accent: "#D4B483",
     tag: "New",
@@ -43,7 +43,7 @@ const collections = [
       "A gown that has never existed before, built entirely around you. Our master atelier begins with a single conversation and ends with something that cannot be replicated.",
     details: ["Private Consultation", "Bespoke Pattern", "Six Fittings", "One of One"],
     image:
-      "https://images.unsplash.com/photo-1595868321403-bac51fbdeb97?q=80&w=1600&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1595868321403-bac51fbdeb97?q=80&w=1587&auto=format&fit=crop",
     imageAlt: "Custom bridal atelier",
     accent: "#9E9488",
     tag: "Exclusive",
@@ -603,7 +603,7 @@ export default function Collections() {
                 marginTop: "6px",
               }}
             >
-              Jakarta · Kuala Lumpur · Dubai
+              Australia · Sydney · Indonesia
             </p>
           </div>
           <div className="col-footer-rule" />

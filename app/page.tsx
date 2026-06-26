@@ -330,6 +330,25 @@ export default function Home() {
                 {item}
               </a>
             ))}
+
+            {/* Brand switcher — Aamira Basic */}
+            <a
+              href="/basic"
+              className="nav-link"
+              style={{
+                fontFamily: "'Jost', sans-serif",
+                fontSize: "10px",
+                fontWeight: 300,
+                letterSpacing: "0.22em",
+                textTransform: "uppercase",
+                color: "var(--dust)",
+                borderLeft: "1px solid rgba(158,148,136,0.3)",
+                paddingLeft: "24px",
+                marginLeft: "4px",
+              }}
+            >
+              Aamira Basic
+            </a>
           </div>
 
           {/* Mobile hamburger */}
@@ -459,7 +478,7 @@ export default function Home() {
               color: "var(--dust)",
             }}
           >
-            Australia · Sydney · Indonesia
+            Australia · Sydney · Indonesiawwww
           </p>
 
           {/* Scroll indicator */}

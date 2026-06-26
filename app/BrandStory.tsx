@@ -335,7 +335,7 @@ export default function BrandStory() {
                 className="bs-font-jost"
                 style={{ fontSize: "9px", fontWeight: 300, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--dust)" }}
               >
-                Aamira Atelier · Jakarta
+                Aamira Bridal · Australia
               </span>
               <span
                 className="bs-font-cormorant"
@@ -490,7 +490,7 @@ export default function BrandStory() {
               }}
             >
               Every gown begins in stillness — a conversation, a silence, a bolt of hand-sourced 
-              fabric held against skin. Our atelier in Jakarta works with a small circle of 
+              fabric held against skin. Our atelier in Australia works with a small circle of 
               master cutters who have spent decades understanding how cloth moves with the body, 
               not against it. Nothing here is rushed. Nothing is repeated.
             </p>

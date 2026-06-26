@@ -699,7 +699,7 @@ export default function EditorialGallery() {
           <div className="eg-marquee-track">
             {/* Duplicate for seamless loop */}
             {[...Array(2)].map((_, di) =>
-              ["Handcrafted", "Unhurried", "Unrepeated", "SS · 2026", "Jakarta", "Kuala Lumpur", "Dubai", "Bridal Couture", "Made to Measure"].map((word, wi) => (
+              ["Handcrafted", "Unhurried", "Unrepeated", "SS · 2026", "Australia", "Sydney", "Indonesia", "Bridal Couture", "Made to Measure"].map((word, wi) => (
                 <span key={`${di}-${wi}`} className="eg-marquee-item">
                   <span className="eg-c" style={{ fontSize: "12px", fontStyle: "italic", fontWeight: 300, color: "var(--dust)", letterSpacing: "0.06em" }}>
                     {word}
