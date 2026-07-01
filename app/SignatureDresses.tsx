@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 const dresses = [
@@ -9,7 +10,7 @@ const dresses = [
     silhouette: "A-Line",
     fabric: "Silk Charmeuse",
     mood: "Sovereign",
-    image: "https://images.unsplash.com/photo-1606216836537-eea72a939072?q=80&w=1588&auto=format&fit=crop",
+    image: "/image/homepage/gambar1.png?q=80&w=1588&auto=format&fit=crop",
     size: "tall",
   },
   {
@@ -18,7 +19,7 @@ const dresses = [
     silhouette: "Column",
     fabric: "Duchess Satin",
     mood: "Reverie",
-    image: "https://images.unsplash.com/photo-1557363763-8381968f8353?q=80&w=1587&auto=format&fit=crop",
+    image: "/image/homepage/gambar2.png?q=80&w=1587&auto=format&fit=crop",
     size: "tall",
   },
   {
@@ -27,7 +28,7 @@ const dresses = [
     silhouette: "Ballgown",
     fabric: "Tulle & Organza",
     mood: "Devotion",
-    image: "https://images.unsplash.com/photo-1512750129023-cacd58b7be35?q=80&w=1587&auto=format&fit=crop",
+    image: "/image/homepage/gambar3.jpg?q=80&w=1587&auto=format&fit=crop",
     size: "tall",
   },
   {
@@ -36,7 +37,7 @@ const dresses = [
     silhouette: "Mermaid",
     fabric: "Chantilly Lace",
     mood: "Grace",
-    image: "https://images.unsplash.com/photo-1529635322560-e767888a1583?q=80&w=1587&auto=format&fit=crop",
+    image: "/image/homepage/gambar4.jpg?q=80&w=1587&auto=format&fit=crop",
     size: "tall",
   },
   {
@@ -45,7 +46,7 @@ const dresses = [
     silhouette: "Empire",
     fabric: "Mikado Silk",
     mood: "Ethereal",
-    image: "https://images.unsplash.com/photo-1643216583837-f6d664d48eac?q=80&w=1587&auto=format&fit=crop",
+    image: "/image/homepage/gambar5.jpg?q=80&w=1587&auto=format&fit=crop",
     size: "tall",
   },
   {
@@ -54,10 +55,19 @@ const dresses = [
     silhouette: "Sheath",
     fabric: "Crêpe de Chine",
     mood: "Luminous",
-    image: "https://images.unsplash.com/photo-1593575620619-602b4ddf6e96?q=80&w=1587&auto=format&fit=crop",
+    image: "/image/homepage/gambar6.jpg?q=80&w=1587&auto=format&fit=crop",
     size: "tall",
   },
 ];
+
+const slugMap: Record<string, string> = {
+  Celestine: "/collections/celestine",
+  Seraphine: "/collections/seraphine",
+  Mireille: "/collections/mireille",
+  Delara: "/collections/delara",
+  Isadora: "/collections/isadora",
+  Lumière: "/collections/lumiere",
+};
 
 export default function SignatureDresses() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -205,9 +215,11 @@ export default function SignatureDresses() {
           position: relative;
           overflow: hidden;
           background: var(--noir2);
-          cursor: none;
+          cursor: pointer;
           display: flex;
           flex-direction: column;
+          text-decoration: none;
+          color: inherit;
         }
 
         /* Tall card spans 2 rows in masonry feel via JS height */
@@ -531,8 +543,10 @@ export default function SignatureDresses() {
         {/* ── CARD GRID ── */}
         <div className={`sd-grid sd-reveal sd-d4 ${inView ? "on" : ""}`} style={{ marginTop: "2px" }}>
           {visible.map((dress, i) => (
-            <div
+            <Link
               key={dress.id}
+              href={slugMap[dress.name] ?? "#"}
+              aria-label={`View ${dress.name}`}
               className={`sd-card ${dress.size === "tall" ? "sd-card-tall" : "sd-card-short"}`}
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
@@ -584,15 +598,13 @@ export default function SignatureDresses() {
                     {dress.silhouette} · {dress.fabric}
                   </p>
                 </div>
-                <a href="#" aria-label={`View ${dress.name}`}>
-                  <div className="sd-arrow">
-                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                      <path d="M2 8L8 2M8 2H3M8 2V7" stroke="var(--ivory)" strokeWidth="0.75" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </div>
-                </a>
+                <div className="sd-arrow">
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                    <path d="M2 8L8 2M8 2H3M8 2V7" stroke="var(--ivory)" strokeWidth="0.75" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 
 import SignatureDresses from "../SignatureDresses";
 import BrandStory from "../BrandStory";
@@ -63,6 +64,9 @@ export default function Home() {
         }
 
         /* Grain overlay */
+        .grain {
+          pointer-events: none;
+        }
         .grain::after {
           content: '';
           position: fixed;
@@ -221,9 +225,9 @@ export default function Home() {
           <div
             className="absolute inset-0 w-full h-full"
             style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1608245536505-9bab008d00d3?q=80&w=1974&auto=format&fit=crop')`,
+              backgroundImage: `url('image/homepage/gambar2.png?q=80&w=1974&auto=format&fit=crop')`,
               backgroundSize: "cover",
-              backgroundPosition: "center 20%",
+              backgroundPosition: "center 40%",
               filter: "grayscale(20%) brightness(0.62)",
             }}
           />
@@ -446,8 +450,8 @@ export default function Home() {
           </p>
 
           {/* CTA */}
-          <a
-            href="#collection"
+          <Link
+            href="/collections"
             className={`cta-link fade-in delay-1000 ${loaded ? "visible" : ""}`}
             style={{
               marginTop: "48px",
@@ -461,7 +465,7 @@ export default function Home() {
             }}
           >
             Explore the Collection
-          </a>
+          </Link>
         </div>
 
         {/* ─── BOTTOM STRIP ─── */}
@@ -479,7 +483,7 @@ export default function Home() {
               color: "var(--dust)",
             }}
           >
-            Australia · Sydney · Indonesiawwww
+            Australia · Sydney · Indonesia
           </p>
 
           {/* Scroll indicator */}

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 const items = [
@@ -67,6 +68,16 @@ const items = [
     caption: "Georgette · A-Line",
   },
 ];
+
+const slugMap: Record<string, string> = {
+  Celestine: "/collections/celestine",
+  Lumière: "/collections/lumiere",
+  Mireille: "/collections/mireille",
+  Seraphine: "/collections/seraphine",
+  Delara: "/collections/delara",
+  Isadora: "/collections/isadora",
+  Aurore: "/collections/aurore",
+};
 
 export default function EditorialGallery() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -247,9 +258,12 @@ export default function EditorialGallery() {
           position: relative;
           overflow: hidden;
           background: var(--noir2);
-          cursor: none;
+          cursor: pointer;
           margin-bottom: 3px;
           display: block;
+          text-decoration: none;
+          color: inherit;
+          z-index: 1;
         }
 
         /* Image wrapper */
@@ -291,6 +305,7 @@ export default function EditorialGallery() {
           );
           z-index: 1;
           transition: background 0.7s ease;
+          pointer-events: none;
         }
         .eg-card:hover .eg-grad {
           background: linear-gradient(
@@ -370,7 +385,7 @@ export default function EditorialGallery() {
           right: 0;
           z-index: 4;
           padding: 18px 22px 20px;
-          transition: transform 0.65s cubic-bezier(0.16,1,0.3,1);
+          pointer-events: none;
         }
         .eg-card:hover .eg-static {
           transform: translateY(-88px);
@@ -382,7 +397,7 @@ export default function EditorialGallery() {
           bottom: 0;
           left: 0;
           right: 0;
-          z-index: 4;
+          z-index: 10;
           padding: 18px 22px 20px;
           transform: translateY(100%);
           transition: transform 0.65s cubic-bezier(0.16,1,0.3,1);
@@ -391,6 +406,7 @@ export default function EditorialGallery() {
           align-items: flex-end;
           justify-content: space-between;
           gap: 12px;
+          pointer-events: none; /* decorative only, the whole card is the clickable Link */
         }
         .eg-card:hover .eg-hover-reveal { transform: translateY(0); }
 
@@ -637,61 +653,87 @@ export default function EditorialGallery() {
 
         {/* ── MASONRY GRID ── */}
         <div className={`eg-grid eg-reveal eg-d4 ${inView ? "on" : ""}`}>
-          {visible.map((item, i) => (
-            <div
-              key={item.id}
-              className={`eg-card eg-card-${item.orientation}`}
-              onMouseEnter={() => setHovered(i)}
-              onMouseLeave={() => setHovered(null)}
-            >
-              <div className="eg-img-wrap">
-                {/* Image */}
-                <div
-                  className="eg-img"
-                  style={{ backgroundImage: `url('${item.image}')` }}
-                />
+          {visible.map((item, i) => {
+            const href = slugMap[item.title];
 
-                {/* Gradient overlay */}
-                <div className="eg-grad" />
+            const cardContent = (
+              <article
+                className={`eg-card eg-card-${item.orientation}`}
+              >
+                <div className="eg-img-wrap">
+                  {/* Image */}
+                  <div
+                    className="eg-img"
+                    style={{ backgroundImage: `url('${item.image}')` }}
+                  />
 
-                {/* ID number */}
-                <span className="eg-num">{item.id}</span>
+                  {/* Gradient overlay */}
+                  <div className="eg-grad" />
 
-                {/* Category tag */}
-                <span className="eg-cat-tag">{item.category}</span>
+                  {/* ID number */}
+                  <span className="eg-num">{item.id}</span>
 
-                {/* Ghost title */}
-                <span className="eg-ghost-title">{item.title}</span>
+                  {/* Category tag */}
+                  <span className="eg-cat-tag">{item.category}</span>
 
-                {/* Static bottom label */}
-                <div className="eg-static">
-                  <p className="eg-j" style={{ fontSize: "9px", fontWeight: 300, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(212,180,131,0.65)", marginBottom: "4px" }}>
-                    {item.year}
-                  </p>
-                  <h3 className="eg-c" style={{ fontSize: "clamp(22px, 2.5vw, 34px)", fontWeight: 100, lineHeight: 1.0, color: "var(--ivory)", letterSpacing: "-0.01em" }}>
-                    {item.title}
-                  </h3>
-                </div>
+                  {/* Ghost title */}
+                  <span className="eg-ghost-title">{item.title}</span>
 
-                {/* Hover reveal */}
-                <div className="eg-hover-reveal">
-                  <div>
-                    <h3 className="eg-c" style={{ fontSize: "clamp(22px, 2.5vw, 34px)", fontWeight: 100, lineHeight: 1.0, color: "var(--ivory)", letterSpacing: "-0.01em", marginBottom: "10px" }}>
+                  {/* Static bottom label */}
+                  <div className="eg-static">
+                    <p className="eg-j" style={{ fontSize: "9px", fontWeight: 300, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(212,180,131,0.65)", marginBottom: "4px" }}>
+                      {item.year}
+                    </p>
+                    <h3 className="eg-c" style={{ fontSize: "clamp(22px, 2.5vw, 34px)", fontWeight: 100, lineHeight: 1.0, color: "var(--ivory)", letterSpacing: "-0.01em" }}>
                       {item.title}
                     </h3>
-                    <span className="eg-fabric">{item.caption}</span>
                   </div>
-                  <a href="#" aria-label={`View ${item.title}`}>
-                    <div className="eg-arrow">
-                      <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                        <path d="M2 8L8 2M8 2H3M8 2V7" stroke="var(--ivory)" strokeWidth="0.75" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
+
+                  {/* Hover reveal */}
+                  <div className="eg-hover-reveal">
+                    <div>
+                      <h3 className="eg-c" style={{ fontSize: "clamp(22px, 2.5vw, 34px)", fontWeight: 100, lineHeight: 1.0, color: "var(--ivory)", letterSpacing: "-0.01em", marginBottom: "10px" }}>
+                        {item.title}
+                      </h3>
+                      <span className="eg-fabric">{item.caption}</span>
                     </div>
-                  </a>
+                    {href && (
+                      <div className="eg-arrow">
+                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                          <path d="M2 8L8 2M8 2H3M8 2V7" stroke="var(--ivory)" strokeWidth="0.75" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </div>
+                    )}
+                  </div>
                 </div>
+              </article>
+            );
+
+            if (href) {
+              return (
+                <Link
+                  key={item.id}
+                  href={href}
+                  aria-label={`View ${item.title}`}
+                  onMouseEnter={() => setHovered(i)}
+                  onMouseLeave={() => setHovered(null)}
+                  style={{ display: "block" }}
+                >
+                  {cardContent}
+                </Link>
+              );
+            }
+
+            return (
+              <div
+                key={item.id}
+                onMouseEnter={() => setHovered(i)}
+                onMouseLeave={() => setHovered(null)}
+              >
+                {cardContent}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* ── MARQUEE STRIP ── */}
