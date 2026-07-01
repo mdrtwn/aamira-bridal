@@ -598,3 +598,12 @@ export default function BridalProcess() {
     </>
   );
 }
+export const slugMap: Record<string, string> = {
+  Celestine: "/collections/celestine",
+  Lumière: "/collections/lumiere",
+  Mireille: "/collections/mireille",
+  Seraphine: "/collections/seraphine",
+  Delara: "/collections/delara",
+  Isadora: "/collections/isadora",
+  Aurore: "/collections/aurore",
+};

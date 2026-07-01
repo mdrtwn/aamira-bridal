@@ -5,9 +5,7 @@ import Link from "next/link";
 
 import SignatureDresses from "../SignatureDresses";
 import BrandStory from "../BrandStory";
-import Collections from "../Collections";
 import BridalProcess from "../BridalProcess";
-import EditorialGallery from "../EditorialGallery";
 import ConsultationCTA from "../ConsultationCTA";
 import Footer from "../Footer";
 
@@ -527,9 +525,7 @@ export default function Home() {
       </section>
       <SignatureDresses />
       <BrandStory />
-      <Collections />
       <BridalProcess />
-      <EditorialGallery />
       <ConsultationCTA />
       <Footer />
     </>
