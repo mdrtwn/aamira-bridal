@@ -317,10 +317,10 @@ export default function Home() {
 
           {/* Right nav links */}
           <div className="nav-links flex items-center gap-10">
-            {["Stories", "Book Appointment"].map((item) => (
+            {[{ label: "Stories", href: "/story" }, { label: "Book Appointment", href: "/book-appointment" }].map((item) => (
               <a
-                key={item}
-                href="#"
+                key={item.href}
+                href={item.href}
                 className="nav-link font-cormorant"
                 style={{
                   color: "var(--warm-fog)",
@@ -330,7 +330,7 @@ export default function Home() {
                   fontSize: "11px",
                 }}
               >
-                {item}
+                {item.label}
               </a>
             ))}
 
