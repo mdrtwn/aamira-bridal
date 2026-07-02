@@ -12,6 +12,7 @@ import Footer from "../Footer";
 export default function Home() {
   const [loaded, setLoaded] = useState(false);
   const [scrollY, setScrollY] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -24,6 +25,18 @@ export default function Home() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
 
   return (
     <>
@@ -191,6 +204,19 @@ export default function Home() {
           100% { background-position: -200% center; }
         }
 
+        /* Mobile menu link stagger */
+        .mobile-nav-link {
+          opacity: 0;
+          transform: translateY(12px);
+          transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .mobile-nav-link.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
         /* Mobile menu */
         @media (max-width: 768px) {
           .nav-links { display: none; }
@@ -356,13 +382,71 @@ export default function Home() {
 
           {/* Mobile hamburger */}
           <button
-            className="mobile-menu-icon flex-col gap-1.5 cursor-pointer"
-            aria-label="Menu"
+            className="mobile-menu-icon flex-col gap-1.5 cursor-pointer z-50 relative items-center justify-center"
+            aria-label="Toggle menu"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((prev) => !prev)}
           >
-            <span className="block w-6 h-px" style={{ background: "var(--ivory)" }} />
-            <span className="block w-4 h-px" style={{ background: "var(--ivory)" }} />
+            <span
+              className="block w-6 h-px transition-transform duration-300"
+              style={{
+                background: "var(--ivory)",
+                transform: menuOpen
+                  ? "rotate(45deg) translateY(3.5px)"
+                  : "none",
+              }}
+            />
+            <span
+              className="block h-px transition-all duration-300"
+              style={{
+                background: "var(--ivory)",
+                width: menuOpen ? "24px" : "16px",
+                transform: menuOpen
+                  ? "rotate(-45deg) translateY(-3.5px)"
+                  : "none",
+              }}
+            />
           </button>
         </nav>
+
+        {/* ─── MOBILE MENU OVERLAY ─── */}
+        <div
+          className="fixed inset-0 z-40 md:hidden"
+          style={{
+            background: "rgba(28,26,24,0.98)",
+            backdropFilter: "blur(6px)",
+            opacity: menuOpen ? 1 : 0,
+            visibility: menuOpen ? "visible" : "hidden",
+            transition: "opacity 0.45s ease, visibility 0.45s ease",
+          }}
+        >
+          <div className="flex flex-col items-center justify-center h-full gap-9 px-6">
+            {[
+              { label: "Collections", href: "#" },
+              { label: "Atelier", href: "#" },
+              { label: "Stories", href: "/story" },
+              { label: "Book Appointment", href: "/book-appointment" },
+              { label: "Aamira Basic", href: "/basic" },
+            ].map((item, i) => (
+              <a
+                key={item.href + item.label}
+                href={item.href}
+                onClick={() => setMenuOpen(false)}
+                className={`font-cormorant mobile-nav-link ${menuOpen ? "visible" : ""}`}
+                style={{
+                  fontSize: "26px",
+                  fontWeight: 300,
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  color: "var(--ivory)",
+                  transitionDelay: menuOpen ? `${0.1 + i * 0.08}s` : "0s",
+                }}
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+        </div>
 
         {/* ─── HERO CONTENT ─── */}
         <div className="absolute inset-0 flex flex-col items-center justify-center z-10 px-6 text-center">
