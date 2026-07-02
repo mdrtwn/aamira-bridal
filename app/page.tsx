@@ -525,7 +525,7 @@ export default function AamiraEntry() {
 
         {/* ── NAV ── */}
         <nav className={`ae-nav ae-fade ae-d0 ${loaded ? "on" : ""}`}>
-          <a href="#" className="ae-nav-link">About Aamira</a>
+          <a href="/story" className="ae-nav-link">About Aamira</a>
         </nav>
 
         {/* ── MAIN ── */}
