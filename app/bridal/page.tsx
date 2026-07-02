@@ -9,9 +9,18 @@ import BridalProcess from "../BridalProcess";
 import ConsultationCTA from "../ConsultationCTA";
 import Footer from "../Footer";
 
+const mobileNavLinks = [
+  { label: "Collections", href: "/collections" },
+  { label: "Atelier", href: "/atelier" },
+  { label: "Stories", href: "/story" },
+  { label: "Book Appointment", href: "/book-appointment" },
+  { label: "Aamira Basic", href: "/basic" },
+];
+
 export default function Home() {
   const [loaded, setLoaded] = useState(false);
   const [scrollY, setScrollY] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -24,6 +33,14 @@ export default function Home() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Lock body scroll while the mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
 
   return (
     <>
@@ -191,19 +208,126 @@ export default function Home() {
           100% { background-position: -200% center; }
         }
 
+        /* Mobile menu toggle icon → morphs into an X when open */
+        .mobile-menu-icon {
+          position: relative;
+          z-index: 60;
+          width: 24px;
+          height: 16px;
+        }
+        .mobile-menu-icon span {
+          position: absolute;
+          left: 0;
+          height: 1px;
+          background: var(--ivory);
+          transition: transform 0.4s cubic-bezier(0.16,1,0.3,1),
+                      width 0.4s cubic-bezier(0.16,1,0.3,1),
+                      opacity 0.3s ease,
+                      top 0.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        .mobile-menu-icon span:nth-child(1) { top: 0; width: 24px; }
+        .mobile-menu-icon span:nth-child(2) { top: 7px; width: 16px; }
+        .mobile-menu-icon.open span:nth-child(1) {
+          top: 7px;
+          width: 24px;
+          transform: rotate(45deg);
+        }
+        .mobile-menu-icon.open span:nth-child(2) {
+          top: 7px;
+          width: 24px;
+          transform: rotate(-45deg);
+        }
+
+        /* Mobile nav overlay panel */
+        .mobile-nav-panel {
+          position: fixed;
+          inset: 0;
+          z-index: 55;
+          background: rgba(28,26,24,0.98);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 8px;
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1);
+        }
+        .mobile-nav-panel.open {
+          opacity: 1;
+          visibility: visible;
+        }
+        .mobile-nav-link {
+          font-family: 'Cormorant Garamond', serif;
+          font-weight: 200;
+          font-size: clamp(26px, 7vw, 38px);
+          color: var(--ivory);
+          text-decoration: none;
+          letter-spacing: 0.01em;
+          padding: 14px 0;
+          opacity: 0;
+          transform: translateY(14px);
+          transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1),
+                      transform 0.5s cubic-bezier(0.16,1,0.3,1),
+                      color 0.3s ease;
+        }
+        .mobile-nav-panel.open .mobile-nav-link {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        .mobile-nav-link:hover,
+        .mobile-nav-link:active {
+          color: var(--blush);
+        }
+        .mobile-nav-panel.open .mobile-nav-link:nth-child(1) { transition-delay: 0.12s; }
+        .mobile-nav-panel.open .mobile-nav-link:nth-child(2) { transition-delay: 0.18s; }
+        .mobile-nav-panel.open .mobile-nav-link:nth-child(3) { transition-delay: 0.24s; }
+        .mobile-nav-panel.open .mobile-nav-link:nth-child(4) { transition-delay: 0.30s; }
+        .mobile-nav-panel.open .mobile-nav-link:nth-child(5) { transition-delay: 0.36s; }
+
+        .mobile-nav-foot {
+          margin-top: 28px;
+          font-family: 'Jost', sans-serif;
+          font-size: 9px;
+          font-weight: 300;
+          letter-spacing: 0.28em;
+          text-transform: uppercase;
+          color: var(--dust);
+          opacity: 0;
+          transition: opacity 0.6s ease;
+          transition-delay: 0.45s;
+        }
+        .mobile-nav-panel.open .mobile-nav-foot { opacity: 1; }
+
         /* Mobile menu */
         @media (max-width: 768px) {
           .nav-links { display: none; }
-          .mobile-menu-icon { display: flex; }
+          .mobile-menu-icon-wrap { display: flex; }
         }
 
         @media (min-width: 769px) {
-          .mobile-menu-icon { display: none; }
+          .mobile-menu-icon-wrap { display: none; }
+          .mobile-nav-panel { display: none; }
         }
       `}</style>
 
       {/* Grain overlay */}
       <div className="grain fixed inset-0 pointer-events-none z-50" />
+
+      {/* ─── MOBILE NAV PANEL ─── */}
+      <div className={`mobile-nav-panel ${menuOpen ? "open" : ""}`}>
+        {mobileNavLinks.map((item) => (
+          <a
+            key={item.href}
+            href={item.href}
+            className="mobile-nav-link"
+            onClick={() => setMenuOpen(false)}
+          >
+            {item.label}
+          </a>
+        ))}
+        <span className="mobile-nav-foot">Aamira Bridal · Sydney</span>
+      </div>
 
       {/* ─── HERO SECTION ─── */}
       <section
@@ -355,13 +479,17 @@ export default function Home() {
           </div>
 
           {/* Mobile hamburger */}
-          <button
-            className="mobile-menu-icon flex-col gap-1.5 cursor-pointer"
-            aria-label="Menu"
-          >
-            <span className="block w-6 h-px" style={{ background: "var(--ivory)" }} />
-            <span className="block w-4 h-px" style={{ background: "var(--ivory)" }} />
-          </button>
+          <div className="mobile-menu-icon-wrap items-center">
+            <button
+              className={`mobile-menu-icon${menuOpen ? " open" : ""}`}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+              onClick={() => setMenuOpen((v) => !v)}
+            >
+              <span />
+              <span />
+            </button>
+          </div>
         </nav>
 
         {/* ─── HERO CONTENT ─── */}
