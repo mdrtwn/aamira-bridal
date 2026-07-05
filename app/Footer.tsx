@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 
 export default function Footer() {
   const footerRef = useRef<HTMLElement>(null);
@@ -23,15 +24,30 @@ export default function Footer() {
   const navColumns = [
     {
       heading: "Collections",
-      links: ["Wedding", "Engagement", "Custom Design", "Signature Dresses"],
+      links: [
+        { label: "Wedding",           href: "/wedding" },
+        { label: "Engagement",        href: "/engagement" },
+        { label: "Custom Design",     href: "/custom-design" },
+        { label: "Signature Dresses", href: "/signature-dresses" },
+      ],
     },
     {
       heading: "Atelier",
-      links: ["Our Story", "The Process", "Fabrics & Craft", "Book Appointment"],
+      links: [
+        { label: "Our Story",        href: "/our-story" },
+        { label: "The Process",      href: "/process" },
+        { label: "Fabrics & Craft",  href: "/fabrics-craft" },
+        { label: "Book Appointment", href: "/appointment" },
+      ],
     },
     {
       heading: "Visit",
-      links: ["Australia", "Sydney", "Indonesia", "Contact Us"],
+      links: [
+        { label: "Australia",   href: "#" },
+        { label: "Sydney",      href: "#" },
+        { label: "Indonesia",   href: "#" },
+        { label: "Contact Us",  href: "#" },
+      ],
     },
   ];
 
@@ -529,9 +545,9 @@ export default function Footer() {
               <div key={col.heading}>
                 <div className="ft-nav-col-head ft-j">{col.heading}</div>
                 {col.links.map((link) => (
-                  <a key={link} href="#" className="ft-nav-link ft-j">
-                    {link}
-                  </a>
+                  <Link key={link.label} href={link.href} className="ft-nav-link ft-j">
+                    {link.label}
+                  </Link>
                 ))}
               </div>
             ))}

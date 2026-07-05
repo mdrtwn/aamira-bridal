@@ -258,7 +258,7 @@ export default function BrandStory() {
               ref={imageRef}
               className="bs-image-inner"
               style={{
-                backgroundImage: `url('https://images.unsplash.com/photo-1608245536505-9bab008d00d3?q=80&w=1587&auto=format&fit=crop')`,
+                backgroundImage: `url('image/homepage/gambar1.png?q=80&w=1587&auto=format&fit=crop')`,
                 transform: `translateY(${parallaxY}px)`,
                 filter: "brightness(0.88) contrast(1.04)",
               }}

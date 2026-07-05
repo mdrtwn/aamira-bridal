@@ -456,7 +456,7 @@ export default function ConsultationCTA() {
           <div
             className="ct-image-inner"
             style={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=1587&auto=format&fit=crop')`,
+              backgroundImage: `url('image/wedding/bawah1.webp?q=80&w=1587&auto=format&fit=crop')`,
               transform: `translateY(${parallaxY}px)`,
             }}
           />

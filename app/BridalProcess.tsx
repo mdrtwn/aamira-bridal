@@ -11,7 +11,7 @@ const steps = [
     description:
       "A private appointment in our atelier. We begin not with measurements but with conversation — who you are, how you move, what the day means to you. Nothing is written down until everything has been heard.",
     detail: "90 minutes · Private atelier · Complimentary",
-    image: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=987&auto=format&fit=crop",
+    image: "image/homepage/gambar1.png?q=80&w=987&auto=format&fit=crop",
   },
   {
     id: "02",
@@ -21,7 +21,7 @@ const steps = [
     description:
       "Our master pattern-maker translates the conversation into form. Fabric is hand-selected. Sketches are presented. You choose not from a catalogue but from a dialogue — the gown evolves as you do.",
     detail: "3 design reviews · Fabric selection · Pattern drafting",
-    image: "https://images.unsplash.com/photo-1574871786514-46e1680ea587?q=80&w=987&auto=format&fit=crop",
+    image: "image/homepage/gambar4.jpg?q=80&w=987&auto=format&fit=crop",
   },
   {
     id: "03",
@@ -31,7 +31,7 @@ const steps = [
     description:
       "Six appointments. Each one a refinement. The gown is built around you — not adjusted to fit, but grown into your body over time. The final fitting happens in silence. You will know when it is right.",
     detail: "6 fittings · Bespoke alterations · Final press",
-    image: "https://images.unsplash.com/photo-1606216836537-eea72a939072?q=80&w=987&auto=format&fit=crop",
+    image: "image/homepage/gambar5.jpg?q=80&w=987&auto=format&fit=crop",
   },
   {
     id: "04",
@@ -41,7 +41,7 @@ const steps = [
     description:
       "Your gown arrives the morning of, pressed and cased. Our atelier lead is available by private line. After the day, we offer preservation — because some things are not meant to end.",
     detail: "Morning delivery · Private contact · Preservation offered",
-    image: "https://plus.unsplash.com/premium_photo-1661456395657-049a92e01522?q=80&w=987&auto=format&fit=crop",
+    image: "image/homepage/gambar6.jpg?q=80&w=987&auto=format&fit=crop",
   },
 ];
 
