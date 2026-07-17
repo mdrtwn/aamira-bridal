@@ -135,6 +135,28 @@ export default function CelestinePage() {
           text-transform: uppercase;
           color: rgba(240,235,225,0.62);
         }
+        .cel-back-btn {
+          position: absolute;
+          top: 40px;
+          left: 64px;
+          z-index: 3;
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          padding: 12px 22px;
+          border: 1px solid rgba(184,150,62,0.55);
+          text-decoration: none;
+          font-size: 9.5px;
+          font-weight: 300;
+          letter-spacing: 0.28em;
+          text-transform: uppercase;
+          color: var(--ivory);
+          background: rgba(28,26,24,0.25);
+          backdrop-filter: blur(2px);
+          transition: background 0.5s ease, border-color 0.5s ease;
+        }
+        .cel-back-btn:hover { background: rgba(184,150,62,0.18); border-color: var(--gold); }
+
         .cel-scroll-cue {
           position: absolute;
           right: 64px;
@@ -354,6 +376,7 @@ export default function CelestinePage() {
         @media (max-width: 900px) {
           .cel-hero-body { padding: 0 28px 56px; }
           .cel-scroll-cue { display: none; }
+          .cel-back-btn { top: 24px; left: 24px; padding: 10px 16px; }
           .cel-story { padding: 88px 28px 64px; }
           .cel-gallery { padding: 0 28px 8px; }
           .cel-gallery-grid {
@@ -384,6 +407,9 @@ export default function CelestinePage() {
         <section className="cel-hero">
           <div className="cel-hero-img" />
           <div className="cel-hero-grad" />
+          <a href="/bridal" className="cel-j cel-back-btn">
+            &larr; Back to Bridal
+          </a>
           <div className="cel-hero-body">
             <p className={`cel-j cel-eyebrow cel-reveal cel-d0 ${loaded ? "on" : ""}`}>
               Signature Silhouettes &middot; No. 01
