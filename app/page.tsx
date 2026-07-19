@@ -592,7 +592,7 @@ export default function AamiraEntry() {
 
             {/* ── BASIC CARD ── */}
             <a
-              href="/basic/page.tsx"
+              href="/basic"
               className="ae-card"
               onMouseEnter={() => setBasicHover(true)}
               onMouseLeave={() => setBasicHover(false)}

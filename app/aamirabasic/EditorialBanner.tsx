@@ -29,6 +29,7 @@ export default function EditorialBanner() {
           --espresso:      #3A322A;
           --espresso-soft: #5C5248;
           --camel:         #A9814F;
+          --eb-clay:       #9C8163;
         }
 
         .ab-c { font-family: 'Cormorant Garamond', serif; }
@@ -45,132 +46,161 @@ export default function EditorialBanner() {
         .ab-eb-d1 { transition-delay: 0.25s; }
         .ab-eb-d2 { transition-delay: 0.45s; }
 
+        .ab-eb-outer {
+          background: var(--silk);
+          padding: 40px 5vw;
+        }
+
         .ab-eb-section {
           position: relative;
           width: 100%;
-          min-height: 70vh;
+          height: clamp(210px, 23vw, 300px);
           display: flex;
-          align-items: center;
+          align-items: stretch;
           overflow: hidden;
-          background: var(--espresso);
+          border-radius: 6px;
+          background: var(--eb-clay);
         }
 
         .ab-eb-img {
+          position: relative;
+          flex: 0 0 44%;
+          max-width: 44%;
+          overflow: hidden;
+        }
+
+        .ab-eb-img-el {
           position: absolute;
           inset: -6%;
           background-image: url('/image/editorial/daily-elegance.jpg');
           background-size: cover;
           background-position: center 35%;
-          filter: saturate(0.92) brightness(0.9);
+          filter: saturate(0.92) brightness(0.95);
           transform: scale(1.04);
           transition: transform 2.6s cubic-bezier(0.16,1,0.3,1);
         }
-        .ab-eb-section.on .ab-eb-img { transform: scale(1); }
+        .ab-eb-section.on .ab-eb-img-el { transform: scale(1); }
 
-        .ab-eb-veil {
+        .ab-eb-fade {
           position: absolute;
           inset: 0;
           background: linear-gradient(
-            100deg,
-            rgba(20,15,10,0.62) 0%,
-            rgba(20,15,10,0.36) 42%,
-            rgba(20,15,10,0.08) 68%,
-            transparent 88%
+            90deg,
+            transparent 55%,
+            var(--eb-clay) 100%
           );
         }
 
         .ab-eb-body {
           position: relative;
           z-index: 2;
-          width: 100%;
-          padding: 0 5vw;
-        }
-
-        .ab-eb-inner {
-          max-width: 460px;
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          padding: 0 6% 0 3%;
         }
 
         .ab-eb-title {
           font-weight: 300;
-          font-size: clamp(30px, 3.4vw, 48px);
-          line-height: 1.15;
-          letter-spacing: -0.01em;
+          font-size: clamp(24px, 2.4vw, 34px);
+          line-height: 1.2;
+          letter-spacing: -0.005em;
           color: var(--ivory);
-          margin-bottom: 26px;
+          margin-bottom: 14px;
         }
 
         .ab-eb-sub {
           font-family: 'Jost', sans-serif;
           font-weight: 300;
-          font-size: 13.5px;
-          line-height: 1.95;
-          letter-spacing: 0.015em;
-          color: rgba(244,239,231,0.82);
-          margin-bottom: 44px;
+          font-size: 11.5px;
+          line-height: 1.6;
+          letter-spacing: 0.01em;
+          color: rgba(244,239,231,0.72);
+          margin-bottom: 22px;
         }
 
         .ab-eb-btn {
           display: inline-flex;
           align-items: center;
-          gap: 12px;
-          padding: 17px 36px;
-          border: 1px solid rgba(244,239,231,0.55);
+          gap: 8px;
           text-decoration: none;
+          font-family: 'Jost', sans-serif;
           font-size: 10px;
           font-weight: 400;
-          letter-spacing: 0.24em;
+          letter-spacing: 0.2em;
           text-transform: uppercase;
           color: var(--ivory);
-          background: transparent;
-          transition: background 0.5s ease, border-color 0.5s ease,
-                      letter-spacing 0.5s ease;
+          transition: gap 0.4s ease, color 0.4s ease;
+        }
+        .ab-eb-btn-arrow {
+          transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
         }
         .ab-eb-btn:hover {
-          background: rgba(169,129,79,0.22);
-          border-color: var(--camel);
-          letter-spacing: 0.28em;
+          color: var(--parchment);
+          gap: 12px;
+        }
+        .ab-eb-btn:hover .ab-eb-btn-arrow {
+          transform: translateX(3px);
         }
 
         @media (max-width: 900px) {
-          .ab-eb-section { min-height: 78vh; }
-          .ab-eb-body { padding: 0 7vw; }
-          .ab-eb-inner { max-width: 100%; }
-          .ab-eb-veil {
+          .ab-eb-outer { padding: 24px 6vw; }
+          .ab-eb-section {
+            flex-direction: column;
+            height: auto;
+          }
+          .ab-eb-img {
+            flex: none;
+            max-width: 100%;
+            width: 100%;
+            height: 44vw;
+          }
+          .ab-eb-fade {
             background: linear-gradient(
-              to top,
-              rgba(20,15,10,0.7) 0%,
-              rgba(20,15,10,0.3) 46%,
-              transparent 78%
+              to bottom,
+              transparent 55%,
+              var(--eb-clay) 100%
             );
+          }
+          .ab-eb-body {
+            padding: 28px 7vw 36px;
+            align-items: flex-start;
           }
         }
       `}</style>
 
-      <section
-        className={`ab-eb-section ${inView ? "on" : ""}`}
-        ref={sectionRef}
-      >
-        <div className="ab-eb-img" />
-        <div className="ab-eb-veil" />
-        <div className="ab-eb-body">
-          <div className="ab-eb-inner">
+      <div className="ab-eb-outer">
+        <section
+          className={`ab-eb-section ${inView ? "on" : ""}`}
+          ref={sectionRef}
+        >
+          <div className="ab-eb-img">
+            <div className="ab-eb-img-el" />
+            <div className="ab-eb-fade" />
+          </div>
+          <div className="ab-eb-body">
             <h2 className={`ab-c ab-eb-title ab-eb-reveal ab-eb-d0 ${inView ? "on" : ""}`}>
-              Daily elegance, made for you.
+              Daily elegance,
+              <br />
+              made for you.
             </h2>
             <p className={`ab-j ab-eb-sub ab-eb-reveal ab-eb-d1 ${inView ? "on" : ""}`}>
-              Designed for comfort.
+              Comfort in every detail.
               <br />
-              Created for confidence.
+              Confidence in every step.
             </p>
             <a
               href="/collections"
-              className={`ab-j ab-eb-btn ab-eb-reveal ab-eb-d2 ${inView ? "on" : ""}`}
+              className={`ab-eb-btn ab-eb-reveal ab-eb-d2 ${inView ? "on" : ""}`}
             >
               Discover Collection
+              <span className="ab-eb-btn-arrow">&rarr;</span>
             </a>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </>
   );
 }

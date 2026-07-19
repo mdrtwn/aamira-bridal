@@ -4,6 +4,7 @@ import NewArrivals from "../aamirabasic/NewArrivals";
 import EditorialBanner from "../aamirabasic/EditorialBanner";
 import Bestsellers from "../aamirabasic/Bestsellers";
 import Newsletter from "../aamirabasic/Newsletter";
+import Footer from "../aamirabasic/Footer";
 
 export default function BasicPage() {
   return (
@@ -14,6 +15,7 @@ export default function BasicPage() {
       <EditorialBanner />
       <Bestsellers />
       <Newsletter />
+      <Footer />
     </>
   );
 }

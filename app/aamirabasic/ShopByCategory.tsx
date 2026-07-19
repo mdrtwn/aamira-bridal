@@ -6,21 +6,21 @@ const CATEGORIES = [
   {
     id: "clothing",
     title: "Clothing",
-    description: "Fluid silhouettes for the way you move through your day.",
+    description: "Effortless pieces for every occasion.",
     href: "/collections/clothing",
     image: "/image/categories/clothing.jpg",
   },
   {
     id: "hijab",
     title: "Hijab",
-    description: "Soft, considered drapes in fabrics made to last.",
+    description: "Premium fabrics for everyday elegance.",
     href: "/collections/hijab",
     image: "/image/categories/hijab.jpg",
   },
   {
     id: "essentials",
     title: "Essentials",
-    description: "Quiet foundations, worn beneath everything you do.",
+    description: "The little things that complete your look.",
     href: "/collections/essentials",
     image: "/image/categories/essentials.jpg",
   },
@@ -71,48 +71,41 @@ export default function ShopByCategory() {
 
         .ab-cat-section {
           background: var(--silk);
-          padding: 128px 5vw 136px;
+          padding: 72px 5vw 88px;
         }
 
         .ab-cat-kicker-row {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 16px;
-          margin-bottom: 72px;
-        }
-        .ab-cat-rule {
-          width: 44px;
-          height: 1px;
-          background: rgba(169,129,79,0.45);
+          margin-bottom: 40px;
         }
         .ab-cat-kicker {
-          font-size: 10px;
-          font-weight: 400;
-          letter-spacing: 0.32em;
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 14px;
+          font-weight: 500;
+          letter-spacing: 0.28em;
           text-transform: uppercase;
-          color: var(--taupe);
+          color: var(--espresso);
         }
 
         .ab-cat-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 4.4vw;
+          gap: 1.6vw;
         }
 
         .ab-cat-card {
-          display: flex;
-          flex-direction: column;
+          display: block;
           text-decoration: none;
         }
 
         .ab-cat-frame {
           position: relative;
           width: 100%;
-          aspect-ratio: 3 / 4;
+          aspect-ratio: 3 / 2;
           overflow: hidden;
           background: var(--parchment);
-          margin-bottom: 30px;
         }
 
         .ab-cat-img {
@@ -132,67 +125,77 @@ export default function ShopByCategory() {
         .ab-cat-veil {
           position: absolute;
           inset: 0;
-          background: linear-gradient(to top, rgba(20,15,10,0.22) 0%, transparent 42%);
+          background: linear-gradient(
+            to top,
+            rgba(20,15,10,0.5) 0%,
+            rgba(20,15,10,0.18) 34%,
+            transparent 62%
+          );
           pointer-events: none;
         }
 
+        .ab-cat-content {
+          position: absolute;
+          left: 22px;
+          bottom: 22px;
+          right: 22px;
+        }
+
         .ab-cat-title {
-          font-weight: 300;
-          font-size: clamp(21px, 1.7vw, 27px);
-          letter-spacing: -0.005em;
-          color: var(--espresso);
-          margin-bottom: 12px;
+          font-weight: 500;
+          font-size: clamp(17px, 1.3vw, 20px);
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          color: var(--ivory);
+          margin-bottom: 8px;
         }
 
         .ab-cat-desc {
           font-family: 'Jost', sans-serif;
           font-weight: 300;
-          font-size: 13px;
-          line-height: 1.85;
+          font-size: 12px;
+          line-height: 1.5;
           letter-spacing: 0.01em;
-          color: var(--espresso-soft);
-          max-width: 30ch;
-          margin-bottom: 20px;
+          color: rgba(244,239,231,0.88);
+          max-width: 22ch;
+          margin-bottom: 12px;
         }
 
         .ab-cat-link {
           display: inline-flex;
           align-items: center;
-          gap: 8px;
+          gap: 7px;
           font-family: 'Jost', sans-serif;
           font-size: 10px;
           font-weight: 400;
-          letter-spacing: 0.22em;
+          letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: var(--espresso);
-          transition: color 0.4s ease, gap 0.4s ease;
+          color: var(--ivory);
+          transition: gap 0.4s ease;
         }
         .ab-cat-link-arrow {
           transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
         }
         .ab-cat-card:hover .ab-cat-link {
-          color: var(--camel);
-          gap: 12px;
+          gap: 11px;
         }
         .ab-cat-card:hover .ab-cat-link-arrow {
           transform: translateX(3px);
         }
 
         @media (max-width: 900px) {
-          .ab-cat-section { padding: 88px 6vw 96px; }
+          .ab-cat-section { padding: 56px 6vw 64px; }
           .ab-cat-grid {
             grid-template-columns: 1fr;
-            gap: 56px;
+            gap: 20px;
           }
-          .ab-cat-frame { aspect-ratio: 4 / 5; }
+          .ab-cat-frame { aspect-ratio: 3 / 2; }
         }
       `}</style>
 
       <section className="ab-cat-section" ref={sectionRef}>
         <div className={`ab-cat-kicker-row ab-cat-reveal ab-cat-d0 ${inView ? "on" : ""}`}>
-          <div className="ab-cat-rule" />
-          <span className="ab-j ab-cat-kicker">Shop By Category</span>
-          <div className="ab-cat-rule" />
+          <span className="ab-c ab-cat-kicker">Shop By Category</span>
         </div>
 
         <div className="ab-cat-grid">
@@ -210,13 +213,15 @@ export default function ShopByCategory() {
                   style={{ backgroundImage: `url('${cat.image}')` }}
                 />
                 <div className="ab-cat-veil" />
+                <div className="ab-cat-content">
+                  <h3 className="ab-j ab-cat-title">{cat.title}</h3>
+                  <p className="ab-j ab-cat-desc">{cat.description}</p>
+                  <span className="ab-cat-link">
+                    Shop Now
+                    <span className="ab-cat-link-arrow">&rarr;</span>
+                  </span>
+                </div>
               </div>
-              <h3 className="ab-c ab-cat-title">{cat.title}</h3>
-              <p className="ab-j ab-cat-desc">{cat.description}</p>
-              <span className="ab-cat-link">
-                Explore
-                <span className="ab-cat-link-arrow">&rarr;</span>
-              </span>
             </a>
           ))}
         </div>
