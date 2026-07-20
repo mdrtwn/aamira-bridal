@@ -602,7 +602,7 @@ export default function ClothingPage() {
           <a href="/basic/clothing" className="active">Clothing</a>
           <a href="/basic/hijab">Hijab</a>
           <a href="/basic/Accessories">Essentials</a>
-          <a href="/collections">Collections</a>
+          <a href="/basic/Collections">Collections</a>
           <a href="/about">About</a>
         </nav>
         <div className="cp-icons">

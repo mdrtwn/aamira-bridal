@@ -7,7 +7,7 @@ const shopLinks = [
   { label: "Clothing", href: "/basic/clothing" },
   { label: "Hijab", href: "/basic/hijab" },
   { label: "Essentials", href: "/basic/Accessories" },
-  { label: "Collections", href: "/collections" },
+  { label: "Collections", href: "/basic/Collections" },
 ];
 
 const careLinks = [
