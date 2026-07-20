@@ -599,9 +599,9 @@ export default function ClothingPage() {
         </div>
         <nav className="cp-nav">
           <a href="/new-in">New In</a>
-          <a href="/collections/clothing" className="active">Clothing</a>
-          <a href="/collections/hijab">Hijab</a>
-          <a href="/collections/essentials">Essentials</a>
+          <a href="/basic/clothing" className="active">Clothing</a>
+          <a href="/basic/hijab">Hijab</a>
+          <a href="/basic/Accessories">Essentials</a>
           <a href="/collections">Collections</a>
           <a href="/about">About</a>
         </nav>
@@ -757,8 +757,8 @@ export default function ClothingPage() {
               <ul>
                 <li><a href="/new-in">New In</a></li>
                 <li><a href="/collections/clothing">Clothing</a></li>
-                <li><a href="/collections/hijab">Hijab</a></li>
-                <li><a href="/collections/essentials">Essentials</a></li>
+                <li><a href="/basic/hijab">Hijab</a></li>
+                <li><a href="/basic/Accessories">Essentials</a></li>
                 <li><a href="/collections">Collections</a></li>
               </ul>
             </div>

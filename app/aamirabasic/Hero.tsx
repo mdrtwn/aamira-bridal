@@ -324,13 +324,13 @@ export default function Hero() {
         <div className="ab-nav-links">
           <a href="/new-in" className="ab-nav-link">New In</a>
           <a href="/basic/clothing" className="ab-nav-link">Clothing</a>
-          <a href="/hijab" className="ab-nav-link">
+          <a href="/basic/hijab" className="ab-nav-link">
             Hijab
             <svg className="ab-nav-caret" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M1.5 3L4 5.5L6.5 3" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </a>
-          <a href="/essentials" className="ab-nav-link">Essentials</a>
+          <a href="/basic/Accessories" className="ab-nav-link">Essentials</a>
           <a href="/collections" className="ab-nav-link">
             Collections
             <svg className="ab-nav-caret" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">

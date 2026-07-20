@@ -5,8 +5,8 @@ import Link from "next/link";
 const shopLinks = [
   { label: "New In", href: "/new-in" },
   { label: "Clothing", href: "/basic/clothing" },
-  { label: "Hijab", href: "/hijab" },
-  { label: "Essentials", href: "/essentials" },
+  { label: "Hijab", href: "/basic/hijab" },
+  { label: "Essentials", href: "/basic/Accessories" },
   { label: "Collections", href: "/collections" },
 ];
 
