@@ -7,11 +7,12 @@ import SignatureDresses from "../SignatureDresses";
 import BrandStory from "../BrandStory";
 import ConsultationCTA from "../ConsultationCTA";
 import Footer from "../Footer";
+import Navbar from "../Navbar";
+import MobileNavbar from "../MobileNavbar";
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false);
   const [scrollY, setScrollY] = useState(0);
-  const [menuOpen, setMenuOpen] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -24,18 +25,6 @@ export default function Home() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Lock body scroll when mobile menu is open
-  useEffect(() => {
-    if (menuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [menuOpen]);
 
   return (
     <>
@@ -203,28 +192,6 @@ export default function Home() {
           100% { background-position: -200% center; }
         }
 
-        /* Mobile menu link stagger */
-        .mobile-nav-link {
-          opacity: 0;
-          transform: translateY(12px);
-          transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-                      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .mobile-nav-link.visible {
-          opacity: 1;
-          transform: translateY(0);
-        }
-
-        /* Mobile menu */
-        @media (max-width: 768px) {
-          .nav-links { display: none; }
-          .mobile-menu-icon { display: flex; }
-        }
-
-        @media (min-width: 769px) {
-          .mobile-menu-icon { display: none; }
-        }
       `}</style>
 
       {/* Grain overlay */}
@@ -232,10 +199,14 @@ export default function Home() {
 
       {/* ─── HERO SECTION ─── */}
       <section
+        id="bridal-hero"
         ref={heroRef}
         className="relative w-full h-screen min-h-[100dvh] overflow-hidden"
         style={{ background: "var(--noir)" }}
       >
+        <Navbar />
+        <MobileNavbar />
+
         {/* Background image with parallax */}
         <div
           className="absolute inset-0 w-full h-full"
@@ -281,171 +252,6 @@ export default function Home() {
             )`,
           }}
         />
-
-        {/* ─── NAVIGATION ─── */}
-        <nav
-          className={`absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-8 md:px-16 py-8 fade-in ${loaded ? "visible" : ""}`}
-        >
-          {/* Left nav links */}
-          <div className="nav-links flex items-center gap-10">
-            {["Collections", "Atelier"].map((item) => (
-              <a
-                key={item}
-                href="#"
-                className="nav-link font-cormorant text-xs"
-                style={{
-                  color: "var(--warm-fog)",
-                  fontWeight: 300,
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                  fontSize: "11px",
-                }}
-              >
-                {item}
-              </a>
-            ))}
-          </div>
-
-          {/* Center logotype */}
-          <div className="absolute left-1/2 -translate-x-1/2 top-6">
-            <span
-              className="font-cormorant tracking-widest"
-              style={{
-                fontSize: "clamp(15px, 1.8vw, 22px)",
-                fontWeight: 100,
-                color: "var(--ivory)",
-                letterSpacing: "0.28em",
-                textTransform: "uppercase",
-              }}
-            >
-              Aamira
-            </span>
-            <div
-              className="shimmer-line mt-1.5"
-              style={{ height: "0.5px", width: "100%" }}
-            />
-            <span
-              className="block text-center"
-              style={{
-                fontSize: "7px",
-                fontFamily: "'Jost', sans-serif",
-                fontWeight: 300,
-                color: "var(--dust)",
-                letterSpacing: "0.32em",
-                textTransform: "uppercase",
-                marginTop: "4px",
-              }}
-            >
-              Bridal
-            </span>
-          </div>
-
-          {/* Right nav links */}
-          <div className="nav-links flex items-center gap-10">
-            {[{ label: "Stories", href: "/story" }, { label: "Book Appointment", href: "/book-appointment" }].map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="nav-link font-cormorant"
-                style={{
-                  color: "var(--warm-fog)",
-                  fontWeight: 300,
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                  fontSize: "11px",
-                }}
-              >
-                {item.label}
-              </a>
-            ))}
-
-            {/* Brand switcher — Aamira Basic */}
-            <a
-              href="/basic"
-              className="nav-link"
-              style={{
-                fontFamily: "'Jost', sans-serif",
-                fontSize: "10px",
-                fontWeight: 300,
-                letterSpacing: "0.22em",
-                textTransform: "uppercase",
-                color: "var(--dust)",
-                borderLeft: "1px solid rgba(158,148,136,0.3)",
-                paddingLeft: "24px",
-                marginLeft: "4px",
-              }}
-            >
-              Aamira Basic
-            </a>
-          </div>
-
-          {/* Mobile hamburger */}
-          <button
-            className="mobile-menu-icon flex-col gap-1.5 cursor-pointer z-50 relative items-center justify-center"
-            aria-label="Toggle menu"
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen((prev) => !prev)}
-          >
-            <span
-              className="block w-6 h-px transition-transform duration-300"
-              style={{
-                background: "var(--ivory)",
-                transform: menuOpen
-                  ? "rotate(45deg) translateY(3.5px)"
-                  : "none",
-              }}
-            />
-            <span
-              className="block h-px transition-all duration-300"
-              style={{
-                background: "var(--ivory)",
-                width: menuOpen ? "24px" : "16px",
-                transform: menuOpen
-                  ? "rotate(-45deg) translateY(-3.5px)"
-                  : "none",
-              }}
-            />
-          </button>
-        </nav>
-
-        {/* ─── MOBILE MENU OVERLAY ─── */}
-        <div
-          className="fixed inset-0 z-40 md:hidden"
-          style={{
-            background: "rgba(28,26,24,0.98)",
-            backdropFilter: "blur(6px)",
-            opacity: menuOpen ? 1 : 0,
-            visibility: menuOpen ? "visible" : "hidden",
-            transition: "opacity 0.45s ease, visibility 0.45s ease",
-          }}
-        >
-          <div className="flex flex-col items-center justify-center h-full gap-9 px-6">
-            {[
-              { label: "Collections", href: "#" },
-              { label: "Atelier", href: "#" },
-              { label: "Stories", href: "/story" },
-              { label: "Book Appointment", href: "/book-appointment" },
-              { label: "Aamira Basic", href: "/basic" },
-            ].map((item, i) => (
-              <a
-                key={item.href + item.label}
-                href={item.href}
-                onClick={() => setMenuOpen(false)}
-                className={`font-cormorant mobile-nav-link ${menuOpen ? "visible" : ""}`}
-                style={{
-                  fontSize: "26px",
-                  fontWeight: 300,
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase",
-                  color: "var(--ivory)",
-                  transitionDelay: menuOpen ? `${0.1 + i * 0.08}s` : "0s",
-                }}
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
-        </div>
 
         {/* ─── HERO CONTENT ─── */}
         <div className="absolute inset-0 flex flex-col items-center justify-center z-10 px-6 text-center">
@@ -606,8 +412,12 @@ export default function Home() {
           </p>
         </div>
       </section>
-      <SignatureDresses />
-      <BrandStory />
+      <div id="collections">
+        <SignatureDresses />
+      </div>
+      <div id="atelier">
+        <BrandStory />
+      </div>
       <ConsultationCTA />
       <Footer />
     </>

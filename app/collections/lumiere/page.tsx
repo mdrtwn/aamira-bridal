@@ -1,512 +1,403 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
-export default function CelestinePage() {
-  const [loaded, setLoaded] = useState(false);
-  const [inView1, setInView1] = useState(false);
-  const [inView2, setInView2] = useState(false);
-  const [inView3, setInView3] = useState(false);
+const craft = [
+  ["01", "Illuminated Tulle", "Layers of translucent tulle hold and diffuse light across the silhouette."],
+  ["02", "Hand-set Crystal", "Crystals are placed individually to create radiance without a uniform pattern."],
+  ["03", "Midnight Structure", "A precise internal corset gives definition beneath an otherwise weightless surface."],
+];
 
-  const storyRef = useRef<HTMLElement>(null);
-  const galleryRef = useRef<HTMLElement>(null);
-  const ctaRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const t = setTimeout(() => setLoaded(true), 80);
-    return () => clearTimeout(t);
-  }, []);
+export default function LumierePage() {
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const make = (setter: (v: boolean) => void) =>
-      new IntersectionObserver(
-        ([e]) => {
-          if (e.isIntersecting) setter(true);
-        },
-        { threshold: 0.12 }
-      );
-
-    const o1 = make(setInView1);
-    const o2 = make(setInView2);
-    const o3 = make(setInView3);
-
-    if (storyRef.current) o1.observe(storyRef.current);
-    if (galleryRef.current) o2.observe(galleryRef.current);
-    if (ctaRef.current) o3.observe(ctaRef.current);
-
-    return () => {
-      o1.disconnect();
-      o2.disconnect();
-      o3.disconnect();
-    };
+    const timer = window.setTimeout(() => setVisible(true), 80);
+    return () => window.clearTimeout(timer);
   }, []);
 
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,100;0,300;0,400;0,500;1,100;1,300;1,400&family=Jost:wght@200;300;400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@200;300;400&display=swap');
 
-        :root {
-          --ivory:      #F0EBE1;
-          --silk:       #F7F4EF;
-          --parchment:  #E8E0D0;
-          --noir:       #1C1A18;
-          --noir2:      #232120;
-          --dust:       #9E9488;
-          --blush:      #D9C4B5;
-          --gold:       #B8963E;
-          --champagne:  #D4B483;
-          --fog:        #C8BFB4;
-        }
-
-        .cel-root { background: var(--silk); }
-        .cel-c { font-family: 'Cormorant Garamond', serif; }
-        .cel-j { font-family: 'Jost', sans-serif; }
-
-        .cel-reveal {
-          opacity: 0;
-          transform: translateY(20px);
-          transition: opacity 1.3s cubic-bezier(0.16,1,0.3,1),
-                      transform 1.3s cubic-bezier(0.16,1,0.3,1);
-        }
-        .cel-reveal.on { opacity: 1; transform: none; }
-        .cel-d0 { transition-delay: 0.05s; }
-        .cel-d1 { transition-delay: 0.25s; }
-        .cel-d2 { transition-delay: 0.45s; }
-        .cel-d3 { transition-delay: 0.62s; }
-
-        /* ── HERO ── */
-        .cel-hero {
-          position: relative;
-          height: 100vh;
-          min-height: 560px;
+        .lum-root {
+          --lum-night: #0e0d0c;
+          --lum-charcoal: #191714;
+          --lum-ivory: #f1ece3;
+          --lum-champagne: #d2b986;
+          --lum-gold: #9f7e3d;
+          --lum-smoke: #9c958a;
+          background: var(--lum-night);
+          color: var(--lum-ivory);
           overflow: hidden;
+        }
+        .lum-c { font-family: 'Cormorant Garamond', serif; }
+        .lum-j { font-family: 'Jost', sans-serif; }
+        .lum-reveal {
+          opacity: 0;
+          transform: translateY(22px);
+          transition: opacity 1.4s cubic-bezier(.16,1,.3,1), transform 1.4s cubic-bezier(.16,1,.3,1);
+        }
+        .lum-reveal.show { opacity: 1; transform: none; }
+        .lum-d1 { transition-delay: .2s; }
+        .lum-d2 { transition-delay: .42s; }
+        .lum-d3 { transition-delay: .64s; }
+
+        .lum-hero {
+          position: relative;
+          min-height: 100svh;
           display: flex;
           align-items: flex-end;
-          background: var(--noir);
+          overflow: hidden;
+          background: var(--lum-night);
         }
-        .cel-hero-img {
+        .lum-hero-image {
           position: absolute;
-          inset: -6%;
-          background-image: url('/image/collections/celestine/1.jpg');
-          background-size: cover;
-          background-position: center 22%;
-          filter: brightness(0.62) saturate(0.92) contrast(1.04);
+          inset: -4%;
+          background: url('/image/wedding/hero.webp') center 23% / cover;
+          filter: brightness(.42) saturate(.48) contrast(1.12);
+          transform: scale(1.025);
         }
-        .cel-hero-grad {
+        .lum-hero-shade {
           position: absolute;
           inset: 0;
           background:
-            linear-gradient(to top, rgba(14,10,7,0.78) 0%, rgba(14,10,7,0.1) 48%, transparent 72%),
-            linear-gradient(180deg, rgba(14,10,7,0.32) 0%, transparent 28%);
+            radial-gradient(circle at 70% 30%, rgba(210,185,134,.22), transparent 24%),
+            linear-gradient(90deg, rgba(8,7,6,.92) 0%, rgba(8,7,6,.42) 45%, transparent 76%),
+            linear-gradient(0deg, rgba(8,7,6,.9), transparent 48%);
         }
-        .cel-hero-body {
-          position: relative;
-          z-index: 2;
-          width: 100%;
-          padding: 0 64px 72px;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-        }
-        .cel-eyebrow {
-          font-size: 9px;
-          font-weight: 300;
-          letter-spacing: 0.42em;
-          text-transform: uppercase;
-          color: var(--champagne);
-          padding-right: 0.42em;
-          margin-bottom: 18px;
-          -webkit-font-smoothing: antialiased;
-        }
-        .cel-hero-title {
-          font-weight: 100;
-          font-size: clamp(56px, 11vw, 156px);
-          line-height: 0.96;
-          letter-spacing: -0.01em;
-          color: var(--ivory);
-          text-shadow: 0 2px 40px rgba(8,5,3,0.5);
-        }
-        .cel-hero-sub {
-          margin-top: 18px;
-          font-size: 11px;
-          font-weight: 300;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          color: rgba(240,235,225,0.62);
-        }
-        .cel-scroll-cue {
+        .lum-grain {
           position: absolute;
-          right: 64px;
-          bottom: 72px;
-          z-index: 2;
+          inset: 0;
+          opacity: .045;
+          pointer-events: none;
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+        .lum-nav {
+          position: absolute;
+          z-index: 5;
+          top: 0;
+          left: 0;
+          right: 0;
           display: flex;
           align-items: center;
-          gap: 10px;
+          justify-content: space-between;
+          padding: 30px 52px;
         }
-        .cel-scroll-line {
-          width: 1px;
-          height: 46px;
-          background: linear-gradient(to bottom, transparent, rgba(212,180,131,0.7));
-        }
-        .cel-scroll-label {
-          writing-mode: vertical-rl;
+        .lum-logo { color: var(--lum-champagne); font-size: 18px; font-weight: 300; letter-spacing: .32em; text-transform: uppercase; }
+        .lum-nav-group { display: flex; align-items: center; gap: 34px; }
+        .lum-nav-link {
+          color: rgba(241,236,227,.66);
           font-size: 8.5px;
-          letter-spacing: 0.3em;
-          text-transform: uppercase;
-          color: rgba(240,235,225,0.5);
           font-weight: 300;
+          letter-spacing: .27em;
+          text-decoration: none;
+          text-transform: uppercase;
         }
-
-        /* ── STORY ── */
-        .cel-story {
-          padding: 132px 64px 96px;
-          display: flex;
-          justify-content: center;
+        .lum-hero-content {
+          position: relative;
+          z-index: 3;
+          width: 100%;
+          padding: 140px 7vw 9vh;
         }
-        .cel-story-inner {
-          max-width: 700px;
-          text-align: center;
-        }
-        .cel-story-mark {
+        .lum-kicker {
           display: flex;
           align-items: center;
-          justify-content: center;
-          gap: 14px;
-          margin-bottom: 32px;
-        }
-        .cel-rule {
-          width: 48px;
-          height: 1px;
-          background: rgba(184,150,62,0.5);
-        }
-        .cel-story-kicker {
-          font-size: 9px;
-          font-weight: 300;
-          letter-spacing: 0.34em;
+          gap: 16px;
+          margin: 0 0 25px;
+          color: var(--lum-champagne);
+          font-size: 8.5px;
+          letter-spacing: .38em;
           text-transform: uppercase;
-          color: var(--dust);
         }
-        .cel-story-title {
-          font-weight: 100;
-          font-size: clamp(28px, 3.4vw, 44px);
-          line-height: 1.18;
-          color: var(--noir);
-          margin-bottom: 28px;
-        }
-        .cel-story-title em {
-          font-style: italic;
-          color: var(--dust);
-        }
-        .cel-story-body {
-          font-size: 14.5px;
+        .lum-kicker::before { content: ''; width: 48px; height: 1px; background: var(--lum-gold); }
+        .lum-title {
+          position: relative;
+          margin: 0;
+          font-size: clamp(82px, 15vw, 215px);
           font-weight: 300;
-          line-height: 2.05;
-          color: #5C564E;
+          letter-spacing: -.04em;
+          line-height: .74;
+          text-shadow: 0 4px 80px rgba(0,0,0,.45);
         }
-
-        /* ── GALLERY ── */
-        .cel-gallery {
-          padding: 0 64px 8px;
-        }
-        .cel-gallery-grid {
-          display: grid;
-          grid-template-columns: repeat(6, 1fr);
-          grid-template-rows: repeat(2, 38vh);
-          gap: 2px;
-          background: rgba(200,191,180,0.25);
-        }
-        .cel-g-item { position: relative; overflow: hidden; background: var(--noir2); }
-        .cel-g-img {
+        .lum-accent {
           position: absolute;
-          inset: -8%;
+          left: 53%;
+          bottom: 10%;
+          color: transparent;
+          -webkit-text-stroke: 1px rgba(210,185,134,.52);
+          font-size: clamp(60px, 10vw, 150px);
+          font-style: italic;
+          font-weight: 300;
+          line-height: .75;
+        }
+        .lum-hero-meta {
+          display: flex;
+          gap: 30px;
+          margin-top: 54px;
+          color: rgba(241,236,227,.52);
+          font-size: 8px;
+          letter-spacing: .24em;
+          text-transform: uppercase;
+        }
+        .lum-scroll {
+          position: absolute;
+          z-index: 3;
+          right: 48px;
+          bottom: 9vh;
+          display: flex;
+          align-items: center;
+          gap: 15px;
+          color: rgba(241,236,227,.46);
+          font-size: 8px;
+          letter-spacing: .3em;
+          text-transform: uppercase;
+          writing-mode: vertical-rl;
+        }
+        .lum-scroll::after { content: ''; width: 1px; height: 58px; background: linear-gradient(var(--lum-champagne),transparent); }
+
+        .lum-statement {
+          position: relative;
+          display: grid;
+          place-items: center;
+          min-height: 78vh;
+          padding: 130px 24px;
+          text-align: center;
+          background: var(--lum-night);
+        }
+        .lum-orbit {
+          position: absolute;
+          width: min(52vw, 680px);
+          aspect-ratio: 1;
+          border: 1px solid rgba(210,185,134,.1);
+          border-radius: 50%;
+        }
+        .lum-orbit::before, .lum-orbit::after {
+          content: '';
+          position: absolute;
+          border: 1px solid rgba(210,185,134,.07);
+          border-radius: 50%;
+        }
+        .lum-orbit::before { inset: 12%; }
+        .lum-orbit::after { inset: 26%; }
+        .lum-statement-inner { position: relative; z-index: 1; max-width: 900px; }
+        .lum-statement-label { color: var(--lum-gold); font-size: 8.5px; letter-spacing: .4em; text-transform: uppercase; }
+        .lum-statement-title { margin: 34px 0; font-size: clamp(42px, 6.3vw, 88px); font-weight: 300; line-height: 1; }
+        .lum-statement-title em { color: var(--lum-champagne); font-weight: 300; }
+        .lum-statement-copy { max-width: 590px; margin: 0 auto; color: var(--lum-smoke); font-size: 12.5px; font-weight: 300; line-height: 2; }
+
+        .lum-gallery {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: 55vw 34vw;
+          gap: 2px;
+          background: var(--lum-gold);
+        }
+        .lum-image { position: relative; overflow: hidden; background: var(--lum-charcoal); }
+        .lum-image-inner {
+          position: absolute;
+          inset: -3%;
           background-size: cover;
           background-position: center;
-          transition: transform 1.4s cubic-bezier(0.16,1,0.3,1), filter 1.4s ease;
+          filter: brightness(.7) saturate(.55);
+          transition: transform 1.5s cubic-bezier(.16,1,.3,1), filter 1.2s ease;
         }
-        .cel-g-item:hover .cel-g-img { transform: scale(1.06); }
-        .cel-g-item:hover .cel-g-img { filter: brightness(0.96); }
-
-        .cel-g1 { grid-column: 1 / 4; grid-row: 1 / 3; }
-        .cel-g2 { grid-column: 4 / 7; grid-row: 1 / 2; }
-        .cel-g3 { grid-column: 4 / 6; grid-row: 2 / 3; }
-        .cel-g4 { grid-column: 6 / 7; grid-row: 2 / 3; }
-        .cel-g5 { display: none; }
-
-        /* ── DETAILS ── */
-        .cel-details {
-          padding: 120px 64px 120px;
-          display: grid;
-          grid-template-columns: 1fr 1px 1fr 1px 1fr;
-          gap: 56px;
-          max-width: 1180px;
-          margin: 0 auto;
+        .lum-image:hover .lum-image-inner { transform: scale(1.04); filter: brightness(.82) saturate(.62); }
+        .lum-image-one { grid-row: 1 / 3; }
+        .lum-image-one .lum-image-inner { background-image: url('/image/wedding/bawah.webp'); background-position: center 24%; }
+        .lum-image-two .lum-image-inner { background-image: url('/image/homepage/gambar3.jpg'); background-position: center 28%; }
+        .lum-image-three .lum-image-inner { background-image: url('/image/wedding/bawah1.webp'); background-position: center 40%; }
+        .lum-image-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(0deg, rgba(8,7,6,.55), transparent 38%);
         }
-        .cel-detail-sep { background: rgba(28,26,24,0.1); }
-        .cel-detail-label {
-          font-size: 9px;
-          font-weight: 300;
-          letter-spacing: 0.3em;
+        .lum-image-label {
+          position: absolute;
+          z-index: 2;
+          left: 28px;
+          bottom: 25px;
+          color: rgba(241,236,227,.72);
+          font-size: 8px;
+          letter-spacing: .3em;
           text-transform: uppercase;
-          color: var(--gold);
-          margin-bottom: 18px;
-        }
-        .cel-detail-value {
-          font-weight: 200;
-          font-size: clamp(24px, 2.4vw, 32px);
-          color: var(--noir);
-          line-height: 1.2;
-          margin-bottom: 14px;
-        }
-        .cel-detail-note {
-          font-size: 12.5px;
-          font-weight: 300;
-          line-height: 1.85;
-          color: var(--dust);
         }
 
-        /* ── CTA ── */
-        .cel-cta {
+        .lum-craft {
+          display: grid;
+          grid-template-columns: .7fr 1.3fr;
+          gap: 8vw;
+          padding: 145px 8vw;
+          background: var(--lum-ivory);
+          color: var(--lum-night);
+        }
+        .lum-craft-intro { position: sticky; top: 50px; align-self: start; }
+        .lum-craft-kicker { color: var(--lum-gold); font-size: 8.5px; letter-spacing: .36em; text-transform: uppercase; }
+        .lum-craft-title { margin: 27px 0 0; font-size: clamp(42px, 5.5vw, 74px); font-weight: 300; line-height: .98; }
+        .lum-craft-title em { display: block; color: var(--lum-gold); font-weight: 300; }
+        .lum-craft-list { border-top: 1px solid rgba(14,13,12,.14); }
+        .lum-craft-item {
+          display: grid;
+          grid-template-columns: 70px 1fr;
+          gap: 30px;
+          padding: 42px 0;
+          border-bottom: 1px solid rgba(14,13,12,.14);
+        }
+        .lum-craft-number { color: var(--lum-gold); font-size: 9px; letter-spacing: .25em; }
+        .lum-craft-name { margin: 0 0 12px; font-size: clamp(26px, 3vw, 39px); font-weight: 300; }
+        .lum-craft-copy { max-width: 480px; color: #706a61; font-size: 12px; font-weight: 300; line-height: 1.85; }
+
+        .lum-cta {
           position: relative;
-          background: var(--noir);
-          padding: 140px 40px;
+          min-height: 85vh;
+          display: grid;
+          place-items: center;
+          padding: 120px 24px;
           text-align: center;
+          background: var(--lum-charcoal);
           overflow: hidden;
         }
-        .cel-cta-bg {
+        .lum-cta-light {
           position: absolute;
-          inset: 0;
-          background-image: url('/image/collections/celestine/5.jpg');
-          background-size: cover;
-          background-position: center 30%;
-          filter: brightness(0.22) saturate(0.5);
+          top: -40%;
+          left: 50%;
+          width: 52vw;
+          height: 100%;
+          transform: translateX(-50%);
+          border-radius: 50%;
+          background: radial-gradient(ellipse, rgba(210,185,134,.22), transparent 67%);
+          filter: blur(16px);
         }
-        .cel-cta-vignette {
-          position: absolute;
-          inset: 0;
-          background: radial-gradient(ellipse 90% 80% at 50% 50%, transparent 30%, rgba(8,5,3,0.6) 100%);
-        }
-        .cel-cta-inner { position: relative; z-index: 2; }
-        .cel-cta-kicker {
-          font-size: 9px;
-          font-weight: 300;
-          letter-spacing: 0.4em;
-          text-transform: uppercase;
-          color: var(--champagne);
-          margin-bottom: 24px;
-        }
-        .cel-cta-title {
-          font-weight: 100;
-          font-size: clamp(34px, 4.6vw, 64px);
-          color: var(--ivory);
-          line-height: 1.08;
-          margin-bottom: 40px;
-        }
-        .cel-cta-btn {
+        .lum-cta-inner { position: relative; z-index: 1; }
+        .lum-cta-kicker { color: var(--lum-champagne); font-size: 8.5px; letter-spacing: .38em; text-transform: uppercase; }
+        .lum-cta-title { margin: 28px 0 42px; font-size: clamp(48px, 7vw, 96px); font-weight: 300; line-height: .95; }
+        .lum-cta-title em { color: var(--lum-champagne); font-weight: 300; }
+        .lum-button {
           display: inline-flex;
           align-items: center;
-          gap: 14px;
-          padding: 18px 38px;
-          border: 1px solid rgba(184,150,62,0.55);
-          text-decoration: none;
-          font-size: 10.5px;
-          font-weight: 300;
-          letter-spacing: 0.28em;
-          text-transform: uppercase;
-          color: var(--ivory);
-          transition: background 0.5s ease, border-color 0.5s ease;
-        }
-        .cel-cta-btn:hover { background: rgba(184,150,62,0.12); border-color: var(--gold); }
-
-        /* ── PREV / NEXT NAV ── */
-        .cel-nav {
-          display: grid;
-          grid-template-columns: 1fr 1px 1fr;
-          background: var(--silk);
-        }
-        .cel-nav-link {
-          position: relative;
-          display: flex;
-          flex-direction: column;
-          padding: 56px 64px;
-          text-decoration: none;
-          overflow: hidden;
-        }
-        .cel-nav-link.next { align-items: flex-end; text-align: right; }
-        .cel-nav-sep { background: rgba(28,26,24,0.1); }
-        .cel-nav-kicker {
+          gap: 16px;
+          padding: 18px 34px;
+          border: 1px solid rgba(210,185,134,.48);
+          color: var(--lum-ivory);
           font-size: 9px;
-          font-weight: 300;
-          letter-spacing: 0.3em;
+          letter-spacing: .28em;
+          text-decoration: none;
           text-transform: uppercase;
-          color: var(--dust);
-          margin-bottom: 12px;
-          transition: color 0.4s ease;
+          transition: background .4s ease;
         }
-        .cel-nav-link:hover .cel-nav-kicker { color: var(--gold); }
-        .cel-nav-name {
-          font-weight: 200;
-          font-size: clamp(24px, 3vw, 38px);
-          color: var(--noir);
-        }
+        .lum-button:hover { background: rgba(210,185,134,.1); }
+        .lum-bottom { display: grid; grid-template-columns: 1fr 1fr; background: var(--lum-night); }
+        .lum-bottom-link { padding: 48px 6vw; color: var(--lum-ivory); text-decoration: none; border-right: 1px solid rgba(241,236,227,.1); }
+        .lum-bottom-link:last-child { border-right: 0; text-align: right; }
+        .lum-bottom-link small { display: block; margin-bottom: 10px; color: var(--lum-smoke); font: 300 8px 'Jost',sans-serif; letter-spacing: .27em; text-transform: uppercase; }
+        .lum-bottom-link span { font: 300 clamp(25px,3vw,40px) 'Cormorant Garamond',serif; }
 
-        /* ── Responsive ── */
-        @media (max-width: 900px) {
-          .cel-hero-body { padding: 0 28px 56px; }
-          .cel-scroll-cue { display: none; }
-          .cel-story { padding: 88px 28px 64px; }
-          .cel-gallery { padding: 0 28px 8px; }
-          .cel-gallery-grid {
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: repeat(4, 42vw);
-          }
-          .cel-g1 { grid-column: 1 / 3; grid-row: 1 / 2; }
-          .cel-g2 { grid-column: 1 / 2; grid-row: 2 / 3; }
-          .cel-g3 { grid-column: 2 / 3; grid-row: 2 / 3; }
-          .cel-g4 { grid-column: 1 / 2; grid-row: 3 / 4; }
-          .cel-g5 { display: block; grid-column: 2 / 3; grid-row: 3 / 4; }
-          .cel-details {
-            grid-template-columns: 1fr;
-            gap: 40px;
-            padding: 80px 28px;
-          }
-          .cel-detail-sep { display: none; }
-          .cel-cta { padding: 96px 24px; }
-          .cel-nav { grid-template-columns: 1fr; }
-          .cel-nav-sep { height: 1px; }
-          .cel-nav-link, .cel-nav-link.next { align-items: flex-start; text-align: left; padding: 40px 28px; }
+        @media (max-width: 780px) {
+          .lum-nav { padding: 24px 20px; }
+          .lum-nav-group .lum-nav-link:first-child { display: none; }
+          .lum-hero-shade { background: linear-gradient(0deg, rgba(8,7,6,.96), rgba(8,7,6,.05) 76%); }
+          .lum-hero-content { padding: 130px 22px 80px; }
+          .lum-title { font-size: clamp(76px,26vw,120px); }
+          .lum-accent { position: static; display: block; margin: 16px 0 0 16%; font-size: 18vw; }
+          .lum-hero-meta { flex-direction: column; gap: 10px; }
+          .lum-scroll { display: none; }
+          .lum-statement { min-height: auto; padding: 110px 24px; }
+          .lum-orbit { width: 110vw; }
+          .lum-gallery { grid-template-columns: 1fr 1fr; grid-template-rows: 120vw 58vw; }
+          .lum-image-one { grid-column: 1 / 3; grid-row: 1; }
+          .lum-craft { grid-template-columns: 1fr; padding: 90px 24px; }
+          .lum-craft-intro { position: static; }
+          .lum-craft-item { grid-template-columns: 42px 1fr; gap: 14px; }
+          .lum-cta { min-height: 70svh; }
+          .lum-cta-light { width: 120vw; }
+          .lum-bottom { grid-template-columns: 1fr; }
+          .lum-bottom-link, .lum-bottom-link:last-child { text-align: left; border-right: 0; border-bottom: 1px solid rgba(241,236,227,.1); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .lum-reveal, .lum-image-inner { transition: none; }
         }
       `}</style>
 
-      <div className="cel-root">
-
-        {/* ── HERO ── */}
-        <section className="cel-hero">
-          <div className="cel-hero-img" />
-          <div className="cel-hero-grad" />
-          <div className="cel-hero-body">
-            <p className={`cel-j cel-eyebrow cel-reveal cel-d0 ${loaded ? "on" : ""}`}>
-              Signature Silhouettes &middot; No. 01
-            </p>
-            <h1 className={`cel-c cel-hero-title cel-reveal cel-d1 ${loaded ? "on" : ""}`}>
-              Celestine
+      <main className="lum-root">
+        <section className="lum-hero">
+          <div className="lum-hero-image" />
+          <div className="lum-hero-shade" />
+          <div className="lum-grain" />
+          <nav className={`lum-nav lum-j lum-reveal ${visible ? "show" : ""}`} aria-label="Collection navigation">
+            <Link href="/bridal" className="lum-c lum-logo">Aamira</Link>
+            <div className="lum-nav-group">
+              <Link href="/collections" className="lum-nav-link">Collections</Link>
+              <Link href="/book-appointment" className="lum-nav-link">Book Appointment</Link>
+            </div>
+          </nav>
+          <div className="lum-hero-content">
+            <p className={`lum-j lum-kicker lum-reveal ${visible ? "show" : ""}`}>Signature Silhouettes · No. 04</p>
+            <h1 className={`lum-c lum-title lum-reveal lum-d1 ${visible ? "show" : ""}`}>
+              Lumière
+              <span className="lum-accent">Dramatic radiance</span>
             </h1>
-            <p className={`cel-j cel-hero-sub cel-reveal cel-d2 ${loaded ? "on" : ""}`}>
-              A-Line &middot; Silk Charmeuse &middot; Sovereign
-            </p>
+            <div className={`lum-j lum-hero-meta lum-reveal lum-d2 ${visible ? "show" : ""}`}>
+              <span>Crystal tulle</span><span>Structured corsetry</span><span>Cathedral train</span>
+            </div>
           </div>
-          <div className="cel-scroll-cue">
-            <span className="cel-j cel-scroll-label">Scroll</span>
-            <div className="cel-scroll-line" />
-          </div>
+          <span className="lum-j lum-scroll">Discover</span>
         </section>
 
-        {/* ── STORY ── */}
-        <section className="cel-story" ref={storyRef}>
-          <div className="cel-story-inner">
-            <div className={`cel-story-mark cel-reveal cel-d0 ${inView1 ? "on" : ""}`}>
-              <div className="cel-rule" />
-              <span className="cel-j cel-story-kicker">The Story</span>
-              <div className="cel-rule" />
-            </div>
-            <h2 className={`cel-c cel-story-title cel-reveal cel-d1 ${inView1 ? "on" : ""}`}>
-              Born of quiet authority,
-              <br />
-              <em>worn like a second skin.</em>
+        <section className="lum-statement">
+          <div className="lum-orbit" />
+          <div className="lum-statement-inner">
+            <p className="lum-j lum-statement-label">A study in illumination</p>
+            <h2 className="lum-c lum-statement-title">
+              Designed for the moment<br /><em>light finds her.</em>
             </h2>
-            <p className={`cel-j cel-story-body cel-reveal cel-d2 ${inView1 ? "on" : ""}`}>
-              Celestine opens the collection with restraint rather than spectacle. The silk
-              charmeuse falls in a single unbroken line, catching light the way still water
-              catches the moon. Every seam is hidden, every movement considered &mdash; a gown
-              built not to announce the bride, but to let her presence speak first.
+            <p className="lum-j lum-statement-copy">
+              Lumière does not simply reflect light—it shapes it. Translucent layers, hand-set
+              crystal, and a precise internal structure create a gown that changes from every
+              angle, revealing its detail slowly as the bride moves through the room.
             </p>
           </div>
         </section>
 
-        {/* ── GALLERY ── */}
-        <section className="cel-gallery" ref={galleryRef}>
-          <div className={`cel-gallery-grid cel-reveal cel-d0 ${inView2 ? "on" : ""}`}>
-            <div className="cel-g-item cel-g1">
-              <div className="cel-g-img" style={{ backgroundImage: "url('/image/collections/celestine/1.jpg')" }} />
-            </div>
-            <div className="cel-g-item cel-g2">
-              <div className="cel-g-img" style={{ backgroundImage: "url('/image/collections/celestine/2.jpg')" }} />
-            </div>
-            <div className="cel-g-item cel-g3">
-              <div className="cel-g-img" style={{ backgroundImage: "url('/image/collections/celestine/3.jpg')" }} />
-            </div>
-            <div className="cel-g-item cel-g4">
-              <div className="cel-g-img" style={{ backgroundImage: "url('/image/collections/celestine/4.jpg')" }} />
-            </div>
-            <div className="cel-g-item cel-g5">
-              <div className="cel-g-img" style={{ backgroundImage: "url('/image/collections/celestine/5.jpg')" }} />
-            </div>
+        <section className="lum-gallery" aria-label="Lumière editorial gallery">
+          <div className="lum-image lum-image-one"><div className="lum-image-inner" /><div className="lum-image-overlay" /><span className="lum-j lum-image-label">I · Silhouette</span></div>
+          <div className="lum-image lum-image-two"><div className="lum-image-inner" /><div className="lum-image-overlay" /><span className="lum-j lum-image-label">II · Reflection</span></div>
+          <div className="lum-image lum-image-three"><div className="lum-image-inner" /><div className="lum-image-overlay" /><span className="lum-j lum-image-label">III · Afterlight</span></div>
+        </section>
+
+        <section className="lum-craft">
+          <div className="lum-craft-intro">
+            <p className="lum-j lum-craft-kicker">The making of Lumière</p>
+            <h2 className="lum-c lum-craft-title">Crafted<br /><em>in light.</em></h2>
+          </div>
+          <div className="lum-craft-list">
+            {craft.map(([number, title, copy]) => (
+              <article className="lum-craft-item" key={number}>
+                <span className="lum-j lum-craft-number">{number}</span>
+                <div>
+                  <h3 className="lum-c lum-craft-name">{title}</h3>
+                  <p className="lum-j lum-craft-copy">{copy}</p>
+                </div>
+              </article>
+            ))}
           </div>
         </section>
 
-        {/* ── DETAILS ── */}
-        <section className="cel-details">
-          <div>
-            <p className="cel-j cel-detail-label">Silhouette</p>
-            <p className="cel-c cel-detail-value">A-Line</p>
-            <p className="cel-j cel-detail-note">
-              A single fluid line from bodice to hem, cut close through the waist and
-              releasing softly toward the floor.
-            </p>
-          </div>
-          <div className="cel-detail-sep" />
-          <div>
-            <p className="cel-j cel-detail-label">Fabric</p>
-            <p className="cel-c cel-detail-value">Silk Charmeuse</p>
-            <p className="cel-j cel-detail-note">
-              A liquid-weight silk with a lustrous face and matte reverse, chosen for the
-              way it drapes without resistance.
-            </p>
-          </div>
-          <div className="cel-detail-sep" />
-          <div>
-            <p className="cel-j cel-detail-label">Mood</p>
-            <p className="cel-c cel-detail-value">Sovereign</p>
-            <p className="cel-j cel-detail-note">
-              Composed, unhurried, certain of itself &mdash; a gown for a bride who needs
-              no embellishment to command a room.
-            </p>
+        <section className="lum-cta">
+          <div className="lum-cta-light" />
+          <div className="lum-cta-inner">
+            <p className="lum-j lum-cta-kicker">Private atelier experience</p>
+            <h2 className="lum-c lum-cta-title">Step into<br /><em>the light.</em></h2>
+            <Link href="/book-appointment" className="lum-j lum-button">Experience Lumière <span>→</span></Link>
           </div>
         </section>
 
-        {/* ── CTA ── */}
-        <section className="cel-cta" ref={ctaRef}>
-          <div className="cel-cta-bg" />
-          <div className="cel-cta-vignette" />
-          <div className="cel-cta-inner">
-            <p className={`cel-j cel-cta-kicker cel-reveal cel-d0 ${inView3 ? "on" : ""}`}>
-              By Private Appointment
-            </p>
-            <h2 className={`cel-c cel-cta-title cel-reveal cel-d1 ${inView3 ? "on" : ""}`}>
-              Experience Celestine
-              <br />
-              in the atelier.
-            </h2>
-            <a href="#" className={`cel-j cel-cta-btn cel-reveal cel-d2 ${inView3 ? "on" : ""}`}>
-              Schedule An Appointment
-            </a>
-          </div>
-        </section>
-
-        {/* ── PREV / NEXT ── */}
-        <nav className="cel-nav">
-          <a href="/collections/lumiere" className="cel-nav-link">
-            <span className="cel-j cel-nav-kicker">&larr; Previous</span>
-            <span className="cel-c cel-nav-name">Lumi&egrave;re</span>
-          </a>
-          <div className="cel-nav-sep" />
-          <a href="/collections/seraphine" className="cel-nav-link next">
-            <span className="cel-j cel-nav-kicker">Next &rarr;</span>
-            <span className="cel-c cel-nav-name">Seraphine</span>
-          </a>
+        <nav className="lum-bottom" aria-label="Browse bridal collections">
+          <Link href="/collections/isadora" className="lum-bottom-link"><small>Previous silhouette</small><span>Isadora</span></Link>
+          <Link href="/collections/mireille" className="lum-bottom-link"><small>Next silhouette</small><span>Mireille</span></Link>
         </nav>
-
-      </div>
+      </main>
     </>
   );
 }

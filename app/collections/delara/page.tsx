@@ -1,512 +1,383 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
-export default function CelestinePage() {
+const details = [
+  ["Silhouette", "Sculpted Column", "A softly structured shape that traces the body before opening into a fluid train."],
+  ["Construction", "Draped Satin", "Bias-cut panels and hand-placed folds create movement without excess volume."],
+  ["Finishing", "Pearl Veil", "A detachable veil and subtle pearl work bring a quiet, luminous finish."],
+];
+
+export default function DelaraPage() {
   const [loaded, setLoaded] = useState(false);
-  const [inView1, setInView1] = useState(false);
-  const [inView2, setInView2] = useState(false);
-  const [inView3, setInView3] = useState(false);
-
-  const storyRef = useRef<HTMLElement>(null);
-  const galleryRef = useRef<HTMLElement>(null);
-  const ctaRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const t = setTimeout(() => setLoaded(true), 80);
-    return () => clearTimeout(t);
-  }, []);
-
-  useEffect(() => {
-    const make = (setter: (v: boolean) => void) =>
-      new IntersectionObserver(
-        ([e]) => {
-          if (e.isIntersecting) setter(true);
-        },
-        { threshold: 0.12 }
-      );
-
-    const o1 = make(setInView1);
-    const o2 = make(setInView2);
-    const o3 = make(setInView3);
-
-    if (storyRef.current) o1.observe(storyRef.current);
-    if (galleryRef.current) o2.observe(galleryRef.current);
-    if (ctaRef.current) o3.observe(ctaRef.current);
-
-    return () => {
-      o1.disconnect();
-      o2.disconnect();
-      o3.disconnect();
-    };
+    const timer = window.setTimeout(() => setLoaded(true), 80);
+    return () => window.clearTimeout(timer);
   }, []);
 
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,100;0,300;0,400;0,500;1,100;1,300;1,400&family=Jost:wght@200;300;400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@200;300;400&display=swap');
 
-        :root {
-          --ivory:      #F0EBE1;
-          --silk:       #F7F4EF;
-          --parchment:  #E8E0D0;
-          --noir:       #1C1A18;
-          --noir2:      #232120;
-          --dust:       #9E9488;
-          --blush:      #D9C4B5;
-          --gold:       #B8963E;
-          --champagne:  #D4B483;
-          --fog:        #C8BFB4;
-        }
-
-        .cel-root { background: var(--silk); }
-        .cel-c { font-family: 'Cormorant Garamond', serif; }
-        .cel-j { font-family: 'Jost', sans-serif; }
-
-        .cel-reveal {
-          opacity: 0;
-          transform: translateY(20px);
-          transition: opacity 1.3s cubic-bezier(0.16,1,0.3,1),
-                      transform 1.3s cubic-bezier(0.16,1,0.3,1);
-        }
-        .cel-reveal.on { opacity: 1; transform: none; }
-        .cel-d0 { transition-delay: 0.05s; }
-        .cel-d1 { transition-delay: 0.25s; }
-        .cel-d2 { transition-delay: 0.45s; }
-        .cel-d3 { transition-delay: 0.62s; }
-
-        /* ── HERO ── */
-        .cel-hero {
-          position: relative;
-          height: 100vh;
-          min-height: 560px;
+        .del-root {
+          --del-ink: #211a17;
+          --del-rose: #c9a99c;
+          --del-petal: #eadbd3;
+          --del-paper: #f5eee8;
+          --del-gold: #a88245;
+          --del-mist: #7e706a;
+          background: var(--del-paper);
+          color: var(--del-ink);
           overflow: hidden;
+        }
+        .del-c { font-family: 'Cormorant Garamond', serif; }
+        .del-j { font-family: 'Jost', sans-serif; }
+        .del-enter {
+          opacity: 0;
+          transform: translateY(24px);
+          transition: opacity 1.2s cubic-bezier(.16,1,.3,1), transform 1.2s cubic-bezier(.16,1,.3,1);
+        }
+        .del-enter.on { opacity: 1; transform: none; }
+        .del-d1 { transition-delay: .18s; }
+        .del-d2 { transition-delay: .36s; }
+        .del-d3 { transition-delay: .54s; }
+
+        .del-hero {
+          position: relative;
+          min-height: 100svh;
+          display: grid;
+          grid-template-columns: minmax(270px, .82fr) 1.18fr;
+          background: var(--del-petal);
+        }
+        .del-nav {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 10;
           display: flex;
-          align-items: flex-end;
-          background: var(--noir);
+          align-items: center;
+          justify-content: space-between;
+          padding: 30px 52px;
         }
-        .cel-hero-img {
+        .del-back, .del-book {
+          color: var(--del-ink);
+          font-size: 9px;
+          font-weight: 300;
+          letter-spacing: .27em;
+          text-transform: uppercase;
+          text-decoration: none;
+        }
+        .del-back { display: inline-flex; align-items: center; gap: 12px; }
+        .del-back::before { content: ''; width: 28px; height: 1px; background: var(--del-gold); }
+        .del-mark {
           position: absolute;
-          inset: -6%;
-          background-image: url('/image/collections/celestine/1.jpg');
-          background-size: cover;
-          background-position: center 22%;
-          filter: brightness(0.62) saturate(0.92) contrast(1.04);
+          left: 50%;
+          transform: translateX(-50%);
+          font-size: 19px;
+          font-weight: 300;
+          letter-spacing: .3em;
+          text-transform: uppercase;
         }
-        .cel-hero-grad {
-          position: absolute;
-          inset: 0;
-          background:
-            linear-gradient(to top, rgba(14,10,7,0.78) 0%, rgba(14,10,7,0.1) 48%, transparent 72%),
-            linear-gradient(180deg, rgba(14,10,7,0.32) 0%, transparent 28%);
-        }
-        .cel-hero-body {
+        .del-copy {
           position: relative;
           z-index: 2;
-          width: 100%;
-          padding: 0 64px 72px;
           display: flex;
           flex-direction: column;
-          align-items: flex-start;
+          justify-content: flex-end;
+          padding: 150px 7vw 9vh;
         }
-        .cel-eyebrow {
-          font-size: 9px;
-          font-weight: 300;
-          letter-spacing: 0.42em;
-          text-transform: uppercase;
-          color: var(--champagne);
-          padding-right: 0.42em;
-          margin-bottom: 18px;
-          -webkit-font-smoothing: antialiased;
-        }
-        .cel-hero-title {
-          font-weight: 100;
-          font-size: clamp(56px, 11vw, 156px);
-          line-height: 0.96;
-          letter-spacing: -0.01em;
-          color: var(--ivory);
-          text-shadow: 0 2px 40px rgba(8,5,3,0.5);
-        }
-        .cel-hero-sub {
-          margin-top: 18px;
-          font-size: 11px;
-          font-weight: 300;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          color: rgba(240,235,225,0.62);
-        }
-        .cel-scroll-cue {
+        .del-number {
           position: absolute;
-          right: 64px;
-          bottom: 72px;
-          z-index: 2;
-          display: flex;
-          align-items: center;
-          gap: 10px;
-        }
-        .cel-scroll-line {
-          width: 1px;
-          height: 46px;
-          background: linear-gradient(to bottom, transparent, rgba(212,180,131,0.7));
-        }
-        .cel-scroll-label {
-          writing-mode: vertical-rl;
-          font-size: 8.5px;
-          letter-spacing: 0.3em;
-          text-transform: uppercase;
-          color: rgba(240,235,225,0.5);
+          top: 14%;
+          right: -2vw;
+          color: transparent;
+          -webkit-text-stroke: 1px rgba(33,26,23,.12);
+          font-size: clamp(150px, 27vw, 420px);
           font-weight: 300;
+          line-height: .7;
         }
-
-        /* ── STORY ── */
-        .cel-story {
-          padding: 132px 64px 96px;
-          display: flex;
-          justify-content: center;
-        }
-        .cel-story-inner {
-          max-width: 700px;
-          text-align: center;
-        }
-        .cel-story-mark {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 14px;
-          margin-bottom: 32px;
-        }
-        .cel-rule {
-          width: 48px;
-          height: 1px;
-          background: rgba(184,150,62,0.5);
-        }
-        .cel-story-kicker {
+        .del-kicker {
+          margin-bottom: 22px;
+          color: var(--del-gold);
           font-size: 9px;
-          font-weight: 300;
-          letter-spacing: 0.34em;
+          letter-spacing: .36em;
           text-transform: uppercase;
-          color: var(--dust);
         }
-        .cel-story-title {
-          font-weight: 100;
-          font-size: clamp(28px, 3.4vw, 44px);
-          line-height: 1.18;
-          color: var(--noir);
-          margin-bottom: 28px;
-        }
-        .cel-story-title em {
-          font-style: italic;
-          color: var(--dust);
-        }
-        .cel-story-body {
-          font-size: 14.5px;
+        .del-title {
+          margin: 0;
+          font-size: clamp(72px, 11vw, 170px);
           font-weight: 300;
-          line-height: 2.05;
-          color: #5C564E;
+          letter-spacing: -.04em;
+          line-height: .72;
         }
-
-        /* ── GALLERY ── */
-        .cel-gallery {
-          padding: 0 64px 8px;
-        }
-        .cel-gallery-grid {
-          display: grid;
-          grid-template-columns: repeat(6, 1fr);
-          grid-template-rows: repeat(2, 38vh);
-          gap: 2px;
-          background: rgba(200,191,180,0.25);
-        }
-        .cel-g-item { position: relative; overflow: hidden; background: var(--noir2); }
-        .cel-g-img {
-          position: absolute;
-          inset: -8%;
-          background-size: cover;
-          background-position: center;
-          transition: transform 1.4s cubic-bezier(0.16,1,0.3,1), filter 1.4s ease;
-        }
-        .cel-g-item:hover .cel-g-img { transform: scale(1.06); }
-        .cel-g-item:hover .cel-g-img { filter: brightness(0.96); }
-
-        .cel-g1 { grid-column: 1 / 4; grid-row: 1 / 3; }
-        .cel-g2 { grid-column: 4 / 7; grid-row: 1 / 2; }
-        .cel-g3 { grid-column: 4 / 6; grid-row: 2 / 3; }
-        .cel-g4 { grid-column: 6 / 7; grid-row: 2 / 3; }
-        .cel-g5 { display: none; }
-
-        /* ── DETAILS ── */
-        .cel-details {
-          padding: 120px 64px 120px;
-          display: grid;
-          grid-template-columns: 1fr 1px 1fr 1px 1fr;
-          gap: 56px;
-          max-width: 1180px;
-          margin: 0 auto;
-        }
-        .cel-detail-sep { background: rgba(28,26,24,0.1); }
-        .cel-detail-label {
-          font-size: 9px;
+        .del-title em {
+          display: block;
+          margin-left: 17%;
+          color: var(--del-mist);
+          font-size: .34em;
           font-weight: 300;
-          letter-spacing: 0.3em;
-          text-transform: uppercase;
-          color: var(--gold);
-          margin-bottom: 18px;
-        }
-        .cel-detail-value {
-          font-weight: 200;
-          font-size: clamp(24px, 2.4vw, 32px);
-          color: var(--noir);
+          letter-spacing: .12em;
           line-height: 1.2;
-          margin-bottom: 14px;
         }
-        .cel-detail-note {
+        .del-intro {
+          max-width: 390px;
+          margin: 44px 0 0 auto;
+          color: #625650;
           font-size: 12.5px;
           font-weight: 300;
-          line-height: 1.85;
-          color: var(--dust);
+          line-height: 1.9;
         }
-
-        /* ── CTA ── */
-        .cel-cta {
+        .del-image {
           position: relative;
-          background: var(--noir);
-          padding: 140px 40px;
-          text-align: center;
+          min-height: 100svh;
           overflow: hidden;
         }
-        .cel-cta-bg {
+        .del-image-inner {
           position: absolute;
           inset: 0;
-          background-image: url('/image/collections/celestine/5.jpg');
-          background-size: cover;
-          background-position: center 30%;
-          filter: brightness(0.22) saturate(0.5);
+          background: url('/image/homepage/gambar3.jpg') center 28% / cover;
+          filter: saturate(.68) contrast(.95);
+          transform: scale(1.04);
         }
-        .cel-cta-vignette {
+        .del-image::after {
+          content: '';
           position: absolute;
           inset: 0;
-          background: radial-gradient(ellipse 90% 80% at 50% 50%, transparent 30%, rgba(8,5,3,0.6) 100%);
+          background: linear-gradient(90deg, rgba(234,219,211,.38), transparent 32%),
+                      linear-gradient(0deg, rgba(33,26,23,.22), transparent 38%);
         }
-        .cel-cta-inner { position: relative; z-index: 2; }
-        .cel-cta-kicker {
-          font-size: 9px;
-          font-weight: 300;
-          letter-spacing: 0.4em;
+        .del-image-caption {
+          position: absolute;
+          z-index: 2;
+          right: 30px;
+          bottom: 34px;
+          color: rgba(255,255,255,.75);
+          font-size: 8px;
+          letter-spacing: .3em;
           text-transform: uppercase;
-          color: var(--champagne);
-          margin-bottom: 24px;
+          writing-mode: vertical-rl;
         }
-        .cel-cta-title {
-          font-weight: 100;
-          font-size: clamp(34px, 4.6vw, 64px);
-          color: var(--ivory);
-          line-height: 1.08;
-          margin-bottom: 40px;
+
+        .del-manifesto {
+          position: relative;
+          display: grid;
+          grid-template-columns: .65fr 1.35fr;
+          gap: 7vw;
+          padding: 130px 8vw 150px;
         }
-        .cel-cta-btn {
+        .del-manifesto-label {
+          padding-top: 12px;
+          color: var(--del-gold);
+          font-size: 9px;
+          letter-spacing: .32em;
+          text-transform: uppercase;
+        }
+        .del-manifesto-title {
+          max-width: 800px;
+          margin: 0 0 42px;
+          font-size: clamp(38px, 5.5vw, 76px);
+          font-weight: 300;
+          line-height: 1.04;
+        }
+        .del-manifesto-title em { color: var(--del-rose); font-weight: 300; }
+        .del-manifesto-body {
+          columns: 2;
+          column-gap: 52px;
+          max-width: 760px;
+          color: #6b5f59;
+          font-size: 13px;
+          font-weight: 300;
+          line-height: 1.95;
+        }
+
+        .del-gallery {
+          display: grid;
+          grid-template-columns: 1.15fr .85fr;
+          grid-template-rows: 43vw 25vw;
+          gap: 12px;
+          padding: 0 3vw;
+        }
+        .del-shot { position: relative; overflow: hidden; background: var(--del-petal); }
+        .del-shot div {
+          position: absolute;
+          inset: 0;
+          background-size: cover;
+          background-position: center;
+          transition: transform 1.2s cubic-bezier(.16,1,.3,1);
+        }
+        .del-shot:hover div { transform: scale(1.035); }
+        .del-shot-a { grid-row: 1 / 3; }
+        .del-shot-a div { background-image: url('/image/homepage/gambar4.jpg'); background-position: center 24%; }
+        .del-shot-b div { background-image: url('/image/homepage/gambar5.jpg'); background-position: center 35%; }
+        .del-shot-c div { background-image: url('/image/homepage/gambar6.jpg'); background-position: center 32%; }
+        .del-gallery-index {
+          position: absolute;
+          z-index: 2;
+          left: 22px;
+          bottom: 20px;
+          color: rgba(255,255,255,.72);
+          font-size: 8px;
+          letter-spacing: .25em;
+        }
+
+        .del-details {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          padding: 120px 7vw;
+        }
+        .del-detail { padding: 0 5vw; border-left: 1px solid rgba(33,26,23,.12); }
+        .del-detail:first-child { border-left: 0; padding-left: 0; }
+        .del-detail:last-child { padding-right: 0; }
+        .del-detail-index { color: var(--del-gold); font-size: 9px; letter-spacing: .25em; }
+        .del-detail-title { margin: 20px 0 14px; font-size: clamp(25px, 2.8vw, 39px); font-weight: 300; }
+        .del-detail-copy { color: var(--del-mist); font-size: 12px; font-weight: 300; line-height: 1.8; }
+
+        .del-cta {
+          position: relative;
+          display: grid;
+          place-items: center;
+          min-height: 72vh;
+          padding: 100px 24px;
+          text-align: center;
+          background: var(--del-ink);
+          overflow: hidden;
+        }
+        .del-cta::before {
+          content: 'DELARA';
+          position: absolute;
+          color: transparent;
+          -webkit-text-stroke: 1px rgba(234,219,211,.08);
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 22vw;
+          letter-spacing: .05em;
+        }
+        .del-cta-inner { position: relative; z-index: 1; }
+        .del-cta-kicker { color: var(--del-rose); font-size: 9px; letter-spacing: .34em; text-transform: uppercase; }
+        .del-cta-title { margin: 25px 0 38px; color: var(--del-paper); font-size: clamp(42px, 6vw, 82px); font-weight: 300; line-height: 1; }
+        .del-cta-title em { color: var(--del-rose); font-weight: 300; }
+        .del-cta-link {
           display: inline-flex;
           align-items: center;
           gap: 14px;
-          padding: 18px 38px;
-          border: 1px solid rgba(184,150,62,0.55);
-          text-decoration: none;
-          font-size: 10.5px;
-          font-weight: 300;
-          letter-spacing: 0.28em;
-          text-transform: uppercase;
-          color: var(--ivory);
-          transition: background 0.5s ease, border-color 0.5s ease;
-        }
-        .cel-cta-btn:hover { background: rgba(184,150,62,0.12); border-color: var(--gold); }
-
-        /* ── PREV / NEXT NAV ── */
-        .cel-nav {
-          display: grid;
-          grid-template-columns: 1fr 1px 1fr;
-          background: var(--silk);
-        }
-        .cel-nav-link {
-          position: relative;
-          display: flex;
-          flex-direction: column;
-          padding: 56px 64px;
-          text-decoration: none;
-          overflow: hidden;
-        }
-        .cel-nav-link.next { align-items: flex-end; text-align: right; }
-        .cel-nav-sep { background: rgba(28,26,24,0.1); }
-        .cel-nav-kicker {
+          padding: 17px 30px;
+          border: 1px solid rgba(201,169,156,.6);
+          color: var(--del-paper);
           font-size: 9px;
-          font-weight: 300;
-          letter-spacing: 0.3em;
+          letter-spacing: .26em;
+          text-decoration: none;
           text-transform: uppercase;
-          color: var(--dust);
-          margin-bottom: 12px;
-          transition: color 0.4s ease;
         }
-        .cel-nav-link:hover .cel-nav-kicker { color: var(--gold); }
-        .cel-nav-name {
-          font-weight: 200;
-          font-size: clamp(24px, 3vw, 38px);
-          color: var(--noir);
+        .del-collection-nav { display: grid; grid-template-columns: 1fr 1fr; background: var(--del-paper); }
+        .del-next {
+          padding: 46px 6vw;
+          color: var(--del-ink);
+          text-decoration: none;
+          border-right: 1px solid rgba(33,26,23,.12);
         }
+        .del-next:last-child { border-right: 0; text-align: right; }
+        .del-next small { display: block; margin-bottom: 10px; color: var(--del-mist); font: 300 8px 'Jost',sans-serif; letter-spacing: .27em; text-transform: uppercase; }
+        .del-next span { font: 300 clamp(25px,3vw,40px) 'Cormorant Garamond',serif; }
 
-        /* ── Responsive ── */
-        @media (max-width: 900px) {
-          .cel-hero-body { padding: 0 28px 56px; }
-          .cel-scroll-cue { display: none; }
-          .cel-story { padding: 88px 28px 64px; }
-          .cel-gallery { padding: 0 28px 8px; }
-          .cel-gallery-grid {
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: repeat(4, 42vw);
-          }
-          .cel-g1 { grid-column: 1 / 3; grid-row: 1 / 2; }
-          .cel-g2 { grid-column: 1 / 2; grid-row: 2 / 3; }
-          .cel-g3 { grid-column: 2 / 3; grid-row: 2 / 3; }
-          .cel-g4 { grid-column: 1 / 2; grid-row: 3 / 4; }
-          .cel-g5 { display: block; grid-column: 2 / 3; grid-row: 3 / 4; }
-          .cel-details {
-            grid-template-columns: 1fr;
-            gap: 40px;
-            padding: 80px 28px;
-          }
-          .cel-detail-sep { display: none; }
-          .cel-cta { padding: 96px 24px; }
-          .cel-nav { grid-template-columns: 1fr; }
-          .cel-nav-sep { height: 1px; }
-          .cel-nav-link, .cel-nav-link.next { align-items: flex-start; text-align: left; padding: 40px 28px; }
+        @media (max-width: 800px) {
+          .del-nav { padding: 24px 20px; }
+          .del-mark { font-size: 15px; }
+          .del-book { display: none; }
+          .del-hero { grid-template-columns: 1fr; }
+          .del-copy { min-height: 56svh; padding: 130px 24px 48px; }
+          .del-number { top: 20%; right: -5vw; font-size: 56vw; }
+          .del-title { font-size: clamp(72px,25vw,112px); }
+          .del-intro { margin-top: 34px; }
+          .del-image { min-height: 66svh; }
+          .del-manifesto { grid-template-columns: 1fr; gap: 32px; padding: 86px 24px; }
+          .del-manifesto-body { columns: 1; }
+          .del-gallery { grid-template-columns: 1fr 1fr; grid-template-rows: 110vw 54vw; padding: 0; gap: 4px; }
+          .del-shot-a { grid-column: 1 / 3; grid-row: 1; }
+          .del-details { grid-template-columns: 1fr; padding: 80px 24px; gap: 40px; }
+          .del-detail, .del-detail:first-child, .del-detail:last-child { padding: 0 0 38px; border-left: 0; border-bottom: 1px solid rgba(33,26,23,.12); }
+          .del-detail:last-child { border-bottom: 0; }
+          .del-collection-nav { grid-template-columns: 1fr; }
+          .del-next, .del-next:last-child { border-right: 0; border-bottom: 1px solid rgba(33,26,23,.12); text-align: left; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .del-enter, .del-shot div { transition: none; }
         }
       `}</style>
 
-      <div className="cel-root">
+      <main className="del-root">
+        <section className="del-hero">
+          <nav className={`del-nav del-j del-enter ${loaded ? "on" : ""}`} aria-label="Collection navigation">
+            <Link href="/bridal" className="del-back">Aamira Bridal</Link>
+            <span className="del-c del-mark">Aamira</span>
+            <Link href="/book-appointment" className="del-book">Book Appointment</Link>
+          </nav>
 
-        {/* ── HERO ── */}
-        <section className="cel-hero">
-          <div className="cel-hero-img" />
-          <div className="cel-hero-grad" />
-          <div className="cel-hero-body">
-            <p className={`cel-j cel-eyebrow cel-reveal cel-d0 ${loaded ? "on" : ""}`}>
-              Signature Silhouettes &middot; No. 01
-            </p>
-            <h1 className={`cel-c cel-hero-title cel-reveal cel-d1 ${loaded ? "on" : ""}`}>
-              Celestine
+          <div className="del-copy">
+            <span className="del-c del-number">02</span>
+            <p className={`del-j del-kicker del-enter ${loaded ? "on" : ""}`}>Signature Silhouettes · No. 02</p>
+            <h1 className={`del-c del-title del-enter del-d1 ${loaded ? "on" : ""}`}>
+              Delara
+              <em>Sculptural Romance</em>
             </h1>
-            <p className={`cel-j cel-hero-sub cel-reveal cel-d2 ${loaded ? "on" : ""}`}>
-              A-Line &middot; Silk Charmeuse &middot; Sovereign
+            <p className={`del-j del-intro del-enter del-d2 ${loaded ? "on" : ""}`}>
+              A study in softness and structure, shaped for the bride who finds romance in restraint.
             </p>
           </div>
-          <div className="cel-scroll-cue">
-            <span className="cel-j cel-scroll-label">Scroll</span>
-            <div className="cel-scroll-line" />
+
+          <div className="del-image">
+            <div className="del-image-inner" />
+            <span className="del-j del-image-caption">Aamira Bridal · Collection II</span>
           </div>
         </section>
 
-        {/* ── STORY ── */}
-        <section className="cel-story" ref={storyRef}>
-          <div className="cel-story-inner">
-            <div className={`cel-story-mark cel-reveal cel-d0 ${inView1 ? "on" : ""}`}>
-              <div className="cel-rule" />
-              <span className="cel-j cel-story-kicker">The Story</span>
-              <div className="cel-rule" />
-            </div>
-            <h2 className={`cel-c cel-story-title cel-reveal cel-d1 ${inView1 ? "on" : ""}`}>
-              Born of quiet authority,
-              <br />
-              <em>worn like a second skin.</em>
+        <section className="del-manifesto">
+          <p className="del-j del-manifesto-label">The silhouette</p>
+          <div>
+            <h2 className="del-c del-manifesto-title">
+              Draped with intention.<br /><em>Remembered in motion.</em>
             </h2>
-            <p className={`cel-j cel-story-body cel-reveal cel-d2 ${inView1 ? "on" : ""}`}>
-              Celestine opens the collection with restraint rather than spectacle. The silk
-              charmeuse falls in a single unbroken line, catching light the way still water
-              catches the moon. Every seam is hidden, every movement considered &mdash; a gown
-              built not to announce the bride, but to let her presence speak first.
+            <p className="del-j del-manifesto-body">
+              Delara begins with the line of the body and builds outward in measured folds. Satin is
+              gathered by hand, allowing light to settle differently with every step. The result is
+              sculptural but never rigid—a gown that holds its form while remaining entirely alive.
+              Its romance is found in proportion: an open neckline, a softened waist, and a train
+              that arrives without spectacle. Every detail has been reduced until only feeling remains.
             </p>
           </div>
         </section>
 
-        {/* ── GALLERY ── */}
-        <section className="cel-gallery" ref={galleryRef}>
-          <div className={`cel-gallery-grid cel-reveal cel-d0 ${inView2 ? "on" : ""}`}>
-            <div className="cel-g-item cel-g1">
-              <div className="cel-g-img" style={{ backgroundImage: "url('/image/collections/celestine/1.jpg')" }} />
-            </div>
-            <div className="cel-g-item cel-g2">
-              <div className="cel-g-img" style={{ backgroundImage: "url('/image/collections/celestine/2.jpg')" }} />
-            </div>
-            <div className="cel-g-item cel-g3">
-              <div className="cel-g-img" style={{ backgroundImage: "url('/image/collections/celestine/3.jpg')" }} />
-            </div>
-            <div className="cel-g-item cel-g4">
-              <div className="cel-g-img" style={{ backgroundImage: "url('/image/collections/celestine/4.jpg')" }} />
-            </div>
-            <div className="cel-g-item cel-g5">
-              <div className="cel-g-img" style={{ backgroundImage: "url('/image/collections/celestine/5.jpg')" }} />
-            </div>
+        <section className="del-gallery" aria-label="Delara editorial gallery">
+          <div className="del-shot del-shot-a"><div /><span className="del-j del-gallery-index">01 — Form</span></div>
+          <div className="del-shot del-shot-b"><div /><span className="del-j del-gallery-index">02 — Drape</span></div>
+          <div className="del-shot del-shot-c"><div /><span className="del-j del-gallery-index">03 — Detail</span></div>
+        </section>
+
+        <section className="del-details">
+          {details.map(([label, title, copy], index) => (
+            <article className="del-detail" key={label}>
+              <p className="del-j del-detail-index">0{index + 1} · {label}</p>
+              <h3 className="del-c del-detail-title">{title}</h3>
+              <p className="del-j del-detail-copy">{copy}</p>
+            </article>
+          ))}
+        </section>
+
+        <section className="del-cta">
+          <div className="del-cta-inner">
+            <p className="del-j del-cta-kicker">Private appointments</p>
+            <h2 className="del-c del-cta-title">Discover <em>Delara</em></h2>
+            <Link href="/book-appointment" className="del-j del-cta-link">Book a consultation <span>→</span></Link>
           </div>
         </section>
 
-        {/* ── DETAILS ── */}
-        <section className="cel-details">
-          <div>
-            <p className="cel-j cel-detail-label">Silhouette</p>
-            <p className="cel-c cel-detail-value">A-Line</p>
-            <p className="cel-j cel-detail-note">
-              A single fluid line from bodice to hem, cut close through the waist and
-              releasing softly toward the floor.
-            </p>
-          </div>
-          <div className="cel-detail-sep" />
-          <div>
-            <p className="cel-j cel-detail-label">Fabric</p>
-            <p className="cel-c cel-detail-value">Silk Charmeuse</p>
-            <p className="cel-j cel-detail-note">
-              A liquid-weight silk with a lustrous face and matte reverse, chosen for the
-              way it drapes without resistance.
-            </p>
-          </div>
-          <div className="cel-detail-sep" />
-          <div>
-            <p className="cel-j cel-detail-label">Mood</p>
-            <p className="cel-c cel-detail-value">Sovereign</p>
-            <p className="cel-j cel-detail-note">
-              Composed, unhurried, certain of itself &mdash; a gown for a bride who needs
-              no embellishment to command a room.
-            </p>
-          </div>
-        </section>
-
-        {/* ── CTA ── */}
-        <section className="cel-cta" ref={ctaRef}>
-          <div className="cel-cta-bg" />
-          <div className="cel-cta-vignette" />
-          <div className="cel-cta-inner">
-            <p className={`cel-j cel-cta-kicker cel-reveal cel-d0 ${inView3 ? "on" : ""}`}>
-              By Private Appointment
-            </p>
-            <h2 className={`cel-c cel-cta-title cel-reveal cel-d1 ${inView3 ? "on" : ""}`}>
-              Experience Celestine
-              <br />
-              in the atelier.
-            </h2>
-            <a href="#" className={`cel-j cel-cta-btn cel-reveal cel-d2 ${inView3 ? "on" : ""}`}>
-              Schedule An Appointment
-            </a>
-          </div>
-        </section>
-
-        {/* ── PREV / NEXT ── */}
-        <nav className="cel-nav">
-          <a href="/collections/lumiere" className="cel-nav-link">
-            <span className="cel-j cel-nav-kicker">&larr; Previous</span>
-            <span className="cel-c cel-nav-name">Lumi&egrave;re</span>
-          </a>
-          <div className="cel-nav-sep" />
-          <a href="/collections/seraphine" className="cel-nav-link next">
-            <span className="cel-j cel-nav-kicker">Next &rarr;</span>
-            <span className="cel-c cel-nav-name">Seraphine</span>
-          </a>
+        <nav className="del-collection-nav" aria-label="Browse bridal collections">
+          <Link href="/collections/celestine" className="del-next"><small>Previous silhouette</small><span>Celestine</span></Link>
+          <Link href="/collections/isadora" className="del-next"><small>Next silhouette</small><span>Isadora</span></Link>
         </nav>
-
-      </div>
+      </main>
     </>
   );
 }

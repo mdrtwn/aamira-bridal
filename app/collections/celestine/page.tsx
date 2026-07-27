@@ -88,7 +88,7 @@ export default function CelestinePage() {
         .cel-hero-img {
           position: absolute;
           inset: -6%;
-          background-image: url('/image/collections/celestine/1.jpg');
+          background-image: url('/image/homepage/gambar2.png');
           background-size: cover;
           background-position: center 22%;
           filter: brightness(0.62) saturate(0.92) contrast(1.04);
@@ -298,7 +298,7 @@ export default function CelestinePage() {
         .cel-cta-bg {
           position: absolute;
           inset: 0;
-          background-image: url('/image/collections/celestine/5.jpg');
+          background-image: url('/image/homepage/gambar1.png');
           background-size: cover;
           background-position: center 30%;
           filter: brightness(0.22) saturate(0.5);
@@ -453,19 +453,19 @@ export default function CelestinePage() {
         <section className="cel-gallery" ref={galleryRef}>
           <div className={`cel-gallery-grid cel-reveal cel-d0 ${inView2 ? "on" : ""}`}>
             <div className="cel-g-item cel-g1">
-              <div className="cel-g-img" style={{ backgroundImage: "url('/image/collections/celestine/1.jpg')" }} />
+              <div className="cel-g-img" style={{ backgroundImage: "url('/image/homepage/gambar2.png')" }} />
             </div>
             <div className="cel-g-item cel-g2">
-              <div className="cel-g-img" style={{ backgroundImage: "url('/image/collections/celestine/2.jpg')" }} />
+              <div className="cel-g-img" style={{ backgroundImage: "url('/image/homepage/gambar3.jpg')" }} />
             </div>
             <div className="cel-g-item cel-g3">
-              <div className="cel-g-img" style={{ backgroundImage: "url('/image/collections/celestine/3.jpg')" }} />
+              <div className="cel-g-img" style={{ backgroundImage: "url('/image/homepage/gambar4.jpg')" }} />
             </div>
             <div className="cel-g-item cel-g4">
-              <div className="cel-g-img" style={{ backgroundImage: "url('/image/collections/celestine/4.jpg')" }} />
+              <div className="cel-g-img" style={{ backgroundImage: "url('/image/wedding/bawah.webp')" }} />
             </div>
             <div className="cel-g-item cel-g5">
-              <div className="cel-g-img" style={{ backgroundImage: "url('/image/collections/celestine/5.jpg')" }} />
+              <div className="cel-g-img" style={{ backgroundImage: "url('/image/homepage/gambar1.png')" }} />
             </div>
           </div>
         </section>
@@ -513,7 +513,7 @@ export default function CelestinePage() {
               <br />
               in the atelier.
             </h2>
-            <a href="#" className={`cel-j cel-cta-btn cel-reveal cel-d2 ${inView3 ? "on" : ""}`}>
+            <a href="/book-appointment" className={`cel-j cel-cta-btn cel-reveal cel-d2 ${inView3 ? "on" : ""}`}>
               Schedule An Appointment
             </a>
           </div>
@@ -521,14 +521,14 @@ export default function CelestinePage() {
 
         {/* ── PREV / NEXT ── */}
         <nav className="cel-nav">
-          <a href="/collections/lumiere" className="cel-nav-link">
+          <a href="/collections/seraphine" className="cel-nav-link">
             <span className="cel-j cel-nav-kicker">&larr; Previous</span>
-            <span className="cel-c cel-nav-name">Lumi&egrave;re</span>
+            <span className="cel-c cel-nav-name">Seraphine</span>
           </a>
           <div className="cel-nav-sep" />
-          <a href="/collections/seraphine" className="cel-nav-link next">
+          <a href="/collections/delara" className="cel-nav-link next">
             <span className="cel-j cel-nav-kicker">Next &rarr;</span>
-            <span className="cel-c cel-nav-name">Seraphine</span>
+            <span className="cel-c cel-nav-name">Delara</span>
           </a>
         </nav>
 

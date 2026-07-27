@@ -1,22 +1,32 @@
-"use client";
+import type { Metadata } from "next";
+import { Cormorant_Garamond, Jost } from "next/font/google";
 
-import { useEffect, useState } from "react";
+const cormorant = Cormorant_Garamond({
+  variable: "--font-aamira-display",
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
+const jost = Jost({
+  variable: "--font-aamira-body",
+  subsets: ["latin"],
+  weight: ["300", "400"],
+  display: "swap",
+});
+
+export const metadata: Metadata = {
+  title: "Aamira — Bridal Couture & Ready-to-Wear",
+  description:
+    "Discover Aamira Bridal couture and Aamira Basic ready-to-wear. Choose the Aamira experience made for you.",
+};
 
 export default function AamiraEntry() {
-  const [loaded, setLoaded] = useState(false);
-  const [bridalHover, setBridalHover] = useState(false);
-  const [basicHover, setBasicHover] = useState(false);
-
-  useEffect(() => {
-    const t = setTimeout(() => setLoaded(true), 80);
-    return () => clearTimeout(t);
-  }, []);
 
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,100;0,300;0,400;0,500;1,100;1,300;1,400&family=Jost:wght@200;300;400&display=swap');
-
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
@@ -34,11 +44,11 @@ export default function AamiraEntry() {
         html, body { height: 100%; }
 
         .ae-root {
-          min-height: 100vh;
-          background: var(--noir);
+          min-height: 100dvh;
+          background: transparent;
           display: flex;
           flex-direction: column;
-          font-family: 'Jost', sans-serif;
+          font-family: var(--font-aamira-body), sans-serif;
           position: relative;
           overflow: hidden;
         }
@@ -48,7 +58,8 @@ export default function AamiraEntry() {
           position: fixed;
           inset: 0;
           z-index: 0;
-          background-image: url('https://plus.unsplash.com/premium_photo-1670430623154-24626c42fb33?q=80&w=1974&auto=format&fit=crop');
+          background-color: var(--noir);
+          background-image: url('/image/homepage/hero.jpg');
           background-size: cover;
           background-position: center;
           filter: brightness(0.22) saturate(0.42) contrast(1.06);
@@ -100,16 +111,17 @@ export default function AamiraEntry() {
         .ae-fade {
           opacity: 0;
           transform: translateY(8px);
-          transition: opacity 1.9s cubic-bezier(0.25, 0.1, 0.1, 1),
-                      transform 2.2s cubic-bezier(0.22, 0.8, 0.32, 1);
+          animation: aeFadeIn 1.2s cubic-bezier(0.22, 0.8, 0.32, 1) forwards;
         }
-        .ae-fade.on { opacity: 1; transform: none; }
-        .ae-d0 { transition-delay: 0.10s; }
-        .ae-d1 { transition-delay: 0.40s; }
-        .ae-d2 { transition-delay: 0.72s; }
-        .ae-d3 { transition-delay: 1.00s; }
-        .ae-d4 { transition-delay: 1.28s; }
-        .ae-d5 { transition-delay: 1.58s; }
+        @keyframes aeFadeIn {
+          to { opacity: 1; transform: none; }
+        }
+        .ae-d0 { animation-delay: 0.05s; }
+        .ae-d1 { animation-delay: 0.18s; }
+        .ae-d2 { animation-delay: 0.30s; }
+        .ae-d3 { animation-delay: 0.42s; }
+        .ae-d4 { animation-delay: 0.54s; }
+        .ae-d5 { animation-delay: 0.66s; }
 
         /* ── Nav ── */
         .ae-nav {
@@ -121,8 +133,8 @@ export default function AamiraEntry() {
           padding: 28px 44px;
         }
         .ae-nav-link {
-          font-family: 'Jost', sans-serif;
-          font-size: 8.5px;
+          font-family: var(--font-aamira-body), sans-serif;
+          font-size: 10px;
           font-weight: 300;
           letter-spacing: 0.32em;
           text-transform: uppercase;
@@ -145,6 +157,12 @@ export default function AamiraEntry() {
         }
         .ae-nav-link:hover { color: var(--ivory); }
         .ae-nav-link:hover::after { width: 100%; }
+        .ae-nav-link:focus-visible {
+          color: var(--ivory);
+          outline: 1px solid var(--gold);
+          outline-offset: 7px;
+        }
+        .ae-nav-link:focus-visible::after { width: 100%; }
 
         /* ── Main layout ── */
         .ae-main {
@@ -168,7 +186,7 @@ export default function AamiraEntry() {
         }
 
         .ae-logotype {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: var(--font-aamira-display), serif;
           font-weight: 300;
           font-size: clamp(38px, 5.8vw, 68px);
           color: var(--ivory);
@@ -200,8 +218,8 @@ export default function AamiraEntry() {
 
         /* ── Eyebrow ── */
         .ae-eyebrow {
-          font-family: 'Jost', sans-serif;
-          font-size: 8.5px;
+          font-family: var(--font-aamira-body), sans-serif;
+          font-size: 10px;
           font-weight: 300;
           letter-spacing: 0.46em;
           text-transform: uppercase;
@@ -239,8 +257,8 @@ export default function AamiraEntry() {
           background: linear-gradient(to top, transparent, rgba(184,150,62,0.4));
         }
         .ae-or-label {
-          font-family: 'Jost', sans-serif;
-          font-size: 7.5px;
+          font-family: var(--font-aamira-body), sans-serif;
+          font-size: 9px;
           font-weight: 300;
           letter-spacing: 0.36em;
           text-transform: uppercase;
@@ -289,6 +307,16 @@ export default function AamiraEntry() {
             inset 1px 0 0 rgba(212,180,131,0.07),
             inset -1px 0 0 rgba(212,180,131,0.07);
         }
+        .ae-card:focus-visible {
+          border-color: rgba(184,150,62,0.85);
+          outline: 1px solid var(--gold);
+          outline-offset: 5px;
+          transform: translateY(-3px);
+          box-shadow:
+            0 28px 88px rgba(6,4,2,0.90),
+            0 10px 32px rgba(6,4,2,0.65),
+            inset 0 1px 0 rgba(212,180,131,0.24);
+        }
 
         /* Card inner image */
         .ae-card-img {
@@ -301,7 +329,8 @@ export default function AamiraEntry() {
             transform 2.8s cubic-bezier(0.22, 0.8, 0.32, 1),
             filter    2.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .ae-card:hover .ae-card-img {
+        .ae-card:hover .ae-card-img,
+        .ae-card:focus-visible .ae-card-img {
           transform: scale(1.04);
           filter: brightness(0.44) contrast(1.12) saturate(0.58) sepia(0.16);
         }
@@ -345,7 +374,8 @@ export default function AamiraEntry() {
             inset 0 -20px 40px rgba(6,4,2,0.25);
           transition: box-shadow 2.0s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .ae-card:hover .ae-card-grad {
+        .ae-card:hover .ae-card-grad,
+        .ae-card:focus-visible .ae-card-grad {
           background: linear-gradient(
             to bottom,
             rgba(14,10,7,0.32)  0%,
@@ -355,8 +385,10 @@ export default function AamiraEntry() {
             rgba(8,5,3,0.92)  100%
           );
         }
-        .ae-card:hover .ae-card-grad::before { opacity: 1; }
-        .ae-card:hover .ae-card-grad::after {
+        .ae-card:hover .ae-card-grad::before,
+        .ae-card:focus-visible .ae-card-grad::before { opacity: 1; }
+        .ae-card:hover .ae-card-grad::after,
+        .ae-card:focus-visible .ae-card-grad::after {
           box-shadow:
             inset 0 0 72px rgba(6,4,2,0.68),
             inset 0 -24px 52px rgba(6,4,2,0.35);
@@ -376,7 +408,7 @@ export default function AamiraEntry() {
         }
 
         .ae-card-super {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: var(--font-aamira-display), serif;
           font-style: italic;
           font-size: clamp(10px, 1vw, 12px);
           font-weight: 300;
@@ -390,7 +422,7 @@ export default function AamiraEntry() {
         }
 
         .ae-card-title {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: var(--font-aamira-display), serif;
           font-size: clamp(38px, 5.2vw, 62px);
           font-weight: 300;
           letter-spacing: 0.06em;
@@ -406,8 +438,8 @@ export default function AamiraEntry() {
         }
 
         .ae-card-sub {
-          font-family: 'Jost', sans-serif;
-          font-size: 7.5px;
+          font-family: var(--font-aamira-body), sans-serif;
+          font-size: 9px;
           font-weight: 300;
           letter-spacing: 0.38em;
           text-transform: uppercase;
@@ -419,8 +451,8 @@ export default function AamiraEntry() {
 
         /* Card CTA — underline style */
         .ae-card-cta {
-          font-family: 'Jost', sans-serif;
-          font-size: 7.5px;
+          font-family: var(--font-aamira-body), sans-serif;
+          font-size: 9px;
           font-weight: 300;
           letter-spacing: 0.32em;
           text-transform: uppercase;
@@ -440,8 +472,10 @@ export default function AamiraEntry() {
           background: rgba(240,235,225,0.35);
           transition: background 1.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .ae-card:hover .ae-card-cta { color: var(--ivory); }
-        .ae-card:hover .ae-card-cta::after { background: var(--gold); }
+        .ae-card:hover .ae-card-cta,
+        .ae-card:focus-visible .ae-card-cta { color: var(--ivory); }
+        .ae-card:hover .ae-card-cta::after,
+        .ae-card:focus-visible .ae-card-cta::after { background: var(--gold); }
 
         /* Corner brackets — restrained reveal, no growth flash */
         .ae-corner {
@@ -455,7 +489,8 @@ export default function AamiraEntry() {
             width    1.8s cubic-bezier(0.22, 0.8, 0.32, 1),
             height   1.8s cubic-bezier(0.22, 0.8, 0.32, 1);
         }
-        .ae-card:hover .ae-corner { opacity: 1; width: 22px; height: 22px; }
+        .ae-card:hover .ae-corner,
+        .ae-card:focus-visible .ae-corner { opacity: 1; width: 22px; height: 22px; }
         .ae-corner-tl { top: 10px;    left: 10px;  border-top: 1px solid rgba(184,150,62,0.80); border-left:  1px solid rgba(184,150,62,0.80); }
         .ae-corner-tr { top: 10px;    right: 10px; border-top: 1px solid rgba(184,150,62,0.80); border-right: 1px solid rgba(184,150,62,0.80); }
         .ae-corner-bl { bottom: 10px; left: 10px;  border-bottom: 1px solid rgba(184,150,62,0.80); border-left:  1px solid rgba(184,150,62,0.80); }
@@ -485,8 +520,8 @@ export default function AamiraEntry() {
         }
 
         .ae-tagline {
-          font-family: 'Jost', sans-serif;
-          font-size: 7.5px;
+          font-family: var(--font-aamira-body), sans-serif;
+          font-size: 9px;
           font-weight: 300;
           letter-spacing: 0.44em;
           text-transform: uppercase;
@@ -497,20 +532,71 @@ export default function AamiraEntry() {
         }
 
         /* ── Responsive ── */
+        @media (max-width: 900px) and (min-width: 681px) {
+          .ae-main { padding-inline: 28px; }
+          .ae-cards { max-width: 650px; }
+          .ae-or { width: 64px; }
+          .ae-card-title { font-size: clamp(38px, 7vw, 54px); }
+        }
+
+        @media (max-height: 760px) and (min-width: 681px) {
+          .ae-nav { padding-block: 20px; }
+          .ae-logo-block { margin-bottom: 12px; }
+          .ae-eyebrow { margin-bottom: 28px; }
+          .ae-card { min-height: 220px; max-height: 310px; }
+          .ae-footer { padding-block: 18px 22px; }
+        }
+
         @media (max-width: 680px) {
+          .ae-root { min-height: 100dvh; overflow-y: auto; }
           .ae-cards {
             flex-direction: column;
-            gap: 16px;
-            max-width: 340px;
+            gap: 12px;
+            max-width: 360px;
           }
           .ae-or { flex-direction: row; width: auto; gap: 12px; }
           .ae-or-line { width: 28px; height: 1px; background: linear-gradient(to right, transparent, rgba(184,150,62,0.4)) !important; }
           .ae-or-line.bot { background: linear-gradient(to left, transparent, rgba(184,150,62,0.4)) !important; }
-          .ae-card { aspect-ratio: 1.4 / 1; max-height: 220px; }
-          .ae-nav { padding: 20px 24px; }
-          .ae-main { padding: 0 20px; }
-          .ae-footer { padding: 20px 20px 28px; }
+          .ae-card {
+            aspect-ratio: auto;
+            width: 100%;
+            height: clamp(160px, 24dvh, 205px);
+            min-height: 160px;
+            max-height: 205px;
+          }
+          .ae-card-body { padding-bottom: 18px; }
+          .ae-card-super { font-size: 11px; }
+          .ae-card-title { font-size: clamp(38px, 12vw, 52px); margin-bottom: 7px; }
+          .ae-card-sub { font-size: 9px; margin-bottom: 13px; }
+          .ae-card-cta { font-size: 9px; }
+          .ae-nav { padding: 18px 20px; }
+          .ae-main { padding: 6px 20px 0; justify-content: flex-start; }
+          .ae-logo-block { margin-bottom: 12px; }
+          .ae-eyebrow { margin-bottom: 24px; font-size: 10px; }
+          .ae-footer { padding: 18px 20px 24px; gap: 10px; }
           .ae-logotype { letter-spacing: 0.36em; font-size: clamp(28px, 8vw, 48px); padding-right: 0.36em; }
+          .ae-tagline { font-size: 9px; letter-spacing: .3em; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .ae-fade {
+            opacity: 1;
+            transform: none;
+            animation: none;
+          }
+          .ae-card,
+          .ae-card-img,
+          .ae-card-grad,
+          .ae-card-grad::before,
+          .ae-card-grad::after,
+          .ae-card-cta,
+          .ae-card-cta::after,
+          .ae-corner,
+          .ae-nav-link,
+          .ae-nav-link::after,
+          .ae-monogram {
+            transition: none;
+          }
         }
       `}</style>
 
@@ -521,10 +607,10 @@ export default function AamiraEntry() {
       {/* Radial vignette */}
       <div className="ae-vignette" />
 
-      <div className="ae-root">
+      <div className={`ae-root ${cormorant.variable} ${jost.variable}`}>
 
         {/* ── NAV ── */}
-        <nav className={`ae-nav ae-fade ae-d0 ${loaded ? "on" : ""}`}>
+        <nav className="ae-nav ae-fade ae-d0">
           <a href="/story" className="ae-nav-link">About Aamira</a>
         </nav>
 
@@ -532,8 +618,8 @@ export default function AamiraEntry() {
         <main className="ae-main">
 
           {/* Logotype */}
-          <div className={`ae-logo-block ae-fade ae-d1 ${loaded ? "on" : ""}`}>
-            <span className="ae-logotype">Aamira</span>
+          <div className="ae-logo-block ae-fade ae-d1">
+            <h1 className="ae-logotype">Aamira</h1>
             <div className="ae-logo-ornament">
               <div className="ae-orn-line" />
               {/* Diamond dot */}
@@ -545,25 +631,24 @@ export default function AamiraEntry() {
           </div>
 
           {/* Eyebrow */}
-          <p className={`ae-eyebrow ae-fade ae-d2 ${loaded ? "on" : ""}`}>
+          <p className="ae-eyebrow ae-fade ae-d2">
             Choose Your Experience
           </p>
 
           {/* Cards */}
-          <div className={`ae-cards ae-fade ae-d3 ${loaded ? "on" : ""}`}>
+          <div className="ae-cards ae-fade ae-d3">
 
             {/* ── BRIDAL CARD ── */}
             <a
               href="/bridal"
               className="ae-card"
-              onMouseEnter={() => setBridalHover(true)}
-              onMouseLeave={() => setBridalHover(false)}
               aria-label="Enter Aamira Bridal"
             >
               <div
                 className="ae-card-img"
+                aria-hidden="true"
                 style={{
-                  backgroundImage: `url('https://images.unsplash.com/photo-1492175742197-ed20dc5a6bed?q=80&w=987&auto=format&fit=crop')`,
+                  backgroundImage: `url('/image/homepage/gambar1.png')`,
                   backgroundPosition: "center 10%",
                 }}
               />
@@ -584,7 +669,7 @@ export default function AamiraEntry() {
             </a>
 
             {/* ── OR DIVIDER ── */}
-            <div className={`ae-or ae-fade ae-d3 ${loaded ? "on" : ""}`}>
+            <div className="ae-or ae-fade ae-d3" aria-hidden="true">
               <div className="ae-or-line" />
               <span className="ae-or-label">Or</span>
               <div className="ae-or-line bot" />
@@ -594,14 +679,13 @@ export default function AamiraEntry() {
             <a
               href="/basic"
               className="ae-card"
-              onMouseEnter={() => setBasicHover(true)}
-              onMouseLeave={() => setBasicHover(false)}
               aria-label="Enter Aamira Basic"
             >
               <div
                 className="ae-card-img"
+                aria-hidden="true"
                 style={{
-                  backgroundImage: `url('https://plus.unsplash.com/premium_photo-1679064458881-76904cf6d1aa?q=80&w=987&auto=format&fit=crop')`,
+                  backgroundImage: `url('/image/homepage/gambar4.jpg')`,
                   backgroundPosition: "center 15%",
                   filter: "brightness(0.58) contrast(1.04) saturate(0.6) sepia(0.08)",
                 }}
@@ -626,7 +710,7 @@ export default function AamiraEntry() {
         </main>
 
         {/* ── FOOTER ── */}
-        <footer className={`ae-footer ae-fade ae-d5 ${loaded ? "on" : ""}`}>
+        <footer className="ae-footer ae-fade ae-d5">
           {/* Monogram mark — stylised AAMIRA letterform */}
           <svg
             className="ae-monogram"
