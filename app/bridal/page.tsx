@@ -8,6 +8,7 @@ import BrandStory from "../BrandStory";
 import ConsultationCTA from "../ConsultationCTA";
 import Footer from "../Footer";
 import Navbar from "../Navbar";
+import MobileNavbar from "../MobileNavbar";
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false);
@@ -204,6 +205,7 @@ export default function Home() {
         style={{ background: "var(--noir)" }}
       >
         <Navbar />
+        <MobileNavbar />
 
         {/* Background image with parallax */}
         <div

@@ -234,6 +234,11 @@ export default function MobileNavbar() {
             transition-delay: 0s;
           }
 
+          .mobile-bridal-overlay:not(.is-open),
+          .mobile-bridal-overlay:not(.is-open) * {
+            pointer-events: none !important;
+          }
+
           .mobile-bridal-screen {
             position: absolute;
             z-index: 0;
@@ -334,8 +339,12 @@ export default function MobileNavbar() {
             list-style: none;
           }
 
+          .mobile-bridal-main-screen .mobile-bridal-menu-list {
+            border-bottom: 1px solid rgba(240,235,225,.14);
+          }
+
           .mobile-bridal-menu-item {
-            border-bottom: 1px solid rgba(240,235,225,.09);
+            border-bottom: 0;
           }
 
           .mobile-bridal-menu-link,
@@ -444,14 +453,15 @@ export default function MobileNavbar() {
         id="mobile-bridal-menu"
         className={`mobile-bridal-overlay ${open ? "is-open" : ""}`}
         aria-hidden={!open}
+        inert={!open}
       >
         <div
           ref={mainScreenRef}
-          className={`mobile-bridal-screen ${screen === null ? "is-active" : ""}`}
+          className={`mobile-bridal-screen mobile-bridal-main-screen ${open && screen === null ? "is-active" : ""}`}
           role="dialog"
           aria-modal="true"
-          aria-hidden={screen !== null}
-          inert={screen !== null}
+          aria-hidden={!open || screen !== null}
+          inert={!open || screen !== null}
           aria-label="Bridal menu"
         >
           <header className="mobile-bridal-screen-header">
@@ -486,11 +496,11 @@ export default function MobileNavbar() {
 
         <div
           ref={collectionsScreenRef}
-          className={`mobile-bridal-screen ${screen === "collections" ? "is-active" : ""}`}
+          className={`mobile-bridal-screen ${open && screen === "collections" ? "is-active" : ""}`}
           role="dialog"
           aria-modal="true"
-          aria-hidden={screen !== "collections"}
-          inert={screen !== "collections"}
+          aria-hidden={!open || screen !== "collections"}
+          inert={!open || screen !== "collections"}
           aria-label="Collections menu"
         >
           <header className="mobile-bridal-screen-header">
@@ -513,11 +523,11 @@ export default function MobileNavbar() {
 
         <div
           ref={atelierScreenRef}
-          className={`mobile-bridal-screen ${screen === "atelier" ? "is-active" : ""}`}
+          className={`mobile-bridal-screen ${open && screen === "atelier" ? "is-active" : ""}`}
           role="dialog"
           aria-modal="true"
-          aria-hidden={screen !== "atelier"}
-          inert={screen !== "atelier"}
+          aria-hidden={!open || screen !== "atelier"}
+          inert={!open || screen !== "atelier"}
           aria-label="Atelier menu"
         >
           <header className="mobile-bridal-screen-header">
