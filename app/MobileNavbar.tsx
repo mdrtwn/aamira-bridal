@@ -236,6 +236,7 @@ export default function MobileNavbar() {
 
           .mobile-bridal-screen {
             position: absolute;
+            z-index: 0;
             inset: 0;
             display: flex;
             overflow-y: auto;
@@ -251,7 +252,13 @@ export default function MobileNavbar() {
               visibility 0s linear 260ms;
           }
 
+          .mobile-bridal-screen:not(.is-active),
+          .mobile-bridal-screen:not(.is-active) * {
+            pointer-events: none !important;
+          }
+
           .mobile-bridal-screen.is-active {
+            z-index: 1;
             opacity: 1;
             visibility: visible;
             pointer-events: auto;
@@ -443,6 +450,8 @@ export default function MobileNavbar() {
           className={`mobile-bridal-screen ${screen === null ? "is-active" : ""}`}
           role="dialog"
           aria-modal="true"
+          aria-hidden={screen !== null}
+          inert={screen !== null}
           aria-label="Bridal menu"
         >
           <header className="mobile-bridal-screen-header">
@@ -480,6 +489,8 @@ export default function MobileNavbar() {
           className={`mobile-bridal-screen ${screen === "collections" ? "is-active" : ""}`}
           role="dialog"
           aria-modal="true"
+          aria-hidden={screen !== "collections"}
+          inert={screen !== "collections"}
           aria-label="Collections menu"
         >
           <header className="mobile-bridal-screen-header">
@@ -505,6 +516,8 @@ export default function MobileNavbar() {
           className={`mobile-bridal-screen ${screen === "atelier" ? "is-active" : ""}`}
           role="dialog"
           aria-modal="true"
+          aria-hidden={screen !== "atelier"}
+          inert={screen !== "atelier"}
           aria-label="Atelier menu"
         >
           <header className="mobile-bridal-screen-header">
