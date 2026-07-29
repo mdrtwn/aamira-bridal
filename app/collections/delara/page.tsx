@@ -309,12 +309,6 @@ export default function DelaraPage() {
 
       <main className="del-root">
         <section className="del-hero">
-          <nav className={`del-nav del-j del-enter ${loaded ? "on" : ""}`} aria-label="Collection navigation">
-            <Link href="/bridal" className="del-back">Aamira Bridal</Link>
-            <span className="del-c del-mark">Aamira</span>
-            <Link href="/book-appointment" className="del-book">Book Appointment</Link>
-          </nav>
-
           <div className="del-copy">
             <span className="del-c del-number">02</span>
             <p className={`del-j del-kicker del-enter ${loaded ? "on" : ""}`}>Signature Silhouettes · No. 02</p>

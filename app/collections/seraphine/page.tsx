@@ -321,11 +321,6 @@ export default function SeraphinePage() {
 
       <main className="ser-root">
         <section className="ser-hero">
-          <nav className={`ser-nav ser-j ser-reveal ${loaded ? "on" : ""}`} aria-label="Collection navigation">
-            <Link href="/bridal" className="ser-nav-link">Aamira Bridal</Link>
-            <span className="ser-c ser-logo">Aamira</span>
-            <Link href="/book-appointment" className="ser-nav-link">Private Appointment</Link>
-          </nav>
           <div className="ser-hero-copy">
             <span className="ser-c ser-number">06</span>
             <p className={`ser-j ser-kicker ser-reveal ${loaded ? "on" : ""}`}>Signature Silhouettes · No. 06</p>

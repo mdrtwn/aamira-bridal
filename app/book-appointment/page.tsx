@@ -468,15 +468,6 @@ export default function BookAppointmentPage() {
       <div className="ba-root">
         <div className="ba-grain-overlay" />
 
-        {/* ── NAV ── */}
-        <nav className="ba-nav">
-          <Link href="/bridal" className="ba-nav-back">
-            <span className="ba-nav-back-bar" />
-            Back to Aamira
-          </Link>
-          <span className="ba-nav-logo">Aamira</span>
-        </nav>
-
         {/* ── HEADER ── */}
         <header className="ba-header">
           <div className={`ba-eyebrow ba-reveal ba-d0 ${loaded ? "on" : ""}`}>

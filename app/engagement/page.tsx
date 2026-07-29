@@ -428,61 +428,6 @@ export default function EngagementPage() {
       {/* ─── HERO ────────────────────────────────────────────── */}
       <section className="en-hero">
 
-        {/* ── NAV ── */}
-        <nav
-          className={`absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-8 md:px-16 py-8 fade-in ${loaded ? "visible" : ""}`}
-        >
-          <span
-            style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: "clamp(16px, 1.6vw, 20px)",
-              fontWeight: 300,
-              color: "var(--champagne)",
-              letterSpacing: "0.22em",
-              textTransform: "uppercase",
-            }}
-          >
-            Aamira
-          </span>
-
-          <div
-            className="absolute left-1/2 -translate-x-1/2 flex items-center"
-            style={{ gap: "14px" }}
-          >
-            <a
-              href="#"
-              className="nav-link"
-              style={{
-                fontFamily: "'Jost', sans-serif",
-                fontSize: "10.5px",
-                fontWeight: 300,
-                textTransform: "uppercase",
-                color: "var(--warm-fog)",
-                textDecoration: "none",
-              }}
-            >
-              Collections
-            </a>
-            <span className="nav-sep">—</span>
-            <a
-              href="#"
-              className="nav-link"
-              style={{
-                fontFamily: "'Jost', sans-serif",
-                fontSize: "10.5px",
-                fontWeight: 300,
-                textTransform: "uppercase",
-                color: "var(--warm-fog)",
-                textDecoration: "none",
-              }}
-            >
-              Atelier
-            </a>
-          </div>
-
-          <div style={{ width: "20px" }} />
-        </nav>
-
         {/* ── IMAGE — bleeding background layer ── */}
         <div className="en-hero-image">
           <div

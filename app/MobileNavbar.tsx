@@ -6,12 +6,18 @@ import { useEffect, useRef, useState } from "react";
 type MobileScreen = "collections" | "atelier" | null;
 
 const collectionLinks = [
-  ["Celestine", "/collections/celestine"],
-  ["Delara", "/collections/delara"],
-  ["Lumière", "/collections/lumiere"],
-  ["Mireille", "/collections/mireille"],
-  ["Isadora", "/collections/isadora"],
-  ["Seraphine", "/collections/seraphine"],
+  ["Analise", "/collections/analise"],
+  ["Aneesa", "/bridal#gown-aneesa"],
+  ["Ayah", "/bridal#gown-ayah"],
+  ["Batoel", "/bridal#gown-batoel"],
+  ["Yasmin", "/bridal#gown-yasmin"],
+  ["Dina", "/bridal#gown-dina"],
+  ["Inaz", "/bridal#gown-inaz"],
+  ["Jasmine", "/bridal#gown-jasmine"],
+  ["Manal", "/bridal#gown-manal"],
+  ["Mariam", "/bridal#gown-mariam"],
+  ["Mariamm", "/bridal#gown-mariamm"],
+  ["Rose", "/bridal#gown-rose"],
 ] as const;
 
 const atelierLinks = [
@@ -22,9 +28,10 @@ const atelierLinks = [
   ["Private Consultation", "/book-appointment"],
 ] as const;
 
-export default function MobileNavbar() {
+export default function MobileNavbar({ hideInitialLogo = false }: Readonly<{ hideInitialLogo?: boolean }>) {
   const [open, setOpen] = useState(false);
   const [screen, setScreen] = useState<MobileScreen>(null);
+  const [scrolled, setScrolled] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const mainScreenRef = useRef<HTMLDivElement>(null);
@@ -49,6 +56,31 @@ export default function MobileNavbar() {
       mainScreenRef.current?.querySelector<HTMLButtonElement>("button")?.focus();
     });
   };
+
+  useEffect(() => {
+    if (!hideInitialLogo) return;
+
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const hero = document.getElementById("bridal-hero");
+      const threshold = hero ? hero.offsetHeight * .72 : 520;
+      setScrolled(window.scrollY >= threshold);
+    };
+    const scheduleUpdate = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
+    return () => {
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, [hideInitialLogo]);
 
   useEffect(() => {
     if (!open) return;
@@ -182,6 +214,15 @@ export default function MobileNavbar() {
             font-family: 'Cormorant Garamond', serif;
             text-decoration: none;
             text-transform: uppercase;
+            transition:
+              opacity 380ms ease,
+              transform 380ms cubic-bezier(.2,.7,.2,1);
+          }
+
+          .mobile-bridal-bar.hide-initial-logo:not(.is-scrolled) .mobile-bridal-logo {
+            opacity: 0;
+            transform: translateY(-4px);
+            pointer-events: none;
           }
 
           .mobile-bridal-logo-main {
@@ -407,6 +448,7 @@ export default function MobileNavbar() {
         }
 
         @media (prefers-reduced-motion: reduce) {
+          .mobile-bridal-logo,
           .mobile-bridal-overlay,
           .mobile-bridal-screen {
             transition: none;
@@ -414,7 +456,10 @@ export default function MobileNavbar() {
         }
       `}</style>
 
-      <nav className="mobile-bridal-bar" aria-label="Mobile bridal navigation">
+      <nav
+        className={`mobile-bridal-bar ${hideInitialLogo ? "hide-initial-logo" : ""} ${scrolled ? "is-scrolled" : ""}`}
+        aria-label="Mobile bridal navigation"
+      >
         <button
           ref={menuButtonRef}
           type="button"

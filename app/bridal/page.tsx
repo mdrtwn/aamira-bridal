@@ -1,29 +1,16 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
-import SignatureDresses from "../SignatureDresses";
-import BrandStory from "../BrandStory";
-import ConsultationCTA from "../ConsultationCTA";
-import Footer from "../Footer";
-import Navbar from "../Navbar";
-import MobileNavbar from "../MobileNavbar";
+import GownArchiveGrid from "../GownArchiveGrid";
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
-  const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setLoaded(true), 100);
     return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -192,234 +179,211 @@ export default function Home() {
           100% { background-position: -200% center; }
         }
 
+        .bridal-campaign-hero {
+          position: relative;
+          min-height: 100svh;
+          overflow: hidden;
+          background: #0c0b0a;
+          isolation: isolate;
+        }
+
+        .bridal-campaign-image {
+          position: absolute;
+          inset: 0;
+          background-image: url('/image/hero/aamira-bridal-hero-v1.png');
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+        }
+
+        .bridal-campaign-image::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background:
+            linear-gradient(to bottom, rgba(10,9,8,.2), transparent 28%, rgba(10,9,8,.22)),
+            linear-gradient(90deg, rgba(10,9,8,.34), transparent 42%, rgba(10,9,8,.08));
+        }
+
+        .bridal-campaign-brand {
+          position: absolute;
+          z-index: 3;
+          top: 50%;
+          left: 50%;
+          display: flex;
+          transform: translate(-50%, -50%);
+          flex-direction: column;
+          align-items: center;
+          color: var(--ivory);
+          text-align: center;
+          text-transform: uppercase;
+          text-shadow: 0 4px 30px rgba(0,0,0,.42);
+        }
+
+        .bridal-campaign-brand.fade-in {
+          transform: translate(-50%, calc(-50% + 16px));
+        }
+
+        .bridal-campaign-brand.fade-in.visible {
+          transform: translate(-50%, -50%);
+        }
+
+        .bridal-campaign-brand-main {
+          padding-left: .12em;
+          font-family: 'Cormorant Garamond', serif;
+          font-size: clamp(52px, 6.3vw, 94px);
+          font-weight: 300;
+          letter-spacing: .12em;
+          line-height: .78;
+        }
+
+        .bridal-campaign-brand-sub {
+          margin-top: 18px;
+          font-family: 'Jost', sans-serif;
+          font-size: 9px;
+          font-weight: 300;
+          letter-spacing: .48em;
+        }
+
+        .bridal-campaign-brand-rule {
+          width: 64px;
+          height: 1px;
+          margin-top: 11px;
+          background: rgba(212,180,131,.72);
+        }
+
+        .bridal-campaign-bar {
+          position: absolute;
+          z-index: 4;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          min-height: 68px;
+          padding: 0 32px;
+          border-top: 1px solid rgba(240, 235, 225, .14);
+          background:
+            linear-gradient(
+              90deg,
+              rgba(35, 28, 21, .82),
+              rgba(50, 40, 29, .72)
+            );
+          box-shadow: 0 -18px 44px rgba(12, 11, 10, .12);
+          backdrop-filter: blur(12px) saturate(.8);
+          -webkit-backdrop-filter: blur(12px) saturate(.8);
+          font-family: 'Jost', sans-serif;
+          font-size: 11px;
+          font-weight: 400;
+          letter-spacing: .16em;
+          text-transform: uppercase;
+        }
+
+        .bridal-campaign-kicker {
+          color: #f3eadc;
+        }
+
+        .bridal-campaign-appointment {
+          display: inline-flex;
+          align-items: center;
+          gap: 13px;
+          color: #fffaf1;
+          text-decoration: none;
+          transition: color 280ms ease, gap 280ms ease;
+        }
+
+        .bridal-campaign-appointment::after {
+          content: '→';
+          color: var(--champagne);
+        }
+
+        .bridal-campaign-appointment:hover,
+        .bridal-campaign-appointment:focus-visible {
+          gap: 18px;
+          color: var(--champagne);
+        }
+
+        .bridal-campaign-appointment:focus-visible {
+          outline: 1px solid var(--gold);
+          outline-offset: 5px;
+        }
+
+        @media (max-width: 768px) {
+          .bridal-campaign-image {
+            background-position: 64% 42%;
+          }
+
+          .bridal-campaign-brand {
+            top: 50%;
+            width: 100%;
+          }
+
+          .bridal-campaign-brand-main {
+            font-size: clamp(44px, 14vw, 68px);
+          }
+
+          .bridal-campaign-bar {
+            min-height: 76px;
+            padding: 0 18px;
+            background:
+              linear-gradient(
+                90deg,
+                rgba(31, 25, 19, .86),
+                rgba(49, 39, 28, .78)
+              );
+            backdrop-filter: blur(10px) saturate(.78);
+            -webkit-backdrop-filter: blur(10px) saturate(.78);
+            font-size: 10px;
+            letter-spacing: .1em;
+          }
+
+          .bridal-campaign-kicker {
+            max-width: 48%;
+            line-height: 1.45;
+          }
+
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .fade-in,
+          .bridal-campaign-appointment {
+            transition: none;
+          }
+
+          .grain::after,
+          .scroll-line,
+          .shimmer-line {
+            animation: none;
+          }
+        }
+
       `}</style>
 
       {/* Grain overlay */}
       <div className="grain fixed inset-0 pointer-events-none z-50" />
 
       {/* ─── HERO SECTION ─── */}
-      <section
-        id="bridal-hero"
-        ref={heroRef}
-        className="relative w-full h-screen min-h-[100dvh] overflow-hidden"
-        style={{ background: "var(--noir)" }}
-      >
-        <Navbar />
-        <MobileNavbar />
+      <section id="bridal-hero" className="bridal-campaign-hero">
+        <div className="bridal-campaign-image" aria-hidden="true" />
 
-        {/* Background image with parallax */}
-        <div
-          className="absolute inset-0 w-full h-full"
-          style={{
-            transform: `translateY(${scrollY * 0.25}px)`,
-            willChange: "transform",
-          }}
-        >
-          {/* Placeholder image — replace src with actual editorial photography */}
-          <div
-            className="absolute inset-0 w-full h-full"
-            style={{
-              backgroundImage: `url('image/homepage/gambar2.png?q=80&w=1974&auto=format&fit=crop')`,
-              backgroundSize: "cover",
-              backgroundPosition: "center 40%",
-              filter: "grayscale(20%) brightness(0.62)",
-            }}
-          />
+        <div className={`bridal-campaign-brand fade-in delay-400 ${loaded ? "visible" : ""}`}>
+          <h1 className="bridal-campaign-brand-main">Aamira</h1>
+          <span className="bridal-campaign-brand-main">Bridal</span>
+          <span className="bridal-campaign-brand-sub">The Gown Archive</span>
+          <span className="bridal-campaign-brand-rule" aria-hidden="true" />
         </div>
 
-        {/* Dark gradient — bottom fade */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `linear-gradient(
-              to bottom,
-              rgba(28,26,24,0.18) 0%,
-              rgba(28,26,24,0.0) 30%,
-              rgba(28,26,24,0.0) 55%,
-              rgba(28,26,24,0.72) 100%
-            )`,
-          }}
-        />
-
-        {/* Left-side vertical gradient for text protection */}
-        <div
-          className="absolute inset-0 hidden md:block"
-          style={{
-            background: `linear-gradient(
-              to right,
-              rgba(28,26,24,0.10) 0%,
-              transparent 50%
-            )`,
-          }}
-        />
-
-        {/* ─── HERO CONTENT ─── */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center z-10 px-6 text-center">
-
-          {/* Ghost display text — large background type */}
-          <span
-            className={`font-cormorant absolute select-none pointer-events-none fade-in delay-200 ${loaded ? "visible" : ""}`}
-            style={{
-              fontSize: "clamp(80px, 18vw, 260px)",
-              fontWeight: 100,
-              color: "transparent",
-              WebkitTextStroke: "0.5px rgba(240,235,225,0.07)",
-              letterSpacing: "-0.03em",
-              lineHeight: 0.9,
-              userSelect: "none",
-              top: "50%",
-              transform: "translateY(-50%)",
-              whiteSpace: "nowrap",
-            }}
-          >
-            Aamira
-          </span>
-
-          {/* Eyebrow */}
-          <p
-            className={`fade-in delay-400 ${loaded ? "visible" : ""}`}
-            style={{
-              fontFamily: "'Jost', sans-serif",
-              fontSize: "10px",
-              fontWeight: 300,
-              letterSpacing: "0.32em",
-              textTransform: "uppercase",
-              color: "var(--blush)",
-              marginBottom: "28px",
-            }}
-          >
-            Bridal Couture
-          </p>
-
-          {/* Main headline */}
-          <h1
-            className={`font-cormorant fade-in delay-600 ${loaded ? "visible" : ""}`}
-            style={{
-              fontSize: "clamp(42px, 7.5vw, 96px)",
-              fontWeight: 100,
-              lineHeight: 1.05,
-              letterSpacing: "-0.02em",
-              color: "var(--ivory)",
-              maxWidth: "820px",
-            }}
-          >
-            Where devotion
-            <br />
-            <em style={{ fontStyle: "italic", fontWeight: 100 }}>becomes</em> design.
-          </h1>
-
-          {/* Divider */}
-          <div
-            className={`fade-in delay-800 ${loaded ? "visible" : ""}`}
-            style={{
-              width: "1px",
-              height: "40px",
-              background: `linear-gradient(to bottom, var(--gold), transparent)`,
-              margin: "32px auto",
-              opacity: 0.7,
-            }}
-          />
-
-          {/* Tagline */}
-          <p
-            className={`font-cormorant fade-in delay-800 ${loaded ? "visible" : ""}`}
-            style={{
-              fontSize: "clamp(15px, 1.6vw, 19px)",
-              fontWeight: 300,
-              fontStyle: "italic",
-              color: "var(--warm-fog)",
-              letterSpacing: "0.02em",
-              lineHeight: 1.7,
-              maxWidth: "480px",
-            }}
-          >
-            Each gown a beginning. Each stitch, a promise held in silk.
-          </p>
-
-          {/* CTA */}
-          <Link
-            href="/collections"
-            className={`cta-link fade-in delay-1000 ${loaded ? "visible" : ""}`}
-            style={{
-              marginTop: "48px",
-              fontFamily: "'Jost', sans-serif",
-              fontSize: "11px",
-              fontWeight: 300,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: "var(--ivory)",
-              textDecoration: "none",
-            }}
-          >
-            Explore the Collection
+        <div className={`bridal-campaign-bar fade-in delay-800 ${loaded ? "visible" : ""}`}>
+          <p className="bridal-campaign-kicker">Aamira Gown Archive · Latest Wedding Gowns</p>
+          <Link href="/book-appointment" className="bridal-campaign-appointment">
+            Book Appointment
           </Link>
-        </div>
-
-        {/* ─── BOTTOM STRIP ─── */}
-        <div
-          className={`absolute bottom-0 left-0 right-0 z-10 flex items-end justify-between px-8 md:px-16 pb-8 fade-in delay-1000 ${loaded ? "visible" : ""}`}
-        >
-          {/* Location */}
-          <p
-            style={{
-              fontFamily: "'Jost', sans-serif",
-              fontSize: "10px",
-              fontWeight: 300,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: "var(--dust)",
-            }}
-          >
-            Australia · Sydney · Indonesia
-          </p>
-
-          {/* Scroll indicator */}
-          <div className="flex flex-col items-center gap-2">
-            <span
-              style={{
-                fontFamily: "'Jost', sans-serif",
-                fontSize: "9px",
-                fontWeight: 300,
-                letterSpacing: "0.22em",
-                textTransform: "uppercase",
-                color: "var(--dust)",
-              }}
-            >
-              Scroll
-            </span>
-            <div
-              className="scroll-line"
-              style={{
-                width: "1px",
-                height: "36px",
-                background: `linear-gradient(to bottom, var(--dust), transparent)`,
-              }}
-            />
-          </div>
-
-          {/* Collection label */}
-          <p
-            style={{
-              fontFamily: "'Jost', sans-serif",
-              fontSize: "10px",
-              fontWeight: 300,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: "var(--dust)",
-            }}
-          >
-            SS · 2026
-          </p>
         </div>
       </section>
       <div id="collections">
-        <SignatureDresses />
+        <GownArchiveGrid />
       </div>
-      <div id="atelier">
-        <BrandStory />
-      </div>
-      <ConsultationCTA />
-      <Footer />
     </>
   );
 }

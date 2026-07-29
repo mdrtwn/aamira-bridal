@@ -325,13 +325,6 @@ export default function LumierePage() {
           <div className="lum-hero-image" />
           <div className="lum-hero-shade" />
           <div className="lum-grain" />
-          <nav className={`lum-nav lum-j lum-reveal ${visible ? "show" : ""}`} aria-label="Collection navigation">
-            <Link href="/bridal" className="lum-c lum-logo">Aamira</Link>
-            <div className="lum-nav-group">
-              <Link href="/collections" className="lum-nav-link">Collections</Link>
-              <Link href="/book-appointment" className="lum-nav-link">Book Appointment</Link>
-            </div>
-          </nav>
           <div className="lum-hero-content">
             <p className={`lum-j lum-kicker lum-reveal ${visible ? "show" : ""}`}>Signature Silhouettes · No. 04</p>
             <h1 className={`lum-c lum-title lum-reveal lum-d1 ${visible ? "show" : ""}`}>

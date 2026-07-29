@@ -412,12 +412,6 @@ export default function MireillePage() {
 
       <main className="mir-root">
         <section className="mir-hero">
-          <nav className={`mir-nav mir-j mir-reveal ${loaded ? "on" : ""}`} aria-label="Collection navigation">
-            <Link href="/bridal" className="mir-nav-link">Aamira Bridal</Link>
-            <span className="mir-c mir-logo">Aamira</span>
-            <Link href="/book-appointment" className="mir-nav-link">Private Appointment</Link>
-          </nav>
-
           <div className="mir-hero-image">
             <div className="mir-hero-image-inner" />
             <span className="mir-j mir-hero-image-label">The Signature Collection · V</span>

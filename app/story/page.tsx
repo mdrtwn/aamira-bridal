@@ -317,15 +317,6 @@ export default function StoryPage() {
       <div className="st-root">
         <div className="st-grain-overlay" />
 
-        {/* ── NAV ── */}
-        <nav className="st-nav">
-          <Link href="/bridal" className="st-nav-back">
-            <span className="st-nav-back-bar" />
-            Back to Aamira
-          </Link>
-          <span className="st-nav-logo">Aamira</span>
-        </nav>
-
         {/* ── HEADER ── */}
         <header className="st-header">
           <div className={`st-eyebrow st-reveal st-d0 ${loaded ? "on" : ""}`}>

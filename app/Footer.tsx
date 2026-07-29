@@ -463,6 +463,7 @@ export default function Footer() {
           .ft-locations  { flex-wrap: wrap; gap: 12px; }
           .ft-legal      { flex-wrap: wrap; gap: 12px; }
           .ft-ghost-logo { font-size: clamp(72px, 24vw, 140px); }
+
         }
       `}</style>
 

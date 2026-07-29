@@ -9,27 +9,29 @@ const collectionsColumns = [
   {
     heading: "Signature Collections",
     links: [
-      ["Celestine", "/collections/celestine"],
-      ["Delara", "/collections/delara"],
-      ["Lumière", "/collections/lumiere"],
-      ["Mireille", "/collections/mireille"],
-      ["Isadora", "/collections/isadora"],
-      ["Seraphine", "/collections/seraphine"],
+      ["Analise", "/collections/analise"],
+      ["Aneesa", "/bridal#gown-aneesa"],
+      ["Ayah", "/bridal#gown-ayah"],
+      ["Batoel", "/bridal#gown-batoel"],
+      ["Yasmin", "/bridal#gown-yasmin"],
+      ["Dina", "/bridal#gown-dina"],
+    ],
+  },
+  {
+    heading: "Gown Archive",
+    links: [
+      ["Inaz", "/bridal#gown-inaz"],
+      ["Jasmine", "/bridal#gown-jasmine"],
+      ["Manal", "/bridal#gown-manal"],
+      ["Mariam", "/bridal#gown-mariam"],
+      ["Mariamm", "/bridal#gown-mariamm"],
+      ["Rose", "/bridal#gown-rose"],
     ],
   },
   {
     heading: "Discover",
     links: [
-      ["View All Dresses", "#collections"],
-      ["New Arrivals", "#collections"],
-      ["Best Sellers", "#collections"],
-      ["Featured Gowns", "#collections"],
-    ],
-  },
-  {
-    heading: "The Experience",
-    links: [
-      ["Lookbook", "#collections"],
+      ["View Collection", "/bridal#collections"],
       ["Real Brides", "/story"],
       ["Bespoke Journey", "/book-appointment"],
     ],
@@ -65,7 +67,7 @@ const atelierColumns = [
   },
 ] as const;
 
-export default function Navbar() {
+export default function Navbar({ hideInitialLogo = false }: Readonly<{ hideInitialLogo?: boolean }>) {
   const [scrolled, setScrolled] = useState(false);
   const [openMenu, setOpenMenu] = useState<MegaMenuName | null>(null);
   const collectionsTriggerRef = useRef<HTMLButtonElement>(null);
@@ -260,6 +262,15 @@ export default function Navbar() {
           font-family: 'Cormorant Garamond', serif;
           text-decoration: none;
           text-transform: uppercase;
+          transition:
+            opacity 420ms ease,
+            transform 420ms cubic-bezier(.2,.7,.2,1);
+        }
+
+        .bridal-desktop-nav.hide-initial-logo:not(.is-scrolled) .bridal-desktop-logo {
+          opacity: 0;
+          transform: translateY(-6px);
+          pointer-events: none;
         }
 
         .bridal-desktop-logo-main {
@@ -576,6 +587,7 @@ export default function Navbar() {
           .bridal-desktop-nav-link,
           .bridal-desktop-nav-link::after,
           .bridal-desktop-appointment,
+          .bridal-desktop-logo,
           .bridal-desktop-logo-main,
           .bridal-desktop-logo-sub,
           .bridal-desktop-separator,
@@ -590,7 +602,7 @@ export default function Navbar() {
       `}</style>
 
       <nav
-        className={`bridal-desktop-nav ${scrolled ? "is-scrolled" : ""}`}
+        className={`bridal-desktop-nav ${hideInitialLogo ? "hide-initial-logo" : ""} ${scrolled ? "is-scrolled" : ""}`}
         aria-label="Bridal navigation"
         onMouseLeave={() => setOpenMenu(null)}
         onKeyDown={(event) => {
@@ -682,7 +694,7 @@ export default function Navbar() {
           ))}
           <aside className="bridal-mega-editorial">
             <div className="bridal-mega-editorial-image" aria-hidden="true" />
-            <Link href="#collections" className="bridal-mega-editorial-link" onClick={() => setOpenMenu(null)}>
+            <Link href="/bridal#collections" className="bridal-mega-editorial-link" onClick={() => setOpenMenu(null)}>
               <span className="bridal-mega-editorial-copy">Timeless elegance, made for you.</span>
               <span className="bridal-mega-editorial-cta">Explore Collections <span aria-hidden="true">→</span></span>
             </Link>

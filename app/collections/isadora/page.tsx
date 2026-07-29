@@ -328,11 +328,6 @@ export default function IsadoraPage() {
           <div className="isa-frame">
             <div className="isa-hero-image" />
             <div className="isa-hero-veil" />
-            <nav className={`isa-nav isa-j isa-rise ${ready ? "ready" : ""}`} aria-label="Collection navigation">
-              <Link href="/bridal" className="isa-nav-link">Aamira Bridal</Link>
-              <span className="isa-c isa-logo">Aamira</span>
-              <Link href="/book-appointment" className="isa-nav-link">Private Appointment</Link>
-            </nav>
             <div className="isa-hero-copy">
               <p className={`isa-j isa-index isa-rise ${ready ? "ready" : ""}`}>Signature Silhouettes · 03</p>
               <h1 className={`isa-c isa-title isa-rise isa-delay-1 ${ready ? "ready" : ""}`}>Isadora</h1>
