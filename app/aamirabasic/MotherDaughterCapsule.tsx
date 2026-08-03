@@ -21,12 +21,7 @@ const products = [
     slug: catalogProducts[1].slug,
     name: "Amara Column Dress — Pearl",
     price: formatAUD(catalogProducts[1].price),
-    images: [
-      "/image/homepage/gambar4.jpg",
-      "/image/homepage/gambar3.jpg",
-      "/image/homepage/gambar5.jpg",
-      "/image/homepage/gambar6.jpg",
-    ],
+    images: catalogProducts[1].images,
   },
   {
     slug: catalogProducts[3].slug,

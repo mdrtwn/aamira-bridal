@@ -42,7 +42,12 @@ const imageSets = [
 ] as const;
 
 const products: readonly Product[] = [
-  ...catalogProducts.slice(0,5).map((product,index) => ({slug:product.slug,name:product.name,price:formatAUD(product.price),images:imageSets[index%imageSets.length]})),
+  ...catalogProducts.slice(0,5).map((product,index) => ({
+    slug:product.slug,
+    name:product.name,
+    price:formatAUD(product.price),
+    images:product.slug === "amara-column-dress-pearl" ? product.images : imageSets[index%imageSets.length],
+  })),
 ] as const;
 
 function ProductCard({ product }: Readonly<{ product: Product }>) {
@@ -104,7 +109,7 @@ export default function FeaturedProducts() {
         ref={trackRef}
         onPointerDown={(event) => {
           if (event.button !== 0) return;
-          if ((event.target as HTMLElement).closest("button")) return;
+          if ((event.target as HTMLElement).closest("button, a")) return;
 
           const track = trackRef.current;
           if (!track) return;

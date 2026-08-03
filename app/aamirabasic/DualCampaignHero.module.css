@@ -1,32 +1,21 @@
 .hero {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0;
-  width: 100%;
-  height: auto;
-  padding: 0;
-  overflow: hidden;
-  background: #ffffff;
-}
-
-.panel {
   position: relative;
-  min-width: 0;
-  height: clamp(620px, calc(100svh - 110px), 920px);
+  width: 100%;
+  aspect-ratio: 2 / 1;
   overflow: hidden;
   isolation: isolate;
-  background: #ddd8d2;
+  background: #d8d3cd;
 }
 
-.image {
+.video {
+  position: absolute;
+  inset: 0;
   z-index: -2;
+  display: block;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  transform: scale(1.002);
-  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.panel:hover .image {
-  transform: scale(1.018);
+  object-position: center 28%;
 }
 
 .scrim {
@@ -36,9 +25,9 @@
   background:
     linear-gradient(
       180deg,
-      transparent 42%,
-      rgba(14, 12, 10, 0.08) 64%,
-      rgba(14, 12, 10, 0.52) 100%
+      transparent 36%,
+      rgba(14, 12, 10, 0.1) 61%,
+      rgba(14, 12, 10, 0.58) 100%
     );
   pointer-events: none;
 }
@@ -47,10 +36,10 @@
   position: absolute;
   top: auto;
   bottom: clamp(42px, 5vw, 84px);
-  right: clamp(22px, 2.2vw, 42px);
-  left: clamp(22px, 2.2vw, 42px);
+  right: clamp(28px, 4.1vw, 80px);
+  left: clamp(28px, 4.1vw, 80px);
   z-index: 2;
-  max-width: 390px;
+  max-width: 560px;
   color: #ffffff;
   font-family: Arial, Helvetica, sans-serif;
   text-shadow: 0 1px 16px rgba(0, 0, 0, 0.2);
@@ -70,7 +59,7 @@
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(30px, 3vw, 58px);
+  font-size: clamp(46px, 5.2vw, 88px);
   font-weight: 400;
   letter-spacing: -0.025em;
   line-height: 1.08;
@@ -122,39 +111,9 @@
   outline-offset: 5px;
 }
 
-.index {
-  position: absolute;
-  top: 24px;
-  right: 25px;
-  color: rgba(255, 255, 255, 0.72);
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 8px;
-  letter-spacing: 0.15em;
-}
-
 @media (max-width: 700px) {
   .hero {
-    display: flex;
-    gap: 0;
-    height: auto;
-    min-height: 0;
-    padding: 0;
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-  }
-
-  .hero::-webkit-scrollbar {
-    display: none;
-  }
-
-  .panel {
-    flex: 0 0 100vw;
-    height: calc(100svh - 96px);
-    min-height: 620px;
-    max-height: 850px;
-    scroll-snap-align: center;
+    aspect-ratio: 4 / 5;
   }
 
   .copy {
@@ -166,7 +125,7 @@
   }
 
   .title {
-    font-size: 38px;
+    font-size: clamp(42px, 13vw, 62px);
   }
 
   .description {
@@ -176,7 +135,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .image,
   .cta::after {
     transition: none;
   }

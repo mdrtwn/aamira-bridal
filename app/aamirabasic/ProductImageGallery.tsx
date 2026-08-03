@@ -11,11 +11,13 @@ export default function ProductImageGallery({
   productName,
   hoverEffect = false,
   href,
+  variant = "card",
 }: Readonly<{
   images: readonly string[];
   productName: string;
   hoverEffect?: boolean;
   href?: string;
+  variant?: "card" | "detail";
 }>) {
   const [activeImage, setActiveImage] = useState(0);
 
@@ -26,14 +28,14 @@ export default function ProductImageGallery({
   };
 
   return (
-    <div className={`${styles.media} ${hoverEffect ? styles.hoverEffect : ""}`}>
+    <div className={`${styles.media} ${variant === "detail" ? styles.detailMedia : ""} ${hoverEffect ? styles.hoverEffect : ""}`}>
       {images.map((image, index) => (
         <Image
           key={`${image}-${index}`}
           src={image}
           alt={`${productName}, view ${index + 1}`}
           fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1000px) 50vw, 25vw"
+          sizes={variant === "detail" ? "(max-width: 800px) 100vw, 75vw" : "(max-width: 640px) 100vw, (max-width: 1000px) 50vw, 25vw"}
           className={`${styles.image} ${
             index === activeImage ? styles.imageActive : ""
           }`}

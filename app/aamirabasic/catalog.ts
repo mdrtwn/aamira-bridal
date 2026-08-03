@@ -52,7 +52,12 @@ const galleryD = [galleryB[2], galleryA[1], galleryB[3], galleryA[3]];
 
 const productSeeds: ProductSeed[] = [
   { id: "ab-001", slug: "sora-long-outer-ivory", name: "Sora Long Outer — Ivory", price: 189, category: "Long Jackets", collections: ["new-arrivals", "signature-edit"], colors: ["Ivory", "Black"], sizes: ["XS", "S", "M", "L", "XL"], stock: 18, description: "A clean, elongated outer layer designed for quiet structure and effortless movement.", material: "Textured crepe blend", images: galleryA, isNew: true },
-  { id: "ab-002", slug: "amara-column-dress-pearl", name: "Amara Column Dress — Pearl", price: 158, category: "Dresses & Kaftans", collections: ["new-arrivals", "summer-2026"], colors: ["Pearl", "Sand"], sizes: ["XS", "S", "M", "L"], stock: 11, description: "A fluid column dress with a restrained silhouette for day-to-evening dressing.", material: "Soft twill", images: galleryB, isNew: true },
+  { id: "ab-002", slug: "amara-column-dress-pearl", name: "Amara Column Dress — Pearl", price: 158, category: "Dresses & Kaftans", collections: ["new-arrivals", "summer-2026"], colors: ["Pearl", "Sand"], sizes: ["XS", "S", "M", "L"], stock: 11, description: "A fluid column dress with a restrained silhouette for day-to-evening dressing.", material: "Soft twill", images: [
+    "/image/aamira-basic/products/produk1.png",
+    "/image/aamira-basic/products/produk2.png",
+    "/image/aamira-basic/products/produk3.png",
+    "/image/aamira-basic/products/produk4.png",
+  ], isNew: true },
   { id: "ab-003", slug: "nara-layered-set-oat", name: "Nara Layered Set — Oat", price: 199, category: "Sets", collections: ["summer-2026", "signature-edit"], colors: ["Oat", "Espresso"], sizes: ["S", "M", "L", "XL"], stock: 8, description: "An easy two-piece set balancing softly tailored lines with all-day comfort.", material: "Linen blend", images: galleryC },
   { id: "ab-004", slug: "mira-relaxed-shirt-white", name: "Mira Relaxed Shirt — White", price: 98, category: "Tops & Shirts", collections: ["new-arrivals", "summer-2026"], colors: ["White", "Powder Blue"], sizes: ["XS", "S", "M", "L", "XL"], stock: 24, description: "A generous everyday shirt with a crisp collar and softened volume.", material: "Cotton poplin", images: galleryD, isNew: true },
   { id: "ab-005", slug: "luma-drape-kaftan-sand", name: "Luma Drape Kaftan — Sand", price: 168, category: "Dresses & Kaftans", collections: ["summer-2026"], colors: ["Sand", "Black"], sizes: ["S/M", "L/XL"], stock: 13, description: "An understated kaftan cut with a fluid drape and subtle side detailing.", material: "Matte satin", images: galleryB },
