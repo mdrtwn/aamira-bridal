@@ -1,21 +1,23 @@
-import Hero from "../aamirabasic/Hero";
-import ShopByCategory from "../aamirabasic/ShopByCategory";
-import NewArrivals from "../aamirabasic/NewArrivals";
-import EditorialBanner from "../aamirabasic/EditorialBanner";
-import Bestsellers from "../aamirabasic/Bestsellers";
-import Newsletter from "../aamirabasic/Newsletter";
-import Footer from "../aamirabasic/Footer";
+import type { Metadata } from "next";
+import DualCampaignHero from "../aamirabasic/DualCampaignHero";
+import FeaturedProducts from "../aamirabasic/FeaturedProducts";
+import MotherDaughterCapsule from "../aamirabasic/MotherDaughterCapsule";
+import ShopTheLooks from "../aamirabasic/ShopTheLooks";
+import AsSeenOn from "../aamirabasic/AsSeenOn";
+
+export const metadata: Metadata = {
+  title: "Aamira Basic",
+  description: "Aamira Basic ready-to-wear.",
+};
 
 export default function BasicPage() {
   return (
-    <>
-      <Hero />
-      <ShopByCategory />
-      <NewArrivals />
-      <EditorialBanner />
-      <Bestsellers />
-      <Newsletter />
-      <Footer />
-    </>
+    <main>
+      <DualCampaignHero />
+      <FeaturedProducts />
+      <MotherDaughterCapsule />
+      <ShopTheLooks />
+      <AsSeenOn />
+    </main>
   );
 }

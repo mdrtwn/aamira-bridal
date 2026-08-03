@@ -1,0 +1,2 @@
+import InfoPage from "../../aamirabasic/InfoPage";
+export default function Page(){return <InfoPage title="Privacy Policy" intro="How Aamira Basic will handle customer information."><h2>Draft pending legal review</h2><p style={{lineHeight:1.8,fontSize:12}}>The final policy must explain data collection, lawful processing, retention, cookies, payment providers, customer rights, and contact details. It should be reviewed for compliance before launch.</p></InfoPage>}

@@ -1,0 +1,107 @@
+.section {
+  padding: clamp(86px, 8vw, 140px) clamp(28px, 3.7vw, 70px) clamp(90px, 8vw, 140px);
+  color: #181818;
+  background: #f3f0eb;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+  max-width: 680px;
+  margin-bottom: 38px;
+}
+
+.header h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(28px, 2.4vw, 44px);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.2;
+}
+
+.header p {
+  max-width: 570px;
+  margin: 14px 0 0;
+  color: #625d58;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.product {
+  min-width: 0;
+}
+
+.product h3,
+.product p {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.035em;
+  line-height: 1.45;
+  text-transform: uppercase;
+}
+.product h3 a { color:inherit; text-decoration:none; }
+
+.product h3 {
+  margin-top: 13px;
+}
+
+.product p {
+  margin-top: 6px;
+  color: #625d58;
+  font-size: 10px;
+}
+
+.link {
+  position: relative;
+  display: inline-block;
+  margin-top: 29px;
+  padding-bottom: 6px;
+  color: #181818;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.link::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  content: "";
+  background: currentColor;
+}
+
+.link:focus-visible {
+  outline: 1px solid #181818;
+  outline-offset: 4px;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 32px;
+  }
+}
+
+@media (max-width: 540px) {
+  .section {
+    padding-inline: 18px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}

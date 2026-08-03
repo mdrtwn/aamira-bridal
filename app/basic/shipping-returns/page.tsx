@@ -1,0 +1,2 @@
+import InfoPage from "../../aamirabasic/InfoPage";
+export default function Page(){return <InfoPage title="Shipping & Returns" intro="Clear delivery and return information for every Aamira Basic order."><h2>Prototype policy</h2><p style={{lineHeight:1.8,fontSize:12}}>Delivery rates, service areas, processing times, return windows, and refund procedures will be confirmed before checkout is activated. This page intentionally avoids presenting unapproved commercial terms.</p></InfoPage>}

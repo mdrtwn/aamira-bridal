@@ -1,0 +1,2 @@
+import InfoPage from "../../aamirabasic/InfoPage";
+export default function Page(){return <InfoPage title="Terms & Conditions" intro="Terms governing use of the Aamira Basic online store."><h2>Draft pending legal review</h2><p style={{lineHeight:1.8,fontSize:12}}>Final terms must cover orders, product availability, pricing, payment, shipping, cancellation, returns, intellectual property, liability, and applicable Indonesian law.</p></InfoPage>}

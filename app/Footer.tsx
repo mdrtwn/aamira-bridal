@@ -27,17 +27,17 @@ export default function Footer() {
       links: [
         { label: "Wedding",           href: "/wedding" },
         { label: "Engagement",        href: "/engagement" },
-        { label: "Custom Design",     href: "/custom-design" },
-        { label: "Signature Dresses", href: "/signature-dresses" },
+        { label: "Custom Design",     href: "/book-appointment" },
+        { label: "Signature Dresses", href: "/bridal#collections" },
       ],
     },
     {
       heading: "Atelier",
       links: [
-        { label: "Our Story",        href: "/our-story" },
-        { label: "The Process",      href: "/process" },
-        { label: "Fabrics & Craft",  href: "/fabrics-craft" },
-        { label: "Book Appointment", href: "/appointment" },
+        { label: "Our Story",        href: "/story" },
+        { label: "The Process",      href: "/book-appointment" },
+        { label: "Fabrics & Craft",  href: "/story" },
+        { label: "Book Appointment", href: "/book-appointment" },
       ],
     },
     {

@@ -1,0 +1,2 @@
+import InfoPage from "../../aamirabasic/InfoPage";
+export default function Page(){return <InfoPage title="Contact" intro="We would love to hear from you."><h2>Customer care</h2><p>Email: hello@aamirabasic.com</p><p>Jakarta, Indonesia</p><p style={{color:"#777",fontSize:11,lineHeight:1.7}}>Contact details are placeholders and must be replaced with the official Aamira customer-care channels before launch.</p></InfoPage>}

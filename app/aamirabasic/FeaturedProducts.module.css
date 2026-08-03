@@ -1,0 +1,189 @@
+.section {
+  padding: clamp(88px, 8vw, 140px) 0 clamp(100px, 9vw, 160px);
+  overflow: hidden;
+  color: #181818;
+  background: #ffffff;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.headingRow {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 0 clamp(28px, 3.7vw, 70px) 28px;
+}
+
+.headingRow h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  max-width: 560px;
+  font-size: clamp(28px, 2.35vw, 44px);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
+
+.headingRow p {
+  margin: 13px 0 0;
+  color: #66615c;
+  font-size: 12px;
+  letter-spacing: 0.005em;
+  line-height: 1.4;
+}
+
+.carouselControls {
+  display: flex;
+  gap: 7px;
+}
+
+.carouselControls button {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid rgba(24, 24, 24, 0.24);
+  border-radius: 50%;
+  color: #181818;
+  background: #ffffff;
+  cursor: pointer;
+  transition: color 200ms ease, background 200ms ease;
+}
+
+.carouselControls button:hover {
+  color: #ffffff;
+  background: #181818;
+}
+
+.carouselControls svg {
+  width: 15px;
+  height: 15px;
+  stroke-width: 1.25;
+}
+
+.track {
+  display: flex;
+  gap: 8px;
+  padding: 0 10px 18px;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-padding-inline: 10px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+}
+
+.card {
+  flex: 0 0 calc((100% - 16px) / 3);
+  min-width: 0;
+  scroll-snap-align: start;
+}
+
+.productInfo {
+  padding: 14px 0 0;
+}
+
+.productInfo h3,
+.productInfo p {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1.45;
+  text-transform: uppercase;
+}
+.productInfo a { color:inherit; text-decoration:none; }
+
+.productInfo p {
+  margin-top: 6px;
+  color: #625d58;
+  font-size: 10px;
+}
+
+.exploreLink {
+  position: relative;
+  display: inline-block;
+  margin: 26px 0 0 clamp(28px, 3.7vw, 70px);
+  padding-bottom: 6px;
+  color: #181818;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.exploreLink::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  content: "";
+  background: currentColor;
+}
+
+.carouselControls button:focus-visible,
+.exploreLink:focus-visible {
+  outline: 1px solid #181818;
+  outline-offset: 4px;
+}
+
+@media (max-width: 1000px) {
+  .card {
+    flex-basis: calc((100% - 8px) / 2.15);
+  }
+}
+
+@media (max-width: 640px) {
+  .headingRow {
+    align-items: center;
+    padding-inline: 18px;
+  }
+
+  .headingRow h2 {
+    max-width: 250px;
+    font-size: 22px;
+  }
+
+  .headingRow p {
+    font-size: 11px;
+  }
+
+  .carouselControls button {
+    width: 34px;
+    height: 34px;
+  }
+
+  .track {
+    gap: 7px;
+    padding-inline: 18px;
+    scroll-padding-inline: 18px;
+  }
+
+  .card {
+    flex-basis: 74vw;
+  }
+
+  .exploreLink {
+    margin-left: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carouselControls button {
+    transition: none;
+  }
+}
