@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 export default function StoryPage() {
@@ -351,7 +351,7 @@ export default function StoryPage() {
           <p className={`st-lead st-c st-reveal st-d2 ${loaded ? "on" : ""}`}>
             Aamira Bridal began with a single conviction — that a wedding gown should be more
             than a garment. It should be <em>a keepsake</em>, a quiet witness to the most tender
-            day of a bride's life, cut and stitched as though nothing else in the world mattered.
+            day of a bride&apos;s life, cut and stitched as though nothing else in the world mattered.
           </p>
 
           <div className={`st-section st-reveal st-d3 ${loaded ? "on" : ""}`}>
@@ -436,7 +436,7 @@ export default function StoryPage() {
           {/* ── QUOTE ── */}
           <div className={`st-quote-block st-reveal st-d5 ${loaded ? "on" : ""}`}>
             <p className="st-c st-quote">
-              "A wedding gown should feel like the quietest, most certain moment of a bride's life."
+              &ldquo;A wedding gown should feel like the quietest, most certain moment of a bride&apos;s life.&rdquo;
             </p>
             <p className="st-quote-attr">— The Aamira Atelier</p>
           </div>

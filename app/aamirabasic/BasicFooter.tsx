@@ -1,8 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import AamiraBasicMark from "./AamiraBasicMark";
 import styles from "./BasicFooter.module.css";
 
 const shopLinks = [
@@ -36,7 +36,15 @@ export default function BasicFooter() {
           <p>Aamira Basic</p>
           <p>Jakarta, Indonesia</p>
 
-          <AamiraBasicMark className={styles.mark} />
+          <Link href="/basic" className={styles.mark} aria-label="Aamira Basic home">
+            <Image
+              src="/image/aamira-basic-logo.png"
+              alt="Aamira Basic"
+              width={647}
+              height={460}
+              className={styles.basicLogo}
+            />
+          </Link>
 
           <div className={styles.newsletter}>
             <h2>Newsletter</h2>
@@ -90,7 +98,16 @@ export default function BasicFooter() {
       </div>
 
       <div className={styles.switcher}>
-        <Link href="/bridal">Go to Aamira Bridal</Link>
+        <Link href="/bridal" aria-label="Go to Aamira Bridal">
+          <Image
+            src="/image/aamira-basic/brand-switcher/aamira-bridal-logo.png"
+            alt="Aamira Bridal by Ikeu"
+            width={1080}
+            height={1080}
+            className={styles.bridalLogo}
+          />
+          <span>Go to Aamira Bridal</span>
+        </Link>
       </div>
     </footer>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 
 export default function CelestinePage() {
   const [loaded, setLoaded] = useState(false);
@@ -495,15 +496,15 @@ export default function CelestinePage() {
 
         {/* ── PREV / NEXT ── */}
         <nav className="cel-nav">
-          <a href="/collections/lumiere" className="cel-nav-link">
+          <Link href="/collections/lumiere" className="cel-nav-link">
             <span className="cel-j cel-nav-kicker">&larr; Previous</span>
             <span className="cel-c cel-nav-name">Lumi&egrave;re</span>
-          </a>
+          </Link>
           <div className="cel-nav-sep" />
-          <a href="/collections/seraphine" className="cel-nav-link next">
+          <Link href="/collections/seraphine" className="cel-nav-link next">
             <span className="cel-j cel-nav-kicker">Next &rarr;</span>
             <span className="cel-c cel-nav-name">Seraphine</span>
-          </a>
+          </Link>
         </nav>
 
       </div>

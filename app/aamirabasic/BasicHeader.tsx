@@ -10,10 +10,11 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useCart } from "./CartProvider";
 import { products, formatAUD } from "./catalog";
 import styles from "./BasicHeader.module.css";
+import { useModalFocus } from "./useModalFocus";
 
 const dropdownNavigation = [
   {
@@ -47,21 +48,25 @@ export default function BasicHeader() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const searchPanelRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const cart = useCart();
   const results = query.trim() ? products.filter((product) => {
     const searchable = [product.name, product.category, product.material, ...product.tags].join(" ").toLowerCase();
     return searchable.includes(query.toLowerCase());
   }).slice(0, 5) : products.slice(0, 4);
 
+  const closeSearch = useCallback(() => setSearchOpen(false), []);
+  useModalFocus(searchOpen, searchPanelRef, closeSearch, searchInputRef);
+
   useEffect(() => {
-    const closeOnEscape = (event: KeyboardEvent) => {
+    const closeNavigationOnEscape = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
-      setSearchOpen(false);
       setMenuOpen(false);
       setOpenDropdown(null);
     };
-    window.addEventListener("keydown", closeOnEscape);
-    return () => window.removeEventListener("keydown", closeOnEscape);
+    window.addEventListener("keydown", closeNavigationOnEscape);
+    return () => window.removeEventListener("keydown", closeNavigationOnEscape);
   }, []);
 
   return (
@@ -157,9 +162,9 @@ export default function BasicHeader() {
           {menuOpen ? <X strokeWidth={1.35} aria-hidden="true" /> : <Menu strokeWidth={1.35} aria-hidden="true" />}
         </button>
       </div>
-      <div className={`${styles.searchPanel} ${searchOpen ? styles.searchPanelOpen : ""}`} aria-hidden={!searchOpen}>
-        <div className={styles.searchTop}><label htmlFor="basic-search">Search Aamira Basic</label><button onClick={() => setSearchOpen(false)} aria-label="Close search"><X /></button></div>
-        <input id="basic-search" type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search by piece, category, or material..." autoFocus={searchOpen} />
+      <div ref={searchPanelRef} className={`${styles.searchPanel} ${searchOpen ? styles.searchPanelOpen : ""}`} aria-hidden={!searchOpen} aria-modal="true" role="dialog" aria-labelledby="basic-search-label" inert={!searchOpen ? true : undefined}>
+        <div className={styles.searchTop}><label id="basic-search-label" htmlFor="basic-search">Search Aamira Basic</label><button type="button" onClick={closeSearch} aria-label="Close search"><X /></button></div>
+        <input ref={searchInputRef} id="basic-search" type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search by piece, category, or material..." />
         <p className={styles.searchLabel}>{query ? `${results.length} results` : "Popular pieces"}</p>
         <div className={styles.searchResults}>{results.map((product) => <Link href={`/basic/products/${product.slug}`} onClick={() => {setSearchOpen(false);setQuery("");}} key={product.id}><Image src={product.images[0]} alt="" width={72} height={96} /><span>{product.name}<small>{formatAUD(product.price)}</small></span></Link>)}</div>
         {query && !results.length && <p className={styles.noResults}>No pieces found. Try another search.</p>}

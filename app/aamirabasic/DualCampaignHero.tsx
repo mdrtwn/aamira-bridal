@@ -1,10 +1,29 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 import styles from "./DualCampaignHero.module.css";
 
 export default function DualCampaignHero() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updatePlayback = () => {
+      const video = videoRef.current;
+      if (!video) return;
+      if (preference.matches) video.pause();
+      else void video.play().catch(() => undefined);
+    };
+    updatePlayback();
+    preference.addEventListener("change", updatePlayback);
+    return () => preference.removeEventListener("change", updatePlayback);
+  }, []);
+
   return (
     <section className={styles.hero} aria-label="Aamira Basic campaign">
       <video
+        ref={videoRef}
         className={styles.video}
         poster="/image/homepage/gambar5.jpg"
         autoPlay

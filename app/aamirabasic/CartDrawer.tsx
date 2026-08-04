@@ -3,32 +3,32 @@
 import { Minus, Plus, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useCart } from "./CartProvider";
 import { formatAUD } from "./catalog";
 import styles from "./Commerce.module.css";
+import { useModalFocus } from "./useModalFocus";
 
 export default function CartDrawer() {
   const cart = useCart();
   const { isOpen, setOpen } = cart;
+  const drawerRef = useRef<HTMLElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const closeDrawer = useCallback(() => setOpen(false), [setOpen]);
+  useModalFocus(isOpen, drawerRef, closeDrawer, closeButtonRef);
   useEffect(() => {
     if (!isOpen) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
-    };
-    window.addEventListener("keydown", closeOnEscape);
     return () => {
       document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", closeOnEscape);
     };
   }, [isOpen, setOpen]);
   return (
     <>
       <button className={`${styles.drawerBackdrop} ${cart.isOpen ? styles.drawerBackdropOpen : ""}`} aria-label="Close shopping bag" onClick={() => cart.setOpen(false)} />
-      <aside className={`${styles.drawer} ${cart.isOpen ? styles.drawerOpen : ""}`} aria-hidden={!cart.isOpen} aria-label="Shopping bag" aria-modal="true" role="dialog">
-        <header className={styles.drawerHeader}><div><p>Shopping bag</p><span>{cart.count} items</span></div><button onClick={() => cart.setOpen(false)} aria-label="Close shopping bag"><X /></button></header>
+      <aside ref={drawerRef} className={`${styles.drawer} ${cart.isOpen ? styles.drawerOpen : ""}`} aria-hidden={!cart.isOpen} aria-label="Shopping bag" aria-modal="true" role="dialog" inert={!cart.isOpen ? true : undefined} tabIndex={-1}>
+        <header className={styles.drawerHeader}><div><p>Shopping bag</p><span>{cart.count} items</span></div><button ref={closeButtonRef} type="button" onClick={closeDrawer} aria-label="Close shopping bag"><X /></button></header>
         <div className={styles.drawerBody}>
           {cart.items.length === 0 ? <div className={styles.empty}><h2>Your bag is empty</h2><p>Discover considered pieces made for everyday ease.</p><Link href="/basic/shop" onClick={() => cart.setOpen(false)}>Start shopping</Link></div> : cart.items.map((item, index) => (
             <article className={styles.cartItem} key={`${item.product.id}-${item.size}-${item.color}`}>

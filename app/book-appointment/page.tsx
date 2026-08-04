@@ -1,45 +1,19 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-
-const collectionOptions = [
-  "No preference",
-  "Celestine",
-  "Lumière",
-  "Mireille",
-  "Seraphine",
-  "Delara",
-  "Isadora",
-  "Aurore",
-];
-
-interface FormState {
-  fullName: string;
-  email: string;
-  phone: string;
-  weddingDate: string;
-  consultationDate: string;
-  collection: string;
-  message: string;
-}
-
-const emptyForm: FormState = {
-  fullName: "",
-  email: "",
-  phone: "",
-  weddingDate: "",
-  consultationDate: "",
-  collection: collectionOptions[0],
-  message: "",
-};
+import { emptyAppointment, validateAppointment } from "@/lib/bridal/appointments";
+import { appointmentCollectionOptions } from "@/lib/bridal/collections";
+import type { BridalAppointmentInput } from "@/lib/bridal/types";
 
 export default function BookAppointmentPage() {
-  const heroRef = useRef<HTMLElement>(null);
   const [loaded, setLoaded] = useState(false);
-  const [form, setForm] = useState<FormState>(emptyForm);
+  const [form, setForm] = useState<BridalAppointmentInput>(emptyAppointment);
   const [submitted, setSubmitted] = useState(false);
-  const [errors, setErrors] = useState<Partial<Record<keyof FormState, boolean>>>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [reference, setReference] = useState("");
+  const [errors, setErrors] = useState<Partial<Record<keyof BridalAppointmentInput, boolean>>>({});
 
   useEffect(() => {
     const t = setTimeout(() => setLoaded(true), 80);
@@ -47,38 +21,54 @@ export default function BookAppointmentPage() {
   }, []);
 
   const update =
-    (field: keyof FormState) =>
+    (field: keyof BridalAppointmentInput) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
       setForm((f) => ({ ...f, [field]: e.target.value }));
       if (errors[field]) setErrors((er) => ({ ...er, [field]: false }));
+      if (submitError) setSubmitError("");
     };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const website = new FormData(e.currentTarget as HTMLFormElement).get("website");
 
-    const required: (keyof FormState)[] = [
-      "fullName",
-      "email",
-      "phone",
-      "weddingDate",
-      "consultationDate",
-    ];
-    const nextErrors: Partial<Record<keyof FormState, boolean>> = {};
-    required.forEach((field) => {
-      if (!form[field].trim()) nextErrors[field] = true;
-    });
+    const validationErrors = validateAppointment(form);
+    const nextErrors = Object.fromEntries(
+      Object.keys(validationErrors).map((field) => [field, true]),
+    ) as Partial<Record<keyof BridalAppointmentInput, boolean>>;
 
     if (Object.keys(nextErrors).length > 0) {
       setErrors(nextErrors);
       return;
     }
 
-    setSubmitted(true);
+    setSubmitting(true);
+    setSubmitError("");
+    try {
+      const response = await fetch("/api/bridal/appointments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, website }),
+      });
+      const result = await response.json() as { reference?: string; error?: string };
+      if (!response.ok || !result.reference) {
+        setSubmitError(result.error ?? "We could not submit your request. Please try again.");
+        return;
+      }
+      setReference(result.reference);
+      setSubmitted(true);
+    } catch {
+      setSubmitError("We could not connect to the atelier. Please try again shortly.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const resetForm = () => {
-    setForm(emptyForm);
+    setForm(emptyAppointment);
     setErrors({});
+    setSubmitError("");
+    setReference("");
     setSubmitted(false);
   };
 
@@ -360,6 +350,9 @@ export default function BookAppointmentPage() {
           transition: background 0.4s ease, gap 0.4s cubic-bezier(0.16,1,0.3,1);
         }
         .ba-submit-btn:hover { background: rgba(184,150,62,0.14); gap: 20px; }
+        .ba-submit-btn:disabled { cursor: wait; opacity: 0.55; }
+        .ba-submit-error { margin: 14px 0 0; color: #e0a3a3; font-family: 'Jost', sans-serif; font-size: 11px; line-height: 1.6; }
+        .ba-honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
         .ba-submit-note {
           font-family: 'Jost', sans-serif;
           font-size: 10.5px;
@@ -533,6 +526,10 @@ export default function BookAppointmentPage() {
           <div className={`ba-reveal ba-d3 ${loaded ? "on" : ""}`}>
             {!submitted ? (
               <form className="ba-form" onSubmit={handleSubmit} noValidate>
+                <label className="ba-honeypot" aria-hidden="true">
+                  Website
+                  <input name="website" type="text" tabIndex={-1} autoComplete="off" />
+                </label>
                 <div className="ba-fieldset">
                   <div className={`ba-field ba-field-full ${errors.fullName ? "has-error" : ""}`}>
                     <label htmlFor="fullName">
@@ -617,7 +614,7 @@ export default function BookAppointmentPage() {
                       value={form.collection}
                       onChange={update("collection")}
                     >
-                      {collectionOptions.map((c) => (
+                      {appointmentCollectionOptions.map((c) => (
                         <option key={c} value={c}>
                           {c}
                         </option>
@@ -638,11 +635,12 @@ export default function BookAppointmentPage() {
                 </div>
 
                 <div className="ba-submit-row">
-                  <button type="submit" className="ba-submit-btn">
-                    Request Appointment
+                  <button type="submit" className="ba-submit-btn" disabled={submitting}>
+                    {submitting ? "Sending Request…" : "Request Appointment"}
                   </button>
                   <span className="ba-submit-note">* Required fields</span>
                 </div>
+                {submitError && <p className="ba-submit-error" role="alert">{submitError}</p>}
               </form>
             ) : (
               <div className="ba-success">
@@ -662,6 +660,10 @@ export default function BookAppointmentPage() {
                 </p>
 
                 <div className="ba-success-summary">
+                  <div className="ba-success-row">
+                    <span>Reference</span>
+                    <span>{reference}</span>
+                  </div>
                   <div className="ba-success-row">
                     <span>Preferred Consultation</span>
                     <span>{form.consultationDate || "—"}</span>

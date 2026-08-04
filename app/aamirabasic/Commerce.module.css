@@ -66,5 +66,5 @@
 .secondaryLink { display:inline-block; margin-top:18px; color:#181818; font-size:11px; text-underline-offset:3px; }
 
 @media(max-width:900px){.productGrid{grid-template-columns:repeat(2,1fr)}.catalogTitle{display:block}.catalogTitle p{margin-top:18px}}
-@media(max-width:600px){.catalog{padding-top:28px}.catalogTitle h1{font-size:42px}.toolbar{align-items:flex-start;flex-direction:column}.toolbarControls{width:100%}.toolbar select{flex:1;min-width:0}.productGrid{gap:30px 7px}.productCopy h2,.productCopy h3{font-size:9px}.formCard{padding:24px 18px}.formGrid{grid-template-columns:1fr}.fieldFull{grid-column:auto}}
+@media(max-width:600px){.catalog{padding-top:28px}.catalogTitle h1{font-size:42px}.toolbar{align-items:flex-start;flex-direction:column}.toolbarControls{width:100%}.toolbar select{flex:1;min-width:0}.productGrid{gap:30px 7px}.productCopy h2,.productCopy h3{font-size:11px}.formCard{padding:24px 18px}.formGrid{grid-template-columns:1fr}.fieldFull{grid-column:auto}}
 @media(prefers-reduced-motion:reduce){.drawer,.drawerBackdrop,.productMedia img{transition:none}}

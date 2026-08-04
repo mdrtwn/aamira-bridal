@@ -6,7 +6,7 @@ import ShopTheLooks from "../aamirabasic/ShopTheLooks";
 import AsSeenOn from "../aamirabasic/AsSeenOn";
 
 export const metadata: Metadata = {
-  title: "Aamira Basic",
+  title: { absolute: "Aamira Basic" },
   description: "Aamira Basic ready-to-wear.",
 };
 

@@ -15,7 +15,7 @@ function useInView(threshold = 0.12) {
     if (ref.current) obs.observe(ref.current);
     return () => obs.disconnect();
   }, [threshold]);
-  return { ref, inView };
+  return [ref, inView] as const;
 }
 
 /* ─── Feature data ────────────────────────────────────────── */
@@ -76,9 +76,9 @@ export default function WeddingPage() {
   const [loaded, setLoaded] = useState(false);
   const [scrollY, setScrollY] = useState(0);
 
-  const highlights = useInView(0.08);
-  const editorial  = useInView(0.1);
-  const cta        = useInView(0.1);
+  const [highlightsRef, highlightsInView] = useInView(0.08);
+  const [editorialRef, editorialInView] = useInView(0.1);
+  const [ctaRef, ctaInView] = useInView(0.1);
 
   useEffect(() => {
     const t = setTimeout(() => setLoaded(true), 100);
@@ -518,14 +518,14 @@ export default function WeddingPage() {
 
       {/* ─── HIGHLIGHTS ─────────────────────────────────────── */}
       <section
-        ref={highlights.ref as React.RefObject<HTMLElement>}
+        ref={highlightsRef}
         style={{ background: "var(--noir)", position: "relative", overflow: "hidden" }}
       >
         <div style={{ position: "relative", zIndex: 2, padding: "112px 64px 120px", maxWidth: "1100px", margin: "0 auto" }}>
 
           {/* Section header */}
           <div style={{ marginBottom: "72px", textAlign: "center" }}>
-            <div className={`wg-eyebrow wg-reveal wg-d0 ${highlights.inView ? "on" : ""}`} style={{ marginBottom: "20px" }}>
+            <div className={`wg-eyebrow wg-reveal wg-d0 ${highlightsInView ? "on" : ""}`} style={{ marginBottom: "20px" }}>
               <span
                 style={{
                   fontFamily: "'Jost', sans-serif",
@@ -541,7 +541,7 @@ export default function WeddingPage() {
             </div>
 
             <p
-              className={`wg-reveal wg-d1 ${highlights.inView ? "on" : ""}`}
+              className={`wg-reveal wg-d1 ${highlightsInView ? "on" : ""}`}
               style={{
                 fontFamily: "'Jost', sans-serif",
                 fontSize: "13px",
@@ -561,7 +561,7 @@ export default function WeddingPage() {
             {features.map((f, i) => (
               <div
                 key={f.number}
-                className={`wg-feature wg-reveal wg-d${i + 1} ${highlights.inView ? "on" : ""}`}
+                className={`wg-feature wg-reveal wg-d${i + 1} ${highlightsInView ? "on" : ""}`}
               >
                 <div className="wg-feature-icon">{f.icon}</div>
                 <h3 className="wg-feature-title">{f.title}</h3>
@@ -574,7 +574,7 @@ export default function WeddingPage() {
 
       {/* ─── EDITORIAL ──────────────────────────────────────── */}
       <section
-        ref={editorial.ref as React.RefObject<HTMLElement>}
+        ref={editorialRef}
         className="wg-editorial"
       >
         <div className="shimmer-line" style={{ height: "1px", position: "relative", zIndex: 3 }} />
@@ -594,12 +594,12 @@ export default function WeddingPage() {
 
         {/* ── TEXT — layered over the composition ── */}
         <div className="wg-editorial-content">
-          <div className={`wg-eyebrow wg-reveal wg-d0 ${editorial.inView ? "on" : ""}`} style={{ marginBottom: "24px", justifyContent: "flex-end" }}>
+          <div className={`wg-eyebrow wg-reveal wg-d0 ${editorialInView ? "on" : ""}`} style={{ marginBottom: "24px", justifyContent: "flex-end" }}>
             <div className="wg-rule" style={{ width: "32px" }} />
           </div>
 
           <h2
-            className={`wg-reveal wg-d1 ${editorial.inView ? "on" : ""}`}
+            className={`wg-reveal wg-d1 ${editorialInView ? "on" : ""}`}
             style={{
               fontFamily: "'Cormorant Garamond', serif",
               fontSize: "clamp(28px, 3.2vw, 44px)",
@@ -615,7 +615,7 @@ export default function WeddingPage() {
           </h2>
 
           <p
-            className={`wg-reveal wg-d2 ${editorial.inView ? "on" : ""}`}
+            className={`wg-reveal wg-d2 ${editorialInView ? "on" : ""}`}
             style={{
               fontFamily: "'Jost', sans-serif",
               fontSize: "13.5px",
@@ -633,7 +633,7 @@ export default function WeddingPage() {
 
       {/* ─── CTA ─────────────────────────────────────────────── */}
       <section
-        ref={cta.ref as React.RefObject<HTMLElement>}
+        ref={ctaRef}
         style={{
           position: "relative",
           background: "var(--noir)",
@@ -644,7 +644,7 @@ export default function WeddingPage() {
       >
         <div style={{ position: "relative", zIndex: 2 }}>
           <p
-            className={`wg-reveal wg-d0 ${cta.inView ? "on" : ""}`}
+            className={`wg-reveal wg-d0 ${ctaInView ? "on" : ""}`}
             style={{
               fontFamily: "'Jost', sans-serif",
               fontSize: "10px",
@@ -659,7 +659,7 @@ export default function WeddingPage() {
           </p>
 
           <h2
-            className={`wg-reveal wg-d1 ${cta.inView ? "on" : ""}`}
+            className={`wg-reveal wg-d1 ${ctaInView ? "on" : ""}`}
             style={{
               fontFamily: "'Jost', sans-serif",
               fontSize: "clamp(14px, 1.4vw, 16px)",
@@ -673,7 +673,7 @@ export default function WeddingPage() {
 
           <Link
             href="/book-appointment"
-            className={`cta-link wg-reveal wg-d2 ${cta.inView ? "on" : ""}`}
+            className={`cta-link wg-reveal wg-d2 ${ctaInView ? "on" : ""}`}
             style={{
               fontFamily: "'Jost', sans-serif",
               fontSize: "10.5px",

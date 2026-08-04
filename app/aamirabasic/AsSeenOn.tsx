@@ -28,6 +28,8 @@ export default function AsSeenOn() {
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (preference.matches) return;
 
     let frame = 0;
     let previousTime = performance.now();

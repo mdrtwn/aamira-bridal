@@ -1,15 +1,13 @@
-export type GownArchiveEntry = {
-  slug: string;
-  name: string;
-  cardImage: string;
-  cardDetail: string;
-  cardPosition: string;
-  cardTone: "bright" | "neutral" | "dark" | "vivid";
-  description: string;
-  images: readonly string[];
-};
+import type { BridalGown } from "@/lib/bridal/types";
 
-export const gownArchive = [
+export type GownArchiveEntry = BridalGown;
+
+type GownArchiveSource = Omit<
+  GownArchiveEntry,
+  "id" | "status" | "sortOrder" | "featured" | "seo"
+>;
+
+const gownArchiveSource = [
   {
     slug: "analise",
     name: "Analise",
@@ -147,7 +145,22 @@ export const gownArchive = [
       "Romantic lace and gentle volume shape a soft bridal silhouette with a classic and feminine presence.",
     images: ["/image/gown-archive/Rose.JPG"],
   },
-] as const satisfies readonly GownArchiveEntry[];
+] as const satisfies readonly GownArchiveSource[];
+
+export const gownArchive: readonly GownArchiveEntry[] = gownArchiveSource.map(
+  (gown, index) => ({
+    ...gown,
+    id: `bridal-gown-${gown.slug}`,
+    status: "published",
+    sortOrder: index + 1,
+    featured: index < 4,
+    seo: {
+      title: `${gown.name} — Aamira Bridal`,
+      description: gown.description,
+      image: gown.cardImage,
+    },
+  }),
+);
 
 export function getGownBySlug(slug: string) {
   return gownArchive.find((gown) => gown.slug === slug);

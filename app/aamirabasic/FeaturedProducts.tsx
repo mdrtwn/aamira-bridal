@@ -82,7 +82,9 @@ export default function FeaturedProducts() {
 
     track.scrollBy({
       left: direction * track.clientWidth * 0.82,
-      behavior: "smooth",
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
     });
   };
 

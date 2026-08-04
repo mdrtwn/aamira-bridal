@@ -21,8 +21,13 @@ export async function generateMetadata({ params }: GownPageProps): Promise<Metad
   if (!gown) return {};
 
   return {
-    title: `${gown.name} — Aamira Bridal`,
-    description: gown.description,
+    title: gown.seo.title,
+    description: gown.seo.description,
+    openGraph: {
+      title: gown.seo.title,
+      description: gown.seo.description,
+      images: [gown.seo.image],
+    },
   };
 }
 

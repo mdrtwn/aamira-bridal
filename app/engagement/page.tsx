@@ -15,7 +15,7 @@ function useInView(threshold = 0.12) {
     if (ref.current) obs.observe(ref.current);
     return () => obs.disconnect();
   }, [threshold]);
-  return { ref, inView };
+  return [ref, inView] as const;
 }
 
 /* ─── Feature data ────────────────────────────────────────── */
@@ -72,8 +72,8 @@ export default function EngagementPage() {
   const [loaded, setLoaded] = useState(false);
   const [scrollY, setScrollY] = useState(0);
 
-  const highlights = useInView(0.08);
-  const moment      = useInView(0.1);
+  const [highlightsRef, highlightsInView] = useInView(0.08);
+  const [momentRef, momentInView] = useInView(0.1);
 
   useEffect(() => {
     const t = setTimeout(() => setLoaded(true), 100);
@@ -505,7 +505,7 @@ export default function EngagementPage() {
 
       {/* ─── HIGHLIGHTS ─────────────────────────────────────── */}
       <section
-        ref={highlights.ref as React.RefObject<HTMLElement>}
+        ref={highlightsRef}
         style={{ background: "var(--noir2)", position: "relative", overflow: "hidden" }}
       >
         <div style={{ position: "relative", zIndex: 2, padding: "88px 64px 96px" }}>
@@ -513,7 +513,7 @@ export default function EngagementPage() {
           {/* Header row — heading left, description right */}
           <div className="en-highlights-header">
             <h2
-              className={`en-reveal en-d0 ${highlights.inView ? "on" : ""}`}
+              className={`en-reveal en-d0 ${highlightsInView ? "on" : ""}`}
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
                 fontSize: "clamp(24px, 2.6vw, 34px)",
@@ -527,7 +527,7 @@ export default function EngagementPage() {
             </h2>
 
             <p
-              className={`en-reveal en-d1 ${highlights.inView ? "on" : ""}`}
+              className={`en-reveal en-d1 ${highlightsInView ? "on" : ""}`}
               style={{
                 fontFamily: "'Jost', sans-serif",
                 fontSize: "12.5px",
@@ -547,7 +547,7 @@ export default function EngagementPage() {
             {features.map((f, i) => (
               <div
                 key={f.number}
-                className={`en-reveal en-d${i + 1} ${highlights.inView ? "on" : ""}`}
+                className={`en-reveal en-d${i + 1} ${highlightsInView ? "on" : ""}`}
               >
                 <div className="en-feature-icon">{f.icon}</div>
                 <div className="en-feature-head">
@@ -563,13 +563,13 @@ export default function EngagementPage() {
 
       {/* ─── THE MOMENT YOU SAY YES + IMAGE CARDS (grid) ────────── */}
       <section
-        ref={moment.ref as React.RefObject<HTMLElement>}
+        ref={momentRef}
         style={{ background: "var(--noir)" }}
       >
         <div className="en-moment-grid">
 
           {/* Left panel — image + text, spans 2 columns */}
-          <div className={`en-moment-panel en-reveal en-d0 ${moment.inView ? "on" : ""}`}>
+          <div className={`en-moment-panel en-reveal en-d0 ${momentInView ? "on" : ""}`}>
             <div className="en-moment-image">
               <div
                 className="en-moment-image-inner"
@@ -628,7 +628,7 @@ export default function EngagementPage() {
           {/* Card — Engagement Gowns */}
           <Link
             href="/collections/engagement-gowns"
-            className={`en-card en-reveal en-d1 ${moment.inView ? "on" : ""}`}
+            className={`en-card en-reveal en-d1 ${momentInView ? "on" : ""}`}
           >
             <div
               className="en-card-image"
@@ -644,7 +644,7 @@ export default function EngagementPage() {
           {/* Card — Custom Design */}
           <Link
             href="/collections/custom-design"
-            className={`en-card en-reveal en-d2 ${moment.inView ? "on" : ""}`}
+            className={`en-card en-reveal en-d2 ${momentInView ? "on" : ""}`}
           >
             <div
               className="en-card-image"
